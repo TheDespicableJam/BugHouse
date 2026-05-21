@@ -11,7 +11,7 @@ def challenge1a():
     return render_template('challenge1/challenge1a.html', msg=msg)
 
 
-#flag sub logic
+#flag logic
 @challenge1.route('/challenge/1a/flag', methods=['POST'])
 def flag1():
    val =  flag('1a', '{h4rd_m1st4k3}')

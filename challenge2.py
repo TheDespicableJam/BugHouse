@@ -12,7 +12,7 @@ def challenge2a():
     return render_template('challenge2/challenge2a.html', msg=msg)
 
 
-#flag submission and cookie handler
+#flag submission and cookie remover
 @challenge2.route('/challenge/2a/flag', methods=['POST'])
 def flag2():
   val = flag('2a', '{ch0c0l4t3_ch1p}')
