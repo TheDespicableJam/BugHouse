@@ -1,11 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+
 <h1>
     YouSpace, a space just for you
 </h1>
 
 <h2>
-    Home Page Home Page. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logged In As: Admin<br>
+    Home Page
 </h2>
-
+<h2 class="alignright">
+Logged in as: Admin
+</h2>
 <p>
     Samuel says: "@admin, i found something weird at /roles"<br><br>
     elite_h4xxor says: "Shutup Samuel! I know your IP, I will doxx you"<br><br>
@@ -21,3 +26,5 @@
 <a href="/challenge/2a">
 <button type="button">Back To Flag Submission</button>
 </a>
+
+{% endblock %}
