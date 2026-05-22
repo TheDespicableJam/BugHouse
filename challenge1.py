@@ -34,9 +34,9 @@ def main():
 def challenge1logic():
     username = request.form['username']
     password = request.form['password']
-
-    if username == 'admin' and password == "REMOVEBEFOREPRODUCTION":
-        return render_template('challenge1/challenge1pass.html')
+    if username == 'admin' and password == 'REMOVEBEFOREPRODUCTION':
+        login = True
+        return render_template('challenge1/LoggedIn.html', login=login)
     else:
-       return render_template('challenge1/challenge1fail.html')
-
+        login = False
+        return render_template('challenge1/LoggedIn.html', login=login)

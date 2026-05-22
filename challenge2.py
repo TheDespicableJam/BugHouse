@@ -30,26 +30,28 @@ def flag2():
 @challenge2.route('/challenge/2a/main')
 def main():
     if request.cookies.get('Role') != None:
-      return redirect('/challenge/2a/Youspace')
+      return redirect('/challenge/2a/YouSpace')
     else:
         return render_template('challenge2/challenge2main.html')
     
 
 
 #YouSpace
-@challenge2.route('/challenge/2a/Youspace', methods=['GET', 'POST'])
+@challenge2.route('/challenge/2a/YouSpace', methods=['GET', 'POST'])
 def YouSpace():
+        login = False
         username = request.form.get('username')
-        response = make_response(render_template('challenge2/youspaceUser.html', username=username))
+        response = make_response(render_template('challenge2/youspace.html', username=username, login=login))
         if request.cookies.get('Role') == None:
             response.set_cookie('Role', 'Guest#WW91ciBhcmUgY3VycmVudGx5IGEgdXNlcg')
             return response
         elif request.cookies.get('Role') == 'Admin#WW91IGFyZSBjdXJyZW50bHkgYW4gYWRtaW4':
-            return render_template('challenge2/youspaceAdmin.html', )
+            login = True
+            return render_template('challenge2/youspace.html', login=login)
         else:
             return response            
 
 #/roles
-@challenge2.route('/challenge/2a/roles')
+@challenge2.route('/challenge/2a/YouSpace/roles')
 def roles():
     return render_template('challenge2/roles.html')

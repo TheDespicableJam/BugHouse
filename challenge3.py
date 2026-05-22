@@ -22,13 +22,23 @@ def flag3():
   else:
        return redirect('/challenge/3a?message=Incorrect+Flag')
   
-@challenge3.route('/challenge/3a/LitHub')
+@challenge3.route('/challenge/3a/LitHub', methods=['GET', 'POST'])
 def LitHub():
     header = request.headers.get('X-Jack-Key')
-    if header == 'yes':
-        return render_template('challenge3/lithubKey.html')
+
+    if request.method == 'GET':
+        show_post= True
+        login = False
+        if header == 'yes':
+            login = True
+            return render_template('challenge3/lithub.html', show_post=show_post, login=login)
+        else:
+            login=False
+            return render_template('challenge3/lithub.html', login=login)
     else:
-        return render_template('challenge3/lithubUser.html')
+        show_post = False
+        login= True
+        return render_template('challenge3/lithub.html', show_post=show_post, login=login)
     
 @challenge3.route('/challenge/3a/LitHub/Home/jackinbahamas', methods=['POST'])
 def key():
@@ -36,5 +46,6 @@ def key():
 
 @challenge3.route('/challenge/3a/LitHub/Home')
 def Home():
-    return render_template('challenge3/lithubMain.html')
+    return render_template('challenge3/lithubHome.html')
+
     
