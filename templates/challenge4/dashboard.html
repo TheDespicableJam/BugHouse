@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<center><h1>Employee Dashboard, BugHouse</h1></center>
+<h2>Current Status: Online <br><br> User: {{id}}<br><br> Priviledges: Admin</h2>
+<br>
+<br>
+<p>
+    <!-- <a href="/challenge/4a/Mantis">
+        Mantis
+    </a> -->
+</p>
+<a href="/challenge/4a/dashboard/LitHubMonitor">
+    <button type="button">Monitor LitHub</button>
+</a>
+<br>
+<br>
+<a href="/challenge/4a/dashboard/YouSpaceMonitor">
+    <button type="button">Monitor YouSpace</button>
+</a>
+<br>
+<br>
+<form method="post" action="/challenge/4a/Logout">
+    <button type="submit">Logout</button>
+</form>
+
+
+{% endblock %}

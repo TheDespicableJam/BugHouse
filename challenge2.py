@@ -27,7 +27,7 @@ def flag2():
      
 
 #pick username and session checker
-@challenge2.route('/challenge/2a/main')
+@challenge2.route('/challenge/2a/Login')
 def main():
     if request.cookies.get('Role') != None:
       return redirect('/challenge/2a/YouSpace')
