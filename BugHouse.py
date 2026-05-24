@@ -29,7 +29,7 @@ def method_not_allowed(error):
 
 @app.errorhandler(500)
 def server_error(error):
-    return "<center>Error 500, Mantis Killed Security Breach detected, This attempt will be flagged, Go Back? <br>" \
+    return "<center>Error 500, Mantis Secure Shell Sesion Terminated, Security Breach detected, This attempt will be flagged<br>" \
     "<a href='/'>" \
     "<button type='button'>Go Back</button></a> </center>", 500
 

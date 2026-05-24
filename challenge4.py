@@ -74,7 +74,7 @@ def logout():
 def mantislog():
     if request.method == 'GET':
         msg=''
-        return render_template('challenge4/mantis.html', msg=msg)
+        return render_template('challenge4/mantisLog.html', msg=msg)
     else:
         id = request.form.get('id')
         password = request.form.get('password')
@@ -84,10 +84,10 @@ def mantislog():
 
         result = cursor.execute(f"SELECT * FROM mantis WHERE ID = '{id}' AND ROLE = 'OWNER' AND PASS = '{password}'")
         if result.fetchone():
-            return "<h2>logedin</h2>"
+            return render_template('challenge4/mantisdashboard.html')
         else:
             msg = "Acces Denied... Mantis is dead..."
-            return render_template('challenge4/mantis.html', msg=msg)
+            return render_template('challenge4/mantisLog.html', msg=msg)
 
 @challenge4.route('/challenge/4a/DeadMantis')
 def dead():
