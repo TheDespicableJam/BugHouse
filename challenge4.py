@@ -1,9 +1,11 @@
-from flask import Flask, Blueprint, redirect,request,make_response,render_template
+from flask import Flask, Blueprint, redirect,request,abort,make_response,render_template
 from stuff import flag
+import sqlite3
+
 
 challenge4=Blueprint('challenge4', __name__ )
 
-#challenge 3
+#challenge 4
 @challenge4.route('/challenge/4a')
 def challenge4a():
     msg = request.args.get('message', '')
@@ -22,7 +24,7 @@ def flag4():
        return redirect('/challenge/4a?message=Incorrect+Flag')
   
 
-  
+#employee login  
 @challenge4.route('/challenge/4a/Login', methods=['GET', 'POST'])
 def Login():
     val = request.form.get('id')
@@ -40,7 +42,7 @@ def Login():
     else:
         return redirect('/challenge/4a/dashboard')
 
- 
+ #admin dashboard
 @challenge4.route('/challenge/4a/dashboard')
 def dashboard():
    response = make_response(render_template('challenge4/dashboard.html', id='GR39573044274'))
@@ -51,10 +53,13 @@ def dashboard():
    else:
        return response
        
+#lithub montior page     
 @challenge4.route('/challenge/4a/dashboard/LitHubMonitor')
 def lithub():
     return render_template('challenge4/LitHub.html')
 
+
+#youspace monitor page
 @challenge4.route('/challenge/4a/dashboard/YouSpaceMonitor')
 def youspace():
     return render_template('challenge4/YouSpace.html')
@@ -64,3 +69,26 @@ def logout():
     response.delete_cookie('id')
     return response
 
+#secret mantis login
+@challenge4.route('/challenge/4a/Mantis', methods=['POST', 'GET'])
+def mantislog():
+    if request.method == 'GET':
+        msg=''
+        return render_template('challenge4/mantis.html', msg=msg)
+    else:
+        id = request.form.get('id')
+        password = request.form.get('password')
+
+        connect = sqlite3.connect('mantis.db')
+        cursor = connect.cursor()
+
+        result = cursor.execute(f"SELECT * FROM mantis WHERE ID = '{id}' AND ROLE = 'OWNER' AND PASS = '{password}'")
+        if result.fetchone():
+            return "<h2>logedin</h2>"
+        else:
+            msg = "Acces Denied... Mantis is dead..."
+            return render_template('challenge4/mantis.html', msg=msg)
+
+@challenge4.route('/challenge/4a/DeadMantis')
+def dead():
+    abort(500)

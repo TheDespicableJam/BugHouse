@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+{% block content %}
+<center>
+    <h2>Mantis</h2>
+<form method="post" action="/challenge/4a/Mantis">
+    <input type="text" name="id" placeholder="Mantis">
+    <br><br>
+    <input type="password" name="password" placeholder="Mantis">
+    <button type="submit">Submit</button>
+</form> 
+{{msg}}
+</center>
+
+{% if msg %}
+<script>
+    setTimeout(function() {window.location = "/challenge/4a/DeadMantis";}, 1500);   
+</script>
+{% endif %}
+{% endblock %}

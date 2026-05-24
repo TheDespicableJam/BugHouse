@@ -27,6 +27,11 @@ def method_not_allowed(error):
     "<a href='/'>" \
     "<button type='button'>Go Back</button></a> ", 405
 
+@app.errorhandler(500)
+def server_error(error):
+    return "<center>Error 500, Mantis Killed Security Breach detected, This attempt will be flagged, Go Back? <br>" \
+    "<a href='/'>" \
+    "<button type='button'>Go Back</button></a> </center>", 500
 
 
 if __name__== '__main__':
