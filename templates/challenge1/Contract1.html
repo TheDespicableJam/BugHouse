@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>Bad Apples</h1>
+    <p>11:57 PM, Black_Jack<br><br>
+    Okay hotshot, dont get too comfy with me, this is serious business that needs to get done <br>
+    I mobilised some other guys to retrieve intel on this new dev at BugHouse, guys name is Jack Birkman, 28, lives in Manhattan with his wife and two kids. <br>
+    He is new and after analyzing his previous works, think he should be our key. <br>
+    Here is the compromised Login Page for there admin dashboard, all I need you to do is get in, you get it? <br>
+    And remember... I want no funny business</p>
+ 
+ <a href='/challenge/1a/Login' target="_blank">
+    <button type='button'>Start</button>
+    </a> <br><br>
+
+{% if msg != 'Aight good work, expect us to cross paths again...' %}
+<form method='POST' action="/challenge/1a">
+    <input type="text" name="flag" placeholder="Admin Token">
+    <button type='submit'>Send Admin Token</button>
+</form>
+{% endif %}
+<p>{{msg}}</p>
+{% endblock %}

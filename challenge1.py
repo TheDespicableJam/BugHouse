@@ -3,40 +3,37 @@ from stuff import flag
 
 challenge1=Blueprint('challenge1', __name__ )
 
-
-# challenge 1
-@challenge1.route('/challenge/1a')
-def challenge1a():
-    msg = request.args.get('message', '')
-    return render_template('challenge1/challenge1a.html', msg=msg)
-
-
-#flag logic
-@challenge1.route('/challenge/1a/flag', methods=['POST'])
+#flag logic and Briefings
+@challenge1.route('/challenge/1a', methods=['POST', 'GET'])
 def flag1():
-   val =  flag('1a', '{h4rd_m1st4k3}')
-   if val == 'Correct':
-       return redirect('/challenge/1a?message=Correct+Flag%21')
-   elif val == 'empty':
-       return redirect('/challenge/1a?message=Please+provide+a+valid+Flag')
-   else:
-       return redirect('/challenge/1a?message=Incorrect+Flag')
-
-    
-#main login page
-@challenge1.route('/challenge/1a/main')
-def main():
-   return render_template('challenge1/challenge1main.html')
-
-
-#login logic
-@challenge1.route('/challenge/1a/login',methods=['POST'])
-def challenge1logic():
-    username = request.form['username']
-    password = request.form['password']
-    if username == 'admin' and password == 'REMOVEBEFOREPRODUCTION':
-        login = True
-        return render_template('challenge1/LoggedIn.html', login=login)
+    msg= ''
+    if request.method == 'POST':
+        val =  flag('Birkman40965070')
+        if val == 'Correct':
+            msg = 'Aight good work, expect us to cross paths again...'
+            return render_template('challenge1/Contract1.html', msg=msg)
+        elif val == 'empty':
+            msg = 'You think this is funny huh?...'
+            return render_template('challenge1/Contract1.html', msg=msg)
+        else:
+            msg = 'This token isnt the right one, keep on diggin nerd'
+            return render_template('challenge1/Contract1.html', msg=msg)
     else:
-        login = False
-        return render_template('challenge1/LoggedIn.html', login=login)
+        return render_template('challenge1/Contract1.html', msg=msg)
+        
+#main login page
+@challenge1.route('/challenge/1a/Login', methods=['POST','GET'])
+def main():
+    msg = ''
+    if request.method == 'POST':
+        id = request.form.get('id')
+        if id == 'JACKISTHECOOLEST':
+            return render_template('challenge1/dashboard.html')
+        else:
+            msg='Wrong ID Please Try Again'
+            return render_template('challenge1/Login.html', msg=msg)
+    else:
+        return render_template('challenge1/Login.html', msg=msg)
+
+
+

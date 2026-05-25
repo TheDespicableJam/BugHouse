@@ -1,9 +1,9 @@
 from flask import request, redirect, render_template
 
-def flag(url ,flg):
-    flag=request.form['flag']
+def flag(flg):
+    flag = request.form['flag']
 
-    if flag == f'Bug{flg}':
+    if flag == flg:
         return("Correct")
     elif not flag:
         return("empty")
