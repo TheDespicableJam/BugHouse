@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block content %}
-<center><p><strong>Secure IRC, for all your Deep web "stuff" </strong></p></center>
+<center><p><strong>Terminal Chat, Powered by IRC </strong></p></center>
 
 Connecting to Chatroom #49583204194620...
 <div id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
@@ -30,7 +30,7 @@ Connecting to Chatroom #49583204194620...
     </a>
 </div>
 </div> 
-<div id="leave" style="display: none;">&lt;Rotten_Apple&gt; has left the Chatroom <br><br></div>
+<div id="leave" style="display: none;">&lt;Rotten_Apple&gt; has left the Chatroom <br>Connection Closed <br><br></div>
 <div id="bck" {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/'>
     <button type="button">Back</button>
     </a></div>
@@ -48,7 +48,7 @@ Connecting to Chatroom #49583204194620...
 {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}
 <script>
     const leave = document.getElementById('leave');
-    setTimeout(function() {leave.style.display='block';}, 1500);
+    setTimeout(function() {leave.style.display='block';}, 2500);
 </script>
 {% endif %}
 {% endblock %}

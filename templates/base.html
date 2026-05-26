@@ -6,7 +6,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>BugHouse</title>
+    
     <style>
+        .toolbar {
+    width: 99.5%;
+    background-color: #333;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+    font-size: 17px;
+    color: aliceblue;
+}
+
+.close {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+
+.red { background-color: #ff5f57; }
+.yellow { background-color: #febc2e; }
+.hostname {margin: auto;}
+
+        @font-face{
+    font-family: 'Pixelta';
+    src: url('/static/Pixelta.ttf');
+        }
+
+
     body {
         background-color: rgba(0, 0, 0, 0.89);
         color: #31ff31;
@@ -32,6 +59,11 @@
 </style>
 </head>
 <body>
+    <div class="toolbar">
+    <div class="close red"></div>
+    <div class="close yellow"></div>
+    <p class="hostname">root@kali</p>
+</div>
     {% block content %} 
     {% endblock %}
 </body>
