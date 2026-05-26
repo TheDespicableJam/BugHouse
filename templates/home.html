@@ -1,11 +1,51 @@
 {% extends 'base.html'%}
 {% block content %}
-<h1>Available Contracts</h1>
-    <p>Compromised BugHouse Products, Choose a contract to start hacking:</p>
-    <ul>
-    <li><a href="/challenge/1a">Bad Apples: Prologue</a></li>
-    <li><a href="/challenge/2a">YouSpace</a></li>
-    <li><a href="/challenge/3a">LitHub</a></li>
-    <li><a href="/challenge/4a">Employee Login</a></li>
-    </ul>
-{% endblock %}
+<div id="banner1" style="display: none;">
+<pre>
+    __________          ____ ___________          __                           .__                  __                  
+    \______   \ __ __  / ___\\_   _____/___  ____/  |_   ____ _______   _____  |__|  ____  _____  _/  |_  ____ _______  
+</pre></div>
+ <div id="banner2" style="display: none;">
+<pre>
+     |    |  _/|  |  \/ /_/  >|    __)_ \  \/  /\   __\_/ __ \\_  __ \ /     \ |  | /    \ \__  \ \   __\/  _ \\_  __ \ 
+     |    |   \|  |  /\___  / |        \ >    <  |  |  \  ___/ |  | \/|  Y Y  \|  ||   |  \ / __ \_|  | (  <_> )|  | \/ 
+</pre>
+ </div>
+<div id="banner3" style="display: none;">
+<pre>
+     |______  /|____//_____/ /_______  //__/\_ \ |__|   \___  >|__|   |__|_|  /|__||___|  /(____  /|__|  \____/ |__|    
+            \/                       \/       \/            \/              \/          \/      \/                      
+</pre>
+</div>
+<p><center>A Game by TheDespicableJam</center></p>
+<div id="command" style="display: none;">
+<span>root@kali:~$</span> <input class="cli" id="inp" type="text" name="command">
+</div>
+<pre class="msg"><div id="msg"></div></pre>
+<script>
+    setTimeout(function() { banner1.style.display = 'block' ;},1000 );
+    setTimeout(function() { banner2.style.display = 'block' ;},1500 );
+    setTimeout(function() { banner3.style.display = 'block' ;},2000 );
+    setTimeout(function() { command.style.display = 'block' ;},2500 );
+
+const inp = document.getElementById('inp')
+inp.addEventListener('keydown', function(event) 
+    {if (event.key === 'Enter'){
+    const val = inp.value.toLowerCase();
+        if (val == 'help'){
+            document.getElementById('msg').textContent='Use the "SSH" command to start playing, Use this command for level 1 SSH@11111111 -p firstlevel\nUse the "help" command to bring up this message ';
+        }
+        else if (val == 'ssh'){
+            document.getElementById('msg').textContent='Use this format for the SSH command to start playing:\nSSH@<CHAT ID> -p <Admin Token>\nExample: SSH@11111111 -p firstlevel '
+        }
+        else if (val == 'ssh@11111111 -p firstlevel'){
+            window.location = '/challenge/1a'
+        }
+        else{ 
+            document.getElementById('msg').textContent='Please use a valid command: "help" or "SSH"'
+    }
+inp.value = ''
+}})
+
+</script>
+ {% endblock %}
