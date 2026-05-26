@@ -1,23 +1,54 @@
 {% extends 'base.html'%}
 
 {% block content %}
-<h1>Bad Apples</h1>
-    <p>11:57 PM, Black_Jack<br><br>
+<center><p><strong>Secure IRC, for all your Deep web "stuff" </strong></p></center>
+
+Connecting to Chatroom #49583204194620...
+<div id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
+<div id="join" {% if not msg %} style="display: none;" {% endif %}>&lt;Rotten_Apple&gt; has joined the Chatroom</div>
+<div id="briefings" {% if not msg %} style="display: none;" {% endif %}>
+    <p>[11:57 PM] &lt;Rotten_Apple&gt;
     Okay hotshot, dont get too comfy with me, this is serious business that needs to get done <br>
     I mobilised some other guys to retrieve intel on this new dev at BugHouse, guys name is Jack Birkman, 28, lives in Manhattan with his wife and two kids. <br>
     He is new and after analyzing his previous works, think he should be our key. <br>
     Here is the compromised Login Page for there admin dashboard, all I need you to do is get in, you get it? <br>
     And remember... I want no funny business</p>
  
- <a href='/challenge/1a/Login' target="_blank">
-    <button type='button'>Start</button>
-    </a> <br><br>
+    <a href='/challenge/1a/Login' target="_blank">
+        <button type='button'>Start</button>
+        </a> <br><br>
 
-{% if msg != 'Aight good work, expect us to cross paths again...' %}
-<form method='POST' action="/challenge/1a">
-    <input type="text" name="flag" placeholder="Admin Token">
-    <button type='submit'>Send Admin Token</button>
-</form>
+    {% if msg != '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}
+    <form method='POST' action="/challenge/1a">
+        <input type="text" name="flag" placeholder="Admin Token">
+        <button type='submit'>Send Admin Token</button>
+    </form>
+    {% endif %}
+    <p>{{msg}}</p>
+    <div id="back" {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %} style="display: none;" {% else %} style="display: block;" {% endif %} ><a href='/'>
+    <button type="button">Back</button>
+    </a>
+</div>
+</div> 
+<div id="leave" style="display: none;">&lt;Rotten_Apple&gt; has left the Chatroom <br><br></div>
+<div id="bck" {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/'>
+    <button type="button">Back</button>
+    </a></div>
+{% if msg == '' %}
+<script>
+    const briefings = document.getElementById('briefings');
+    const connect = document.getElementById('connect');
+    const join = document.getElementById('join')
+    setTimeout(function() {connect.style.display='block';}, 2500);
+    setTimeout(function() {join.style.display='block';}, 4500)
+    setTimeout(function() {briefings.style.display='block';}, 6500);
+</script>
 {% endif %}
-<p>{{msg}}</p>
+
+{% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}
+<script>
+    const leave = document.getElementById('leave');
+    setTimeout(function() {leave.style.display='block';}, 1500);
+</script>
+{% endif %}
 {% endblock %}

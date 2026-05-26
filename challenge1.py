@@ -10,13 +10,13 @@ def flag1():
     if request.method == 'POST':
         val =  flag('Birkman40965070')
         if val == 'Correct':
-            msg = 'Aight good work, expect us to cross paths again...'
+            msg = '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...'
             return render_template('challenge1/Contract1.html', msg=msg)
         elif val == 'empty':
-            msg = 'You think this is funny huh?...'
+            msg = '[12:01 AM] <Rotten_Apple> You think this is funny huh?...'
             return render_template('challenge1/Contract1.html', msg=msg)
         else:
-            msg = 'This token isnt the right one, keep on diggin nerd'
+            msg = '[12:01 AM] <Rotten_Apple> This token isnt the right one, keep on diggin nerd'
             return render_template('challenge1/Contract1.html', msg=msg)
     else:
         return render_template('challenge1/Contract1.html', msg=msg)
