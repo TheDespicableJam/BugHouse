@@ -4,10 +4,10 @@
 <center><p><strong>Terminal Chat, Powered by IRC </strong></p></center>
 
 Connecting to Chatroom #11111111...
-<div id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
-<div id="join" {% if not msg %} style="display: none;" {% endif %}>&lt;Rotten_Apple&gt; has joined the Chatroom</div>
-<div id="briefings" {% if not msg %} style="display: none;" {% endif %}>
-    <p>[11:57 PM] &lt;Rotten_Apple&gt;
+<div  id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
+<div  id="join" {% if not msg %} style="display: none;" {% endif %}> <span class="apple">&lt;Rotten_Apple&gt;</span> has joined the Chatroom</div>
+<div  id="briefings" {% if not msg %} style="display: none;" {% endif %}>
+    <p>[11:57 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>
     Okay hotshot, dont get too comfy with me, this is serious business that needs to get done <br>
     I mobilised some other guys to retrieve intel on this new dev at BugHouse, guys name is Jack Birkman, 28, lives in Manhattan with his wife and two kids. <br>
     He is new and after analyzing his previous works, think he should be our key. <br>
@@ -17,21 +17,28 @@ Connecting to Chatroom #11111111...
     <a href='/challenge/1a/Login' target="_blank">
         <button type='button'>Start</button>
         </a> <br><br>
-
-    {% if msg != '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}
-    <form method='POST' action="/challenge/1a">
+ <form {% if msg == 'correct' %} style="display: none;" {% else %}style="display: block;" {% endif %} method='POST' action="/challenge/1a">
         <input type="text" name="flag" placeholder="Admin Token">
         <button type='submit'>Send Admin Token</button>
-    </form>
+    </form><br>
+{% if msg  %}  
+    {% if msg == 'correct' %}
+    <p>[12:01 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Aight good work, expect us to cross paths again... Next time join here #29405828</p>
+
+    {% elif msg == 'wrong' %}
+    <p>[12:01 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>This aint the right token, keep on diggin nerd</p>
+
+    {% else %}
+    <p>[12:01 AM]  <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...
     {% endif %}
-    <p>{{msg}}</p>
-    <div id="back" {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %} style="display: none;" {% else %} style="display: block;" {% endif %} ><a href='/'>
+{% endif %}
+    <div   id="back" {% if msg == 'correct' %} style="display: none;" {% else %} style="display: block;" {% endif %} ><a href='/'>
     <button type="button">Back</button>
     </a>
-</div>
-</div> 
-<div id="leave" style="display: none;">&lt;Rotten_Apple&gt; has left the Chatroom <br>Connection Closed <br><br></div>
-<div id="bck" {% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/'>
+    </div>
+    </div> 
+<div  id="leave" style="display: none;"><span class="apple">&lt;Rotten_Apple&gt;</span> has left the Chatroom <br>Connection Closed <br><br></div>
+<div  id="bck" {% if msg == 'correct' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/'>
     <button type="button">Back</button>
     </a></div>
 {% if msg == '' %}
@@ -45,10 +52,12 @@ Connecting to Chatroom #11111111...
 </script>
 {% endif %}
 
-{% if msg == '[12:01 AM] <Rotten_Apple> Aight good work, expect us to cross paths again...' %}
+{% if msg == 'correct' %}
 <script>
     const leave = document.getElementById('leave');
     setTimeout(function() {leave.style.display='block';}, 2500);
 </script>
 {% endif %}
+
+
 {% endblock %}

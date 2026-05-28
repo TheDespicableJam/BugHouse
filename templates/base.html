@@ -18,6 +18,7 @@
     color: aliceblue;
 }
 
+
 .close {
     height: 15px;
     width: 15px;
@@ -36,10 +37,33 @@
 .msg{
     font-family: 'Bitcount Prop Single', monospace;
 }
-pre {
-    color: white;
-    margin: 0;
+
+
+.apple{
+    color: #ff5555
 }
+
+.player{
+    color: #5555ff
+}
+
+
+/* animations? */
+.fade {
+  animation: fade 1s linear infinite;
+}
+@keyframes fade {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+
+
+
+
+
         @font-face{
     font-family: 'Pixelta';
     src: url('/static/Pixelta.ttf');
@@ -71,6 +95,7 @@ pre {
 </style>
 </head>
 <body>
+<div hud>
     <div class="toolbar">
     <div class="close red"></div>
     <div class="close yellow"></div>

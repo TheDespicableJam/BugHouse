@@ -9,7 +9,7 @@ challenge2=Blueprint('challenge2', __name__ )
 @challenge2.route('/challenge/2a')
 def challenge2a():
     msg = request.args.get('message','')
-    return render_template('challenge2/challenge2a.html', msg=msg)
+    return render_template('challenge2/Contract2.html', msg=msg)
 
 
 #flag submission and cookie remover
