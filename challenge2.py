@@ -6,24 +6,38 @@ challenge2=Blueprint('challenge2', __name__ )
 
 
 #challenge 2
-@challenge2.route('/challenge/2a')
+@challenge2.route('/challenge/2a', methods=['GET', 'POST'])
 def challenge2a():
-    msg = request.args.get('message','')
-    return render_template('challenge2/Contract2.html', msg=msg)
+    msg=''
+    if request.method == 'POST':
+      val = flag('unknownvisitor')
+      if val == 'Correct':
+          msg='correct'
+          response = make_response(render_template('challenge2/Contract2.html', msg=msg))
+          response.delete_cookie('Role')
+          return response
+      elif val == 'empty':
+          msg='empty'
+          return render_template('challenge2/Contract2.html', msg=msg)
+      else:
+          msg='wrong'
+          return render_template('challenge2/Contract2.html', msg=msg)
+    else:
+        return render_template('challenge2/Contract2.html', msg=msg)
 
 
 #flag submission and cookie remover
-@challenge2.route('/challenge/2a/flag', methods=['POST'])
-def flag2():
-  val = flag('2a', '{ch0c0l4t3_ch1p}')
-  if val == 'Correct':
-    respone = make_response(redirect('/challenge/2a?message=Correct+Flag%21'))
-    respone.delete_cookie('Role')
-    return respone
-  elif val == 'empty':
-    return redirect('/challenge/2a?message=Please+provide+a+valid+Flag')
-  else:
-     return redirect('/challenge/2a?message=Incorrect+Flag')
+#@challenge2.route('/challenge/2a/flag', methods=['POST'])
+#def flag2():
+#  val = flag('2a', '{ch0c0l4t3_ch1p}')
+ # if val == 'Correct':
+  #  respone = make_response(redirect('/challenge/2a?message=Correct+Flag%21'))
+   # respone.delete_cookie('Role')
+    #return respone
+  #elif val == 'empty':
+   # return redirect('/challenge/2a?message=Please+provide+a+valid+Flag')
+  #else:
+   #  return redirect('/challenge/2a?message=Incorrect+Flag')
      
 
 #pick username and session checker
