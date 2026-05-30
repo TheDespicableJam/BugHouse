@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+        body{
+            background-image: url('/static/wall.jpg');
+        }
+
+        @keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+
+.spin{
+    animation: spin 2s linear infinite
+}
+        
+    </style>
+</head>
+<body>
+    <p style="position: absolute; right: 25px; top: -11px; font-family: Bitcount Prop Single; font-size: 40px; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 5px solid rgb(29, 131, 8); padding: 5px;" id="time">&nbsp;</p>
+<a style="text-decoration:none;font-size: 17px; font-family: Bitcount Prop Single; color: white;" href="/challenge/1a">
+    <img src="/static/msgicon.png" style="height: 50px; width: auto;;" alt=""><br>
+    Messages
+</a>
+
+<p><img class="spin" id="wheel" src="/static/ying.png" style="position: absolute; right: 285px; top: 30px; height:65px; width: auto;" ></p>
+</body>
+
+<script>
+    function time(){
+        const now = new Date()
+        document.getElementById('time').textContent = now.toLocaleTimeString()
+    }
+    time();
+    setInterval(time, 1000)
+    
+</script>
+</html>
