@@ -5,22 +5,36 @@ challenge3=Blueprint('challenge3', __name__ )
 
 
 #challenge 3
-@challenge3.route('/challenge/3a')
+@challenge3.route('/challenge/3a', methods=['GET', 'POST'])
 def challenge3a():
-    msg = request.args.get('message', '')
-    return render_template('challenge3/challenge3a.html', msg =msg)
+    if request.method == 'POST':
+        val = flag('privaterepos')
+        if val == 'Correct':
+            msg = 'correct'
+            return render_template('challenge3/Contract3.html', msg=msg)
+        elif val == 'empty':
+            msg = 'empty'
+            return render_template('challenge3/Contract3.html', msg=msg)
+        else:
+            msg= 'wrong'
+            return render_template('challenge3/Contract3.html', msg=msg)
+    else:
+        msg = ''
+        return render_template('challenge3/Contract3.html', msg=msg)
 
+
+    
 
 #flag logic
-@challenge3.route('/challenge/3a/flag', methods=['POST'])
-def flag3():
-  val = flag('3a', '{s4v3d_th3_d4y}')
-  if val == 'Correct':
-       return redirect('/challenge/3a?message=Correct+Flag%21')
-  elif val == 'empty':
-       return redirect('/challenge/3a?message=Please+provide+a+valid+Flag')
-  else:
-       return redirect('/challenge/3a?message=Incorrect+Flag')
+#@challenge3.route('/challenge/3a/flag', methods=['POST'])
+#def flag3():
+#  val = flag('3a', '{s4v3d_th3_d4y}')
+#  if val == 'Correct':
+#       return redirect('/challenge/3a?message=Correct+Flag%21')
+#  elif val == 'empty':
+#       return redirect('/challenge/3a?message=Please+provide+a+valid+Flag')
+#  else:
+#       return redirect('/challenge/3a?message=Incorrect+Flag')
   
 @challenge3.route('/challenge/3a/LitHub', methods=['GET', 'POST'])
 def LitHub():
@@ -40,7 +54,7 @@ def LitHub():
         login= True
         return render_template('challenge3/lithub.html', show_post=show_post, login=login)
     
-@challenge3.route('/challenge/3a/LitHub/Home/jackinbahamas', methods=['POST'])
+@challenge3.route('/challenge/3a/LitHub/Home/backup', methods=['POST'])
 def key():
     return "K-Wnpx-Xrl: lrf <br> I did'nt mess up this time ;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jack"
 

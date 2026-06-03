@@ -26,20 +26,6 @@ def challenge2a():
         return render_template('challenge2/Contract2.html', msg=msg)
 
 
-#flag submission and cookie remover
-#@challenge2.route('/challenge/2a/flag', methods=['POST'])
-#def flag2():
-#  val = flag('2a', '{ch0c0l4t3_ch1p}')
- # if val == 'Correct':
-  #  respone = make_response(redirect('/challenge/2a?message=Correct+Flag%21'))
-   # respone.delete_cookie('Role')
-    #return respone
-  #elif val == 'empty':
-   # return redirect('/challenge/2a?message=Please+provide+a+valid+Flag')
-  #else:
-   #  return redirect('/challenge/2a?message=Incorrect+Flag')
-     
-
 #pick username and session checker
 @challenge2.route('/challenge/2a/Login')
 def main():

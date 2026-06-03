@@ -32,13 +32,13 @@ Connecting to Chatroom #11111111...
     <p>[12:01 AM]  <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...
     {% endif %}
 {% endif %}
-    <div   id="back" {% if msg == 'correct' %} style="display: none;" {% else %} style="display: block;" {% endif %} ><a href='/'>
+    <div   id="back" {% if msg == 'correct' %} style="display: none;" {% else %} style="display: block;" {% endif %} ><a href='/home'>
     <button type="button">Back</button>
     </a>
     </div>
     </div> 
 <div  id="leave" style="display: none;"><span class="apple">&lt;Rotten_Apple&gt;</span> has left the Chatroom <br>Connection Closed <br><br></div>
-<div  id="bck" {% if msg == 'correct' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/'>
+<div  id="bck" {% if msg == 'correct' %}  style="display: block;" {% else %} style="display: none;" {% endif %}><a href='/home'>
     <button type="button">Back</button>
     </a></div>
 {% if msg == '' %}

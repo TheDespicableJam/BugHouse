@@ -12,25 +12,29 @@ app.register_blueprint(challenge4)
 
 #home route function
 @app.route('/', methods=['GET','POST'])
-def home():
+def desktop():
     return render_template('dekstop.html')
-#    msg= ''
- #   if request.method == 'GET':
-  #      return render_template('home.html', msg=msg)
-   # else:
-    #    command = str.lower(request.form.get('command'))
-     #   if command == 'help':
-      ##     return render_template('home.html', msg=msg)
-        #elif command == 'ssh':
-         #   msg = 'Use this format for the SSH command to start playing:\nSSH@<CHAT ID> -p <Admin Token>\nFor first level: SSH@11111111 -p firstlevel'
-          #  return render_template('home.html', msg=msg)
-        #elif command == 'ssh@11111111 -p firstlevel':
-        #    return redirect('/challenge/1a')
-        #elif command == 'ssh@29405828 -p birkman40965070':
-        #    return redirect('/challenge/2a')
-        #else:
-         #   msg='Please use a valid command: "help" or "SSH"'
-          #  return render_template('home.html', msg=msg)
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    msg= ''
+    if request.method == 'GET':
+        return render_template('home.html', msg=msg)
+    else:
+        command = str.lower(request.form.get('command'))
+        if command == 'help':
+           msg = 'Use the "SSH" command to start playing, for first level: SSH@11111111 -p firstlevel\nUse the "help" command to bring up this message'
+           return render_template('home.html', msg=msg)
+        elif command == 'ssh':
+            msg = 'Use this format for the SSH command to start playing:\nSSH@<CHAT ID> -p <Admin Token>\nFor first level: SSH@11111111 -p firstlevel'
+            return render_template('home.html', msg=msg)
+        elif command == 'ssh@11111111 -p firstlevel':
+            return redirect('/challenge/1a')
+        elif command == 'ssh@29405828 -p birkman40965070':
+            return redirect('/challenge/2a')
+        else:
+            msg='Please use a valid command: "help" or "SSH"'
+            return render_template('home.html', msg=msg)
 
 
 @app.errorhandler(404)

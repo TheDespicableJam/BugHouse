@@ -2,7 +2,7 @@
 {% block content %}
 <center><p><strong>Terminal Chat, Powered by IRC </strong></p></center>
 
-Connecting to Chatroom #29405828...
+Connecting to Chatroom #37502750...
 <div id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
 <div id="join" {% if not msg %} style="display: none;" {% endif %}> <span class="apple">&lt;Rotten_Apple&gt;</span> has joined the Chatroom</div>
 
@@ -11,29 +11,36 @@ Connecting to Chatroom #29405828...
 <div id="scenes" {% if not msg %}style="display: block" {% else %} style="display: none;" {% endif %}> 
     <div id="m1" {% if not msg %} style="display: none;" {% endif %}>
     <p>[11:34 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>
-        Okay now listen up freak, tell me what the hell did you fricking do?</p></div>
+        Okay, rise and shine mf</p></div>
 
     <div id="m2" {% if not msg %} style="display: none;" {% endif %}>
-    <p>[11:35 PM] <span class="player">&lt;Exterminator&gt;</span> ?</p>
+    <p>[11:35 PM] <span class="player">&lt;Exterminator&gt;</span>...</p>
     </div>
 
     <div id="m3" {% if not msg %} style="display: none;" {% endif %}>
-        <pre style="font-family: 'Bitcount Prop Single';">[11:41 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Dont you dare play coy with me
-                    You knew damn well about the security breach alert at the end of the login portal... <br>                    but you still kept going...</pre>
+        <pre style="font-family: 'Bitcount Prop Single';">[11:41 PM] <span class="apple">&lt;Rotten_Apple&gt;</span> Why the long face huh, dont worry this time you'll be bouncing with joy <br>                                             after you see todays target... LitHub</pre>
     </div>
 
     <div id="m4" {% if not msg %} style="display: none;" {% endif %}>
-        <p>[11:44 PM] <span class="player">&lt;Exterminator&gt;</span> I did'nt knew anything about the breach... must have been an automated shutdown</p>
+        <p>[11:44 PM] <span class="player">&lt;Exterminator&gt;</span> Why a version control like LitHub?</p>
     </div>
 
     <div id="m5" {% if not msg %} style="display: none;" {% endif %}>
-        <pre style="font-family: Bitcount Prop Single">[11:50 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Now you better do exactly as i say or shits going down, and remember...<br>                     if Boracle goes down, you are in this with us... </pre>
+        <pre style="font-family: Bitcount Prop Single">[11:50 PM] <span class="apple">&lt;Rotten_Apple&gt;</span> Who said you could ask question... but I'll let you in on a little secret <br>                                             that screwhead Jack... he uses LitHub for the companies internal repos... </pre>
     </div>
 
     <div id="m6" {% if not msg %} style="display: none;" {% endif %}>
         <pre style="font-family: Bitcount Prop Single;">[11:55 PM] <span class="player">&lt;Exterminator&gt;</span>...</pre>
     </div>
-</div>  
+
+    <div id="m7" {% if not msg %} style="display: none;" {% endif %}>
+        <pre style="font-family: Bitcount Prop Single;">[11:56 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Now, my guys have gave this command it will supposedly scans the site, copy it and run it... <br>                                             nikto -h LitHub.bughouse.io</pre>
+    </div>
+</div>  <br>
+<div {% if not msg %} style="display: none;" {% else %} style="display: flex;" {% endif %}id="nikto">
+    root@kali:~$ &nbsp;<input class="cli" autocomplete="off" id="inp" type="text" name="scan">
+</div>
+<div id="output"></div>
 <div  id="briefings" {% if not msg %} style="display: none;" {% endif %}>
     <p>[11:57 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>
         The devs at BugHouse have rolled out this new platform called YouSpace, it is supposed be this new big thing, but for you only one thing matters, get that Admin Access <br>
@@ -42,7 +49,7 @@ Connecting to Chatroom #29405828...
     <a href='/challenge/2a/Login' target="_blank">
         <button type='button'>Start</button>
         </a> <br>
- <form {% if msg == 'correct' %} style="display: none;" {% else %}style="display: block;" {% endif %} method='POST' action="/challenge/2a">
+ <form {% if msg == 'correct' %} style="display: none;" {% else %}style="display: block;" {% endif %} method='POST' action="/challenge/3a">
         <input type="text" name="flag" placeholder="Admin Token">
         <button type='submit'>Send Admin Token</button>
     </form>
@@ -80,21 +87,61 @@ Connecting to Chatroom #29405828...
     const chat4 = document.getElementById('m4')
     const chat5 = document.getElementById('m5')
     const chat6 = document.getElementById('m6')
-
-    let convo = [chat1, chat2, chat3, chat4, chat5, chat6]
+    const chat7 = document.getElementById('m7')
+    const nikto = document.getElementById('nikto')
+    const inp = document.getElementById('inp')
+    const output = document.getElementById('output')
+    let convo = [chat1, chat2, chat3, chat4, chat5, chat6, chat7]
     let index = 0;
     
     setTimeout(function() {key.style.display='block';},4500)
-    setTimeout (function() {document.addEventListener('keydown', function(event) {
+    setTimeout(function(){document.addEventListener('keydown', function(event) {
        if (event.key === 'Enter'){
         if (index >= convo.length){key.style.display='none'}
         else{convo[index].style.display ='block'}
         index++
         if (index > convo.length){scenes.style.display='none'}
-        if (index > convo.length){briefings.style.display='block'}
-       }
-    })
-}, 4500)
+        if (index > convo.length){nikto.style.display='flex'} 
+        inp.focus()
+       }})
+    },4500)
+    const div1 = document.createElement('div')
+    const div2 = document.createElement('div')
+    const div3 = document.createElement('div')
+    const div4 = document.createElement('div')
+    inp.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){
+            
+        const val = inp.value
+        if (val === 'nikto -h LitHub.bughouse.io'){
+            inp.value = ''
+            div4.innerHTML= ''
+            output.appendChild(div4)
+            inp.style.display = 'none'
+            setTimeout(function(){
+                div1.innerHTML = 'Nikto, Pwning the web since 2001<br>Running Nikto Scan... '
+                output.appendChild(div1)
+            }, 1500)
+
+            setTimeout(function(){
+                div2.innerHTML = '- Nikto v2.1.6 <br>- Server: Apache/2.4.41 '
+                output.appendChild(div2)
+            }, 3000)
+            
+            setTimeout(function(){
+                div3.innerHTML = '+ Target: LitHub.bughouse.io <br>+ Uncommon Enpoint found LitHub/home/backupkeys<br>Have Fun Pwning -Team Nikto'
+                output.appendChild(div3)
+            }, 6000)
+            
+        }
+        else{
+            inp.value =''
+            div4.innerHTML = 'Please run a valid command'
+            output.appendChild(div4)
+        }
+        }
+        
+    })   
 </script>
 {% endif %}
 {% if msg == 'correct' %}

@@ -20,7 +20,7 @@
 </div>
 <p><center>A Game by TheDespicableJam</center></p>
 <div id="command" {% if not msg %} style="display: none;" {% else %} style="display: flex;" {% endif %}>
-<span>root@kali:~$ &nbsp;</span><form style="flex: 1;" method="post" action='/'><input class="cli" id="inp" type="text" name="command"></form>
+root@kali:~$ &nbsp;<form style="flex: 1;" method="post" autocomplete="off" action='/home'><input class="cli" id="inp" type="text" name="command"></form>
 </div>
 <pre style="margin: 0; color: white;" class="msg">{{msg}}<div id="msg"></div></pre>
 <script>

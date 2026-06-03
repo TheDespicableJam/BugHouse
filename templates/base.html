@@ -47,6 +47,14 @@
     color: #5555ff
 }
 
+.closing{
+    color: white; 
+    position: absolute; 
+    top: 11px; left:15.5px; 
+    font-size: 17px;
+    cursor: default
+}
+
 
 /* animations? */
 .fade {
@@ -57,11 +65,6 @@
     opacity: 0;
   }
 }
-
-
-
-
-
 
 
         @font-face{
@@ -95,13 +98,23 @@
 </style>
 </head>
 <body>
-<div hud>
+<div>
     <div class="toolbar">
-    <div class="close red"></div>
+    <div id="cross" class="close red">
+        <div class="closing">x</div>
+    </div>
     <div class="close yellow"></div>
     <p class="hostname">root@kali</p>
 </div>
-    {% block content %} 
+    {% block content %}
     {% endblock %}
+<script>
+
+    document.getElementById('cross').addEventListener('click', ()=>{
+        window.location ='/'
+    })
+
+</script>
+    {% block scipts %}{% endblock %}
 </body>
 </html>
