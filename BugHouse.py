@@ -30,8 +30,10 @@ def home():
             return render_template('home.html', msg=msg)
         elif command == 'ssh@11111111 -p firstlevel':
             return redirect('/challenge/1a')
-        elif command == 'ssh@29405828 -p birkman40965070':
+        elif command == 'ssh@29405828 -p jackbirkman':
             return redirect('/challenge/2a')
+        elif command == 'ssh@37502750 -p privaterepos':
+            return redirect('/challenge/3a')
         else:
             msg='Please use a valid command: "help" or "SSH"'
             return render_template('home.html', msg=msg)

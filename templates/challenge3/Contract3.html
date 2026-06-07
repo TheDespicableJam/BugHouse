@@ -34,28 +34,41 @@ Connecting to Chatroom #37502750...
     </div>
 
     <div id="m7" {% if not msg %} style="display: none;" {% endif %}>
-        <pre style="font-family: Bitcount Prop Single;">[11:56 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Now, my guys have gave this command it will supposedly scans the site, copy it and run it... <br>                                             nikto -h LitHub.bughouse.io</pre>
+        <pre style="font-family: Bitcount Prop Single;">[11:56 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Now, my guys have gave me this command, it will supposedly scans the site, copy it and run it... <br>                                             nikto -h LitHub.bughouse.io</pre>
     </div>
 </div>  <br>
-<div {% if not msg %} style="display: none;" {% else %} style="display: flex;" {% endif %}id="nikto">
-    root@kali:~$ &nbsp;<input class="cli" autocomplete="off" id="inp" type="text" name="scan">
+<div id="nikto" style="display: none;">
+    <span>root@kali:~$ &nbsp;</span><input class="cli" autocomplete="off" id="inp" type="text" name="scan">
 </div>
-<div id="output"></div>
+<div id="output" {% if msg %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+    <div id="sect1"{% if msg %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+        Nikto, Pwning the web since 2001<br>Running Nikto Scan...
+    </div>
+    <div id="sect2"{% if msg %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+        - Nikto v2.1.6 <br>- Server: Apache/2.4.41
+    </div>
+    <div id="sect3" {% if msg %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+        + Target: LitHub.bughouse.io <br>+ Uncommon Enpoint found LitHub/home/backupkeys
+    </div>
+</div><br>
+<div id="response" style="display: none;">
+    <button>Send Results</button>
+</div>
+<div id="res"{% if not msg %} style="display: none;" {% endif %} >
+    [12:01 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Okay... interesting ... You know what to do...
+</div>
 <div  id="briefings" {% if not msg %} style="display: none;" {% endif %}>
-    <p>[11:57 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>
-        The devs at BugHouse have rolled out this new platform called YouSpace, it is supposed be this new big thing, but for you only one thing matters, get that Admin Access <br>
-         Get, Admin Access, get the Token, and out, no snooping around <br> I am sure they pupmped up their security after the admin portal hack
         <br><br>
-    <a href='/challenge/2a/Login' target="_blank">
+    <a href='/challenge/3a/LitHub' target="_blank">
         <button type='button'>Start</button>
-        </a> <br>
+        </a> <br><br>
  <form {% if msg == 'correct' %} style="display: none;" {% else %}style="display: block;" {% endif %} method='POST' action="/challenge/3a">
         <input type="text" name="flag" placeholder="Admin Token">
         <button type='submit'>Send Admin Token</button>
     </form>
 {% if msg %}
     {% if msg == 'correct' %}
-    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Aight good work, expect us to cross paths again... Next time join here #37502750</p>
+    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Aight good work, expect us to cross paths again... Next time join here #47851606</p>
     
     {% elif msg == 'wrong' %}
     <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>This aint the right token, keep on diggin nerd</p>
@@ -91,6 +104,7 @@ Connecting to Chatroom #37502750...
     const nikto = document.getElementById('nikto')
     const inp = document.getElementById('inp')
     const output = document.getElementById('output')
+    const key = document.getElementById('key')
     let convo = [chat1, chat2, chat3, chat4, chat5, chat6, chat7]
     let index = 0;
     
@@ -101,47 +115,58 @@ Connecting to Chatroom #37502750...
         else{convo[index].style.display ='block'}
         index++
         if (index > convo.length){scenes.style.display='none'}
-        if (index > convo.length){nikto.style.display='flex'} 
+        if (index === convo.length + 1){nikto.style.display='flex'} 
         inp.focus()
        }})
     },4500)
-    const div1 = document.createElement('div')
-    const div2 = document.createElement('div')
-    const div3 = document.createElement('div')
-    const div4 = document.createElement('div')
+</script>
+{% endif %}
+{% if not msg %}
+<script>
+    const response = document.getElementById('response')
+    const sect1 = document.getElementById('sect1')
+    const sect2 = document.getElementById('sect2')
+    const sect3 = document.getElementById('sect3')
+
     inp.addEventListener('keydown', function(e){
         if(e.key === 'Enter'){
             
         const val = inp.value
         if (val === 'nikto -h LitHub.bughouse.io'){
-            inp.value = ''
-            div4.innerHTML= ''
-            output.appendChild(div4)
-            inp.style.display = 'none'
-            setTimeout(function(){
-                div1.innerHTML = 'Nikto, Pwning the web since 2001<br>Running Nikto Scan... '
-                output.appendChild(div1)
+            setTimeout(function(){nikto.style.display='none'; output.style.display='block'}, 500) 
+                setTimeout(function(){
+                    sect1.style.display='block'
             }, 1500)
 
             setTimeout(function(){
-                div2.innerHTML = '- Nikto v2.1.6 <br>- Server: Apache/2.4.41 '
-                output.appendChild(div2)
+                sect2.style.display='block'
             }, 3000)
             
             setTimeout(function(){
-                div3.innerHTML = '+ Target: LitHub.bughouse.io <br>+ Uncommon Enpoint found LitHub/home/backupkeys<br>Have Fun Pwning -Team Nikto'
-                output.appendChild(div3)
+                sect3.style.display='block'
             }, 6000)
-            
+            setTimeout(function(){
+                response.style.display="block"
+            }, 7000)
         }
         else{
-            inp.value =''
-            div4.innerHTML = 'Please run a valid command'
-            output.appendChild(div4)
+            inp.value= ''
+            inp.setAttribute('placeholder', 'Invalid Command')
+            setTimeout(function(){
+                inp.setAttribute('placeholder', '')
+             }, 3000)
         }
-        }
-        
-    })   
+    }
+
+
+})   
+function res(event) {
+    const res = document.getElementById('res')
+    setTimeout(function(){ res.style.display = 'block'}, 1000)
+    setTimeout(function(){briefings.style.display = 'block'}, 3000)
+    response.style.display = 'none'
+}
+response.addEventListener('click', res)
 </script>
 {% endif %}
 {% if msg == 'correct' %}
