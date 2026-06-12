@@ -9,7 +9,7 @@
     
     <style>
         .toolbar {
-    width: 99.5%;
+    width: 99.8%;
     background-color: #333;
     padding: 5px;
     display: flex;
@@ -19,14 +19,25 @@
 }
 
 
-.close {
+.closer {
     height: 15px;
     width: 15px;
     border-radius: 50%;
+    background-color: #ff5f57;
+}
+.closer:hover{
+    background-color: #ff0d00;
 }
 
-.red { background-color: #ff5f57; }
-.yellow { background-color: #febc2e; }
+
+
+.closey{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #febc2e;
+}
+
 .hostname {margin: auto;}
 .cli{
     border: none;
@@ -89,21 +100,25 @@
     } 
 
     button {
-    background-color: rgb(66, 62, 62);
+    background-color: rgb(41, 38, 38);
     color: #43ff4c;
     border: 2px solid #626862;
     font-family: 'Bitcount Prop Single', monospace;
     font-size: 18px;
     }
+
+button:hover{
+    background-color: rgba(66, 62, 62);   
+}
 </style>
 </head>
 <body>
 <div>
     <div class="toolbar">
-    <div id="cross" class="close red">
+    <div id="cross" class="closer">
         <div class="closing">x</div>
     </div>
-    <div class="close yellow"></div>
+    <div class="closey"></div>
     <p class="hostname">root@kali</p>
 </div>
     {% block content %}
@@ -115,6 +130,6 @@
     })
 
 </script>
-    {% block scipts %}{% endblock %}
+    
 </body>
 </html>

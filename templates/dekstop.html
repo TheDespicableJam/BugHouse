@@ -9,6 +9,10 @@
 <style>
         body{
             background-image: url('/static/wall.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            overflow: hidden;
         }
 
         @keyframes spin {
@@ -26,38 +30,65 @@
         
 .pixel{
     image-rendering: crisp-edges;
+    background: transparent;
+    border: none;
 }
 
-    </style>
+.pixel:hover{
+    background-color: rgba(240, 248, 255, 0.3);
+    border: 0.08vw solid white
+}
+
+</style>
 </head>
+
+
+
 <body>
-    <p style="position: absolute; right: 25px; top: -11px; font-family: Bitcount Prop Single; font-size: 40px; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 5px solid rgb(29, 131, 8); padding: 5px;" id="time">&nbsp;</p>
-<div class="pixel" id='message' style="height: 75px; width: 80px;">
-    <img src="/static/msgicon.png" style="height: 50px; width: auto;;" alt="">
+    <p style="position: absolute; right: 2vw; top: -1vh; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
+
+<div class="pixel" id='message' style="height: 10vh; width: 6vw;">
+    <img src="/static/msgicon.png" style="height: 6vh; width: auto;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
 </div>
+
 <br>
-<div class="pixel" id='terminal' style="height: 88px; width: 65px;">
-    <img src="/static/terminal.png" style="height: 60px; width: auto;;" alt="">
+
+<div class="pixel" id='terminal' style="height: 12vh; width: 5vw;">
+    <img src="/static/terminal.png" style="height: 8vh; width: auto;;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Terminal</p>
 </div>
+
 <br>
-<div class="pixel" id='text' style="height: 80px; width: 60px; text-align: center;">
-    <img src="/static/text.png" style="height: 55px; width: auto;" alt="">
+
+<div class="pixel" id='text' style="height: 11vh; width: 4.5vw; text-align: center;">
+    <img src="/static/text.png" style="height: 7vh; width: auto;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Text</p>
 </div>
+
 <br>
-<div class="pixel"  id='photos' style="height: 80px; width: 63px; text-align: center;">
-    <img src="/static/photos.png" style="height: 55px; width: auto;" alt="">
+
+<div class="pixel"  id='photos' style="height: 11vh; width: 5vw; text-align: center;">
+    <img src="/static/photos.png" style="height: 7vh; width: auto;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Pictures</p>
 </div>
+
 <br>
-<div class="pixel" id='music' style="height: 80px; width: 60px; text-align: center;">
-    <img src="/static/music.png" style="height: 55px; width: auto;" alt="">
+
+<div class="pixel" id='music' style="height: 11vh; width: 4.5vw; text-align: center;">
+    <img src="/static/music.png" style="height: 7vh; width: auto;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
 </div>
 
-<p><img class="spin" id="wheel" src="/static/ying.png" style="position: absolute; right: 300px; top: 30px; height:65px; width: auto;" ></p>
+
+<dialog style="text-align: center; justify-content: center; outline: none; padding: 0; border: none; height: fit-content; width: fit-content;" id="msg">
+    <img src="/static/msgwindow.png" style="display: block; fill: red;">
+</dialog>
+
+
+
+<img class="spin" id="wheel" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
+
 </body>
 
 <script>
@@ -67,55 +98,76 @@
     }
     time();
     setInterval(time, 1000)
-
+    
     const photos = document.getElementById('photos')
     const music = document.getElementById('music')
     const message = document.getElementById('message')
-    const termnial = document.getElementById('terminal')
+    const terminal = document.getElementById('terminal')
     const text = document.getElementById('text')
-    const home = document.getElementById('home')
+    const msg = document.getElementById('msg')
+
+
+    function closing(){
+        msg.close()
+    }
 
     message.addEventListener('click',  ()=>{
         message.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
         setTimeout(function(){
-            window.location = '/challenge/1a'
+            msg.showModal()
         }, 850)
+
         setTimeout(function(){
             message.style.background = 'transparent'
         }, 1500)
     } )
+
     terminal.addEventListener('click',  ()=>{
         terminal.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
+
         setTimeout(function(){
             window.location = '/home'
         }, 850)
+
         setTimeout(function(){
             terminal.style.background = 'transparent'
         }, 1500)
     } )
+
 text.addEventListener('click',  ()=>{
+
         text.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
+
         setTimeout(function(){
             window.location = '/home'
         }, 850)
+
         setTimeout(function(){
             text.style.background = 'transparent'
         }, 1500)
     } )    
+
 music.addEventListener('click',  ()=>{
+
         music.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
+
         setTimeout(function(){
             window.location = '/home'
         }, 850)
+
         setTimeout(function(){
             music.style.background = 'transparent'
         }, 1500)
     } )    
+
 photos.addEventListener('click',  ()=>{
+
         photos.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
+
         setTimeout(function(){
             window.location = '/home'
         }, 850)
+
         setTimeout(function(){
             photos.style.background = 'transparent'
         }, 1500)

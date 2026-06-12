@@ -1,94 +1,97 @@
 from flask import Flask, Blueprint, redirect,request,abort,make_response,render_template
 from stuff import flag
-import sqlite3
 
+employees = {
+    'mndnt':{'name': 'Kevin',
+            'role': 'Admin Team',
+            'bio':'Silicon Valley, 2030 Asp.'},
+    'ujuzks':{'name': 'Samuel',
+              'role': 'Classified',
+              'bio': 'None'},
+    'ljkp':{'name':'Jack',
+            'role': 'TERMINATED',
+            'bio': 'ACCOUNT REMOVAL PENDING'}
+            }
 
 challenge4=Blueprint('challenge4', __name__ )
 
-#challenge 4
-@challenge4.route('/challenge/4a')
-def challenge4a():
-    msg = request.args.get('message', '')
-    return render_template('challenge4/challenge4a.html', msg=msg)
-
-
 #flag logic
-@challenge4.route('/challenge/4a/flag', methods=['POST'])
-def flag4():
-  val = flag('4a', '{1s_j4ck_ok4y}')
-  if val == 'Correct':
-       return redirect('/challenge/4a?message=Correct+Flag%21')
-  elif val == 'empty':
-       return redirect('/challenge/4a?message=Please+provide+a+valid+Flag')
-  else:
-       return redirect('/challenge/4a?message=Incorrect+Flag')
-  
-
-#employee login  
+@challenge4.route('/challenge/4a', methods=['GET', 'POST'])
+def challenge4a():
+    if request.method == 'POST':
+        val = flag('mantis')
+        if val == 'Correct':
+            msg = 'correct'
+            return render_template('challenge4/Contract4.html', msg=msg)
+        elif val == 'empty':
+            msg = 'empty'
+            return render_template('challenge4/Contract4.html', msg=msg)
+        else:
+            msg= 'wrong'
+            return render_template('challenge4/Contract4.html', msg=msg)
+    else:
+        msg = ''
+        return render_template('challenge4/Contract4.html', msg=msg)
+    
 @challenge4.route('/challenge/4a/Login', methods=['GET', 'POST'])
 def Login():
-    val = request.form.get('id')
-    msg = ''
-    cookie = request.cookies.get('id')
-    if not cookie:
-        if request.method == 'GET':
-            msg = ''
-            return render_template('challenge4/Login.html', msg=msg)
-        elif request.method == 'POST' and val != 'GR39573044274':
-            msg = 'Access Denied, You either entered the wrong ID or left the field Empty'
-            return render_template('challenge4/Login.html', msg=msg)
-        else:
-            return redirect('/challenge/4a/dashboard')
-    else:
-        return redirect('/challenge/4a/dashboard')
-
- #admin dashboard
-@challenge4.route('/challenge/4a/dashboard')
-def dashboard():
-   response = make_response(render_template('challenge4/dashboard.html', id='GR39573044274'))
-   cookie = request.cookies.get('id')
-   if not cookie:
-       response.set_cookie('id', 'ID#GR39573044274')
-       return response
-   else:
-       return response
-       
-#lithub montior page     
-@challenge4.route('/challenge/4a/dashboard/LitHubMonitor')
-def lithub():
-    return render_template('challenge4/LitHub.html')
-
-
-#youspace monitor page
-@challenge4.route('/challenge/4a/dashboard/YouSpaceMonitor')
-def youspace():
-    return render_template('challenge4/YouSpace.html')
-@challenge4.route('/challenge/4a/Logout', methods=['POST'])
-def logout():
-    response = make_response(redirect('/challenge/4a/Login'))
-    response.delete_cookie('id')
-    return response
-
-#secret mantis login
-@challenge4.route('/challenge/4a/Mantis', methods=['POST', 'GET'])
-def mantislog():
     if request.method == 'GET':
         msg=''
-        return render_template('challenge4/mantisLog.html', msg=msg)
+        return render_template('challenge4/Login.html', msg=msg)
     else:
-        id = request.form.get('id')
-        password = request.form.get('password')
-
-        connect = sqlite3.connect('mantis.db')
-        cursor = connect.cursor()
-
-        result = cursor.execute(f"SELECT * FROM mantis WHERE ID = '{id}' AND ROLE = 'OWNER' AND PASS = '{password}'")
-        if result.fetchone():
-            return render_template('challenge4/mantisdashboard.html')
+        id = request.form.get('id').lower()
+        if id in employees:
+            if id == 'ljkp':
+                msg= 'Access on this ID has been restricted'
+                return render_template('challenge4/Login.html', msg=msg)
+            else:
+                return redirect(f'/challenge/4a/Dashboard?user={id}')
         else:
-            msg = "Acces Denied... Mantis is dead..."
-            return render_template('challenge4/mantisLog.html', msg=msg)
+            msg='Wrong ID'
+            return render_template('challenge4/Login.html', msg=msg)
 
-@challenge4.route('/challenge/4a/DeadMantis')
-def dead():
-    abort(500)
+@challenge4.route('/challenge/4a/Dashboard')
+def dashboard():
+    id = request.args.get('user')
+    if id not in employees:
+        return redirect('/challenge/4a/Login')
+    else:
+        bio = employees[id]['bio']
+        return render_template('challenge4/dashboard.html', id=id, bio=bio)
+    
+@challenge4.route('/challenge/4a/Dashboard/YouSpaceMonitor')
+def YSMONITOR():
+    id = request.args.get('user')
+    return render_template('challenge4/YouSpace.html', id=id)
+
+@challenge4.route('/challenge/4a/Dashboard/LitHubMonitor')
+def LHMONITOR():
+    id = request.args.get('user')
+    return render_template('challenge4/LitHub.html', id=id)
+
+@challenge4.route('/challenge/4a/terminal', methods=['POST', 'GET'])
+def terminal():
+    command = request.form.get('command').lower()
+    
+    if not command:   
+        return 'Enter a valid commmand'
+    else:
+        parts = command.split()
+        if not parts:
+            return 'Please run --help for Valid command syntax'
+        else:
+            if parts[0] == 'decode' and len(parts) == 5:
+                if parts[2] in employees:
+                    return 'Possible crack... '+employees[parts[2]]['name']
+                else:
+                    return 'No Possible Matches Found'
+            elif parts[0] == 'analyze' and len(parts) >= 3:
+                if any(part in employees for part in parts[2:]):
+                    return 'Atleast one Match Found... Possible Shift: 2-9-8-5-6-7-4-3 \n Results saved to algo.txt'
+                else:
+                     return 'No Possible match'
+            elif parts[0] == '--help':
+                return 'Use the analyze command to find possible algorithms\n syntax: analyze --sample <sample1> ... <sample X>\n\n' \
+                'Use the decode command to decode using algorithms found from the analyze command\nsyntax: decode --id <id> --source <algorithm file>'
+            else:
+                return 'Please run --help for Valid command syntax'

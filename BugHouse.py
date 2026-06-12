@@ -3,12 +3,14 @@ from challenge1 import challenge1
 from challenge2 import challenge2
 from challenge3 import challenge3
 from challenge4 import challenge4
+from challenge5 import challenge5
 
 app=Flask(__name__)
 app.register_blueprint(challenge1)
 app.register_blueprint(challenge2)
 app.register_blueprint(challenge3)
 app.register_blueprint(challenge4)
+app.register_blueprint(challenge5)
 
 #home route function
 @app.route('/', methods=['GET','POST'])
@@ -32,7 +34,7 @@ def home():
             return redirect('/challenge/1a')
         elif command == 'ssh@29405828 -p jackbirkman':
             return redirect('/challenge/2a')
-        elif command == 'ssh@37502750 -p privaterepos':
+        elif command == 'ssh@37502750 -p youspace':
             return redirect('/challenge/3a')
         else:
             msg='Please use a valid command: "help" or "SSH"'
@@ -42,19 +44,19 @@ def home():
 @app.errorhandler(404)
 def page_not_found(error):
     return "Error 404 Page not found, Go Back? <br>" \
-    "<a href='/'>" \
+    "<a href='/home'>" \
     "<button type='button'>Go Back</button></a> ", 404
 
 @app.errorhandler(405)
 def method_not_allowed(error):
     return "Error 405, This method is not allowed, Go Back? <br>" \
-    "<a href='/'>" \
+    "<a href='/home'>" \
     "<button type='button'>Go Back</button></a> ", 405
 
 @app.errorhandler(500)
 def server_error(error):
     return "<center>Error 500, Mantis Secure Shell Sesion Terminated, Security Breach detected, This attempt will be flagged<br>" \
-    "<a href='/'>" \
+    "<a href='/home'>" \
     "<button type='button'>Go Back</button></a> </center>", 500
 
 

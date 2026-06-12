@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template
+from flask import request
 
 def flag(flg):
     flag = request.form['flag']

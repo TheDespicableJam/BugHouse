@@ -1,28 +1,56 @@
 {% extends 'base.html'%}
 {% block content %}
-
+{% if id == 'LJKP' %}
+<style>
+.bar{
+    justify-content: center;
+    margin: auto;
+    width: 99%;
+    background-color: #eb1717;
+    padding: 10px;
+    display: flex;
+    font-size: 18px;
+    color: aliceblue;
+    }
+</style>
+<div  class="bar">This Account will be Terminated in&nbsp;<span id="timer"></span></div>
+{% endif %}
 <center><h1>Employee Dashboard, BugHouse</h1></center>
-<h2>Current Status: Online <br><br> User: {{id}}<br><br> Priviledges: Admin</h2>
+<h2 style="margin-bottom: 0;">Current Status: Online <br><br> User: {% if id == 'MNDNT' %}Kevin{% elif id == 'LJKP' %}Jack{% elif id == 'UJUZKS' %}Samuel {% endif %}<br>Priviledges: Admin</h2>
 <br>
-<br>
-<p>
-    <!-- <a href="/challenge/4a/Mantis">
-        Mantis
-    </a> -->
-</p>
-<a href="/challenge/4a/dashboard/LitHubMonitor">
+<h2 style="position: absolute; top: 23vh; right: 5vh;">
+    Bio: {{bio}}</h2>
+{% if id == 'LJKP' %}
+<p style="color: white; margin-top: 0;">MANTIS</p>
+{% endif %}
+<a href="/challenge/4a/Dashboard/LitHubMonitor?user={{id}}">
     <button type="button">Monitor LitHub</button>
 </a>
 <br>
 <br>
-<a href="/challenge/4a/dashboard/YouSpaceMonitor">
+<a href="/challenge/4a/Dashboard/YouSpaceMonitor?user={{id}}">
     <button type="button">Monitor YouSpace</button>
 </a>
 <br>
 <br>
-<form method="post" action="/challenge/4a/Logout">
+<a href="/challenge/4a/Login">
     <button type="submit">Logout</button>
-</form>
+</a>
+{% if id == "LJKP" %}
+<script>
+    let seconds = 50400
 
+function countdown(){
+    seconds--
+    
+    let hours = Math.floor(seconds / 3600)
+    let minutes = Math.floor((seconds % 3600) / 60)
+    let secs = seconds % 60
 
+    document.getElementById('timer').textContent = `${hours}:${minutes}:${secs}`
+}
+
+setInterval(countdown, 1000)
+</script>
+{% endif %}
 {% endblock %}

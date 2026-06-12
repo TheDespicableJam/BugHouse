@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>It's A Sad Day</h1>
+    <!-- THIS JUST THE SETUP -->
+    <p>After completion you will know about:</p>
+    <ul>
+        <li>Header Manipulation</li>
+        <li>ROT13 Encoding</li>
+        <li>Methods Errors</li>
+    </ul>
+    <p> THIS PLACE NEEDS THE CONTEXT</p>
+    
+    <a href='/challenge/4a/Login'>
+    <button type='button'>Start</button>
+    </a><br><br>
+ 
+<form method='POST' action="/challenge/4a">
+    <input type="text" name="flag" placeholder="Input Flag">
+    <button type='submit'>Submit Flag</button>
+</form><br>
+root@kali:~$ &nbsp;<input class="cli" type="text" id="command"><br>
+<div id="output"></div>
+
+{% if msg %}
+    {% if msg == 'correct' %}
+    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Aight good work, expect us to cross paths again... Next time join here #47851606</p>
+    
+    {% elif msg == 'wrong' %}
+    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>This aint the right token, keep on diggin nerd</p>
+
+    {% else %}
+    <p>[12:10 AM]  <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...
+    {% endif %}
+{% endif %}
+
+<script>
+    const command = document.getElementById('command')
+command.focus()
+command.addEventListener('keydown', function(event){
+    if(event.key === 'Enter'){
+        const response = command.value
+        
+        fetch('/challenge/4a/terminal', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'command=' + response
+        })
+        .then(response => response.text())
+        .then(reply => {
+            document.getElementById('output').innerText = reply 
+        })
+
+        command.value = ''
+    }
+})
+</script>
+{% endblock %}
