@@ -1,46 +1,143 @@
 {% extends 'base.html'%}
 
 {% block content %}
-<h1>It's A Sad Day</h1>
-    <!-- THIS JUST THE SETUP -->
-    <p>After completion you will know about:</p>
-    <ul>
-        <li>Header Manipulation</li>
-        <li>ROT13 Encoding</li>
-        <li>Methods Errors</li>
-    </ul>
-    <p> THIS PLACE NEEDS THE CONTEXT</p>
-    
-    <a href='/challenge/4a/Login'>
+<style>
+    #output {
+    height: 57vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+#output::-webkit-scrollbar {
+    display: none;
+}
+</style>
+
+<center><p><strong>Terminal Chat, Powered by IRC </strong></p></center>
+
+<div id="first">Connecting to Chatroom #47851606...</div> 
+<div id="connect" {% if not msg %} style="display:none;" {% endif %}>Connection Established!</div>
+<div id="join" {% if not msg %} style="display: none;" {% endif %}> <span class="apple">&lt;Rotten_Apple&gt;</span> has joined the Chatroom</div>
+
+<div style="display: none; color: white; position: fixed; bottom: 35px; right: 20px;" class="fade" id="key"><span style="color: red; font-size: 25px; position: fixed; right: 267px; bottom: 30px;">&#x232C;</span> Press Enter To Proceed... </div>
+
+<div id="scenes" {% if not msg %}style="display: block" {% else %} style="display: none;" {% endif %}> 
+    <div id="m1" {% if not msg %} style="display: none;" {% endif %}>
+    <p>[11:34 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>
+        ...</p></div>
+
+    <div id="m2" {% if not msg %} style="display: none;" {% endif %}>
+    <p>[11:35 PM] <span class="player">&lt;Exterminator&gt;</span>...?...</p>
+    </div>
+
+    <div id="m3" {% if not msg %} style="display: none;" {% endif %}>
+        <pre style="font-family: 'Bitcount Prop Single';">[11:41 PM] <span class="apple">&lt;Rotten_Apple&gt;</span> Something feels off about this Jack guy... Jr. dev with access to major platforms? <br>                                            master keys? access to development on the ADMIN DASHBOARD?!</pre>
+    </div>
+
+    <div id="m4" {% if not msg %} style="display: none;" {% endif %}>
+        <p>[11:44 PM] <span class="player">&lt;Exterminator&gt;</span>Weird...</p>
+    </div>
+
+    <div id="m5" {% if not msg %} style="display: none;" {% endif %}>
+        <pre style="font-family: Bitcount Prop Single">[11:50 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>Even if he has access to all that... why is HE the one who always slips...</pre>
+    </div>
+
+    <div id="m6" {% if not msg %} style="display: none;" {% endif %}>
+        <pre style="font-family: Bitcount Prop Single;">[11:55 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>It is very weird... you need to gather intel on this mf, get in his employee dashboard <br>                                            and get whatever there is <br>                                            my boys have acquired these keys for the employee dashboard, but only 2 of them work... <br>                                             it doesnt have Jack's... crack the algorithm, forge the keys and get in NO MATTER HOW... This is serious...</pre>
+    </div>
+
+    <div id="m7"{% if not msg %} style="display: none;"{% endif %}>
+        <pre style="font-family: Bitcount Prop Single;">[11:57 PM] <span class="apple">&lt;Rotten_Apple&gt;</span>I got this neat tool off the dark web... it can analyze algorithms in ciphers and decode ciphers... <br>                                            thank me later freak... here are the IDs- MNDNT, UJUZKS, TXWMGU, VQMIKZTLEJJQKQEP </pre>
+    </div>
+</div>
+
+<div id="main" style="display: none;">
+    <a href='/challenge/4a/Login' target="_blank">
     <button type='button'>Start</button>
-    </a><br><br>
- 
-<form method='POST' action="/challenge/4a">
-    <input type="text" name="flag" placeholder="Input Flag">
-    <button type='submit'>Submit Flag</button>
-</form><br>
-root@kali:~$ &nbsp;<input class="cli" type="text" id="command"><br>
+    </a><br><br> 
+    <form method='POST' action="/challenge/4a">
+        <input type="text" id="flag" placeholder="Input Flag">
+        <button id="sub" onclick=btn()>Submit Flag</button>
+    </form> <br>
+    <div id="flagresponse"></div><br>
+    <div id="ter">
+    root@kali:~$ &nbsp;<input class="cli" type="text" id="command"><br></div>
 <div id="output"></div>
+</div>
 
-{% if msg %}
-    {% if msg == 'correct' %}
-    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>Aight good work, expect us to cross paths again... Next time join here #47851606</p>
+
+{% if not msg %}
+<script>
+    const connect = document.getElementById('connect');
+    const join = document.getElementById('join')
+    setTimeout(function() {connect.style.display='block';}, 2500);
+    setTimeout(function() {join.style.display='block';}, 4500)
+    setTimeout(function() {key.style.display='block';},4500)
+    const chat1 = document.getElementById('m1')
+    const chat2 = document.getElementById('m2')
+    const chat3 = document.getElementById('m3')
+    const chat4 = document.getElementById('m4')
+    const chat5 = document.getElementById('m5')
+    const chat6 = document.getElementById('m6')
+    const chat7 = document.getElementById('m7')
+    const main = document.getElementById('main')
+    const key = document.getElementById('key')
+    const first  = document.getElementById('first')
+    let convo = [chat1, chat2, chat3, chat4, chat5, chat6, m7]
+    let index = 0;
     
-    {% elif msg == 'wrong' %}
-    <p>[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>This aint the right token, keep on diggin nerd</p>
+    setTimeout(function(){document.addEventListener('keydown', function(event) {
+       if (event.key === 'Enter'){
+        if (index >= convo.length){key.style.display='none'}
+        else{convo[index].style.display ='block'}
+        index++
+        if (index > convo.length){scenes.style.display='none'; connect.style.display='none';  join.style.display='none'; first.style.display='none'}
+        if (index === convo.length + 1){
+            main.style.display='block'
+            command.focus()
+            
+        }
+       }})
+    },4500)
 
-    {% else %}
-    <p>[12:10 AM]  <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...
-    {% endif %}
+
+</script>
 {% endif %}
 
 <script>
     const command = document.getElementById('command')
+    const sub = document.getElementById('sub')
+    const flag = document.getElementById('flag')
+    function btn(){
+        const flgval = flag.value
+        event.preventDefault()
+        fetch('/challenge/4a', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'flag=' + flgval
+        })
+        .then(response => response.text())
+        .then(reply =>{
+            if (reply === '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>word is on dev forums that Jack was fired... hmmm... i will contact you for the next assignment, till then... LAY LOW SPEAK. TO NOBODY'){
+            document.getElementById('ter').style.display='none'
+            document.getElementById('flag').style.display='none'
+            document.getElementById('sub').style.display='none'
+            document.getElementById('flagresponse').innerHTML = reply
+            }
+            else{
+            document.getElementById('flagresponse').innerHTML = reply
+            }})
+        flag.value = ''
+        }
+
 command.focus()
 command.addEventListener('keydown', function(event){
-    if(event.key === 'Enter'){
+    if(event.key === 'Enter' && document.activeElement === command){
         const response = command.value
-        
+        if (response === 'clear'){
+            document.getElementById('output').innerText=''
+            command.value = ''
+        }
+        else{
         fetch('/challenge/4a/terminal', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -48,10 +145,11 @@ command.addEventListener('keydown', function(event){
         })
         .then(response => response.text())
         .then(reply => {
-            document.getElementById('output').innerText = reply 
+            document.getElementById('output').innerText += reply + '\n\n'
+            document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight
         })
 
-        command.value = ''
+        command.value = ''}
     }
 })
 </script>

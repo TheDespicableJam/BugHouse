@@ -19,19 +19,15 @@ challenge4=Blueprint('challenge4', __name__ )
 @challenge4.route('/challenge/4a', methods=['GET', 'POST'])
 def challenge4a():
     if request.method == 'POST':
-        val = flag('mantis')
-        if val == 'Correct':
-            msg = 'correct'
-            return render_template('challenge4/Contract4.html', msg=msg)
-        elif val == 'empty':
-            msg = 'empty'
-            return render_template('challenge4/Contract4.html', msg=msg)
+        val = request.form.get('flag')
+        if val == 'mantis':
+            return '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>word is on dev forums that Jack was fired... hmmm... i will contact you for the next assignment, till then... LAY LOW SPEAK. TO NOBODY'
+        elif not val:
+            return '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...'
         else:
-            msg= 'wrong'
-            return render_template('challenge4/Contract4.html', msg=msg)
+            return '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>This aint the right token, keep on diggin nerd'
     else:
-        msg = ''
-        return render_template('challenge4/Contract4.html', msg=msg)
+        return render_template('challenge4/Contract4.html')
     
 @challenge4.route('/challenge/4a/Login', methods=['GET', 'POST'])
 def Login():

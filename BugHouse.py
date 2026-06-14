@@ -36,6 +36,8 @@ def home():
             return redirect('/challenge/2a')
         elif command == 'ssh@37502750 -p youspace':
             return redirect('/challenge/3a')
+        elif command == 'ssh@47851606 -p elitehack':
+            return redirect('/challenge/4a')
         else:
             msg='Please use a valid command: "help" or "SSH"'
             return render_template('home.html', msg=msg)
