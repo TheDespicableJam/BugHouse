@@ -7,38 +7,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 <style>
-        body{
-            background-image: url('/static/wall.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100vh;
-            overflow: hidden;
+    dialog{
+        font-family: 'Bitcount Prop Single', monospace;
+    }
+    #msg:open{
+        display: flex;
+        flex-direction: column;
+    }
+    body{
+        background-image: url('/static/wall.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        overflow: hidden;
         }
 
-        @keyframes spin {
-    0%{
-        transform: rotate(0deg);
+    @keyframes spin {
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
     }
-    100%{
-        transform: rotate(360deg);
+
+    .spin{
+        animation: spin 2s linear infinite
     }
-}
+            
+    .pixel{
+        image-rendering: crisp-edges;
+        background: transparent;
+        border: none;
+    }
 
-.spin{
-    animation: spin 2s linear infinite
-}
-        
-.pixel{
-    image-rendering: crisp-edges;
-    background: transparent;
-    border: none;
-}
+    .pixel:hover{
+        background-color: rgba(240, 248, 255, 0.3);
+        border: 0.08vw solid white
+    }
 
-.pixel:hover{
-    background-color: rgba(240, 248, 255, 0.3);
-    border: 0.08vw solid white
-}
+    dialog::backdrop{
+        background:none;
+    }
 
+    .toolbar {
+        width: 99.8%;
+        background-color: #333;
+        padding: 5px;
+        box-sizing: border-box;
+        display: flex;
+        gap: 5px;
+        font-size: 17px;
+        color: white
+        }
+
+
+    .closer {
+        position: relative;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background-color: #ff5f57;
+
+    }
+    .closer:hover{
+        background-color: #ff0d00;
+    }
+
+
+
+    .closey{
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background-color: #febc2e;
+    }
+
+    .hostname {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -88%);
+    }
+    
+    .closing{
+        color: white; 
+        position: absolute; 
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 13px;
+        cursor: default;
+    }
 </style>
 </head>
 
@@ -80,14 +139,32 @@
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
 </div>
 
-
-<dialog style="text-align: center; justify-content: center; outline: none; padding: 0; border: none; height: fit-content; width: fit-content;" id="msg">
-    <img src="/static/msgwindow.png" style="display: block; fill: red;">
+<!--messages app-->
+<dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
+    <div style="display: flex;" class="toolbar">
+    <div id="cross" class="closer">
+        <div class="closing">x</div>
+    </div>
+    <div class="closey"></div>
+    <p class="hostname">Messages</p>
+</div>
+    <div id="content" style=" font-size: 17px; padding: 10px; color: aliceblue; flex: 1; position: relative;">
+        <div style="position: absolute; font-size: 25px; left: 50%; transform: translate(-50%);">Inbox</div>
+        <ul style="list-style-type: none; padding: 0;">
+            <li><button id="showmsg" onclick=showMsg() style="border: none;">Get FREE RAM!!!</button></li>
+        </ul>
+        <div id="messages" style="position: absolute; display: none; inset: 0; padding: 20px; background-color: rgb(80, 88, 97);">
+            <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto ea facilis veritatis eveniet saepe iure animi unde aperiam dolores! In magni rem consequatur, hic atque laboriosam corporis laborum dolorum ducimus.
+                <button onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"'>Back</button>
+            </div>
+        </div>
+    </div> 
 </dialog>
 
 
 
-<img class="spin" id="wheel" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
+<img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
 
 </body>
 
@@ -104,12 +181,20 @@
     const message = document.getElementById('message')
     const terminal = document.getElementById('terminal')
     const text = document.getElementById('text')
-    const msg = document.getElementById('msg')
+    const msg = document.getElementById('msg')  
 
-
-    function closing(){
-        msg.close()
+    function showMsg(){
+        document.getElementById('messages').style.display="block"
+        document.getElementById('showmsg').style.display='none'
     }
+    function hideMsg(){
+        msg.close()
+        document.getElementById('messages').style.display="none"
+        document.getElementById('showmsg').style.display="block"
+    }
+
+    document.getElementById('cross').addEventListener('click', hideMsg)
+     
 
     message.addEventListener('click',  ()=>{
         message.style.backgroundColor = "rgba(0, 0, 255, 0.45)"

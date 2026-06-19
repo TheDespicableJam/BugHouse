@@ -1,12 +1,25 @@
 {% extends 'base.html'%}
 {% block content %}
+<style>
+    #warning{
+        text-decoration: underline;
+        width: fit-content;
+        color: rgb(62, 62, 235);
+    }
+
+    #warning:hover{
+        color: rgb(235, 62, 62);
+        cursor:default
+    }
+</style>
+
 <center>
     <h1>Project Mantis</h1>
     <h2>Logged in As: PRAYING_MANTIS</h2>
 </center>
 <p><strong>Message Monitoring System</strong></p>
 
-<div id="feed"></div>
+<div style="position: absolute;" id="feed"></div>
 
 <script>
     const livefeed = [
@@ -28,7 +41,7 @@
     index++;
     if (index >= livefeed.length) { index = 1;}}, 4000); 
 </script>
-<br><br>
+<br>
 <table>
         <tr>
             <th>User</th>
@@ -82,7 +95,7 @@
         </tr>
     </table>
 
-<a  href="#" onclick="alert('You are not authorized to view the contents of this file')">BugExterminator.zip</a>
+<div id="warning" onclick="alert('You are not authorized to view the contents of this file')">BugExterminator.zip</div>
 
 <br><br>  
 <a href="/challenge/4a">

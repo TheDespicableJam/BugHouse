@@ -50,9 +50,13 @@ def LitHub():
             login=False
             return render_template('challenge3/lithub.html', login=login)
     else:
-        show_post = False
-        login= True
-        return render_template('challenge3/lithub.html', show_post=show_post, login=login)
+        if header == 'yes':
+            show_post = False
+            login= True
+            return render_template('challenge3/lithub.html', show_post=show_post, login=login)
+        else:
+            login=False
+            return render_template('challenge3/lithub.html', login=login)
     
 @challenge3.route('/challenge/3a/LitHub/Home/backup', methods=['POST'])
 def key():

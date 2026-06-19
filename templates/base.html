@@ -7,78 +7,81 @@
     <meta charset="UTF-8">
     <title>BugHouse</title>
     
-    <style>
-        .toolbar {
-    width: 99.8%;
-    background-color: #333;
-    padding: 5px;
-    display: flex;
-    gap: 5px;
-    font-size: 17px;
-    color: aliceblue;
-}
+<style>
+    .toolbar {
+        width: 99.8%;
+        background-color: #333;
+        padding: 5px;
+        display: flex;
+        gap: 5px;
+        font-size: 17px;
+        color: aliceblue;
+        }
 
 
-.closer {
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    background-color: #ff5f57;
-}
-.closer:hover{
-    background-color: #ff0d00;
-}
+    .closer {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        position: relative;
+        background-color: #ff5f57;
+    }
+    .closer:hover{
+        background-color: #ff0d00;
+    }
 
 
 
-.closey{
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    background-color: #febc2e;
-}
+    .closey{
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background-color: #febc2e;
+    }
 
-.hostname {margin: auto;}
-.cli{
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 90%;
-}
-.msg{
-    font-family: 'Bitcount Prop Single', monospace;
-}
+    .hostname {margin: auto;}
+
+    .closing{
+        color: white; 
+        position: absolute; 
+        top: 50%; left:50%; 
+        transform: translate(-50%, -50%);
+        font-size: 13px;
+        cursor: default
+    }
+    .cli{
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 90%;
+    }
+    .msg{
+        font-family: 'Bitcount Prop Single', monospace;
+    }
 
 
-.apple{
-    color: #ff5555
-}
+    .apple{
+        color: #ff5555
+    }
 
-.player{
-    color: #5555ff
-}
+    .player{
+        color: #5555ff
+    }
 
-.closing{
-    color: white; 
-    position: absolute; 
-    top: 11px; left:15.5px; 
-    font-size: 17px;
-    cursor: default
-}
 
-#scroll::-webkit-scrollbar{
-    display: none;
-}
+    #scroll::-webkit-scrollbar{
+        display: none;
+    }
 
-/* animations? */
-.fade {
-  animation: fade 1s linear infinite;
-}
-@keyframes fade {
-  50% {
-    opacity: 0;
-  }
-}
+    /* animations? */
+    .fade {
+    animation: fade 1s linear infinite;
+    }
+    @keyframes fade {
+    50% {
+        opacity: 0;
+    }
+    }
 
 
         @font-face{
@@ -110,9 +113,9 @@
     font-size: 18px;
     }
 
-button:hover{
-    background-color: rgba(66, 62, 62);   
-}
+    button:hover{
+        background-color: rgba(66, 62, 62);   
+    }
 </style>
 </head>
 <body>
@@ -127,11 +130,8 @@ button:hover{
     {% block content %}
     {% endblock %}
 <script>
-
     document.getElementById('cross').addEventListener('click', ()=>{
-        window.location ='/'
-    })
-
+        window.location ='/'})
 </script>
     
 </body>
