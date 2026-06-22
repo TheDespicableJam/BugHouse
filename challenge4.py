@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, redirect,request,abort,make_response,render_template
+from flask import Flask, Blueprint, redirect,request,render_template, session
 from stuff import flag
 
 employees = {
@@ -21,6 +21,7 @@ def challenge4a():
     if request.method == 'POST':
         val = request.form.get('flag')
         if val == 'mantis':
+            session['ch4_completed'] = True
             return '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>word is on dev forums that Jack was fired... hmmm... i will contact you for the next assignment, till then... LAY LOW SPEAK. TO NOBODY'
         elif not val:
             return '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>You think this is funny huh...'

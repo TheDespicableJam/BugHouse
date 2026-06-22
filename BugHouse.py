@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from challenge1 import challenge1
 from challenge2 import challenge2
 from challenge3 import challenge3
@@ -16,6 +16,23 @@ app.register_blueprint(challenge5)
 @app.route('/', methods=['GET','POST'])
 def desktop():
     return render_template('dekstop.html')
+
+@app.route('/messages', methods=['GET'])
+def msgchecker():
+    check = session.get('ch4_completed')
+    if check:
+        return """<ul style="list-style-type: none; padding: 0;">
+            <li><button id="showmsg" onclick=showMsg() style="border: none;">Get FREE RAM!!!</button></li>
+        </ul>
+        <div id="messages" style="position: absolute; display: none; inset: 0; padding: 20px; background-color: rgb(80, 88, 97);">
+            <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto ea facilis veritatis eveniet saepe iure animi unde aperiam dolores! In magni rem consequatur, hic atque laboriosam corporis laborum dolorum ducimus.
+                <button onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"'>Back</button>
+            </div>
+        </div>"""
+    else:
+        return 'not completed'
+
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -60,6 +77,8 @@ def server_error(error):
     return "<center>Error 500, Mantis Secure Shell Sesion Terminated, Security Breach detected, This attempt will be flagged<br>" \
     "<a href='/home'>" \
     "<button type='button'>Go Back</button></a> </center>", 500
+
+app.config['SECRET_KEY'] = 'POIUYTREWQLKJHGFDSAMNBVCXZ'
 
 
 if __name__== '__main__':
