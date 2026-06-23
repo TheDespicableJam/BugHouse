@@ -22,12 +22,12 @@ def msgchecker():
     check = session.get('ch4_completed')
     if check:
         return """<ul style="list-style-type: none; padding: 0;">
-            <li><button id="showmsg" onclick=showMsg() style="border: none;">Get FREE RAM!!!</button></li>
+            <li><button id="showmsg" onclick=showMsg() style="border: none;">I need Help</button></li>
         </ul>
         <div id="messages" style="position: absolute; display: none; inset: 0; padding: 20px; background-color: rgb(80, 88, 97);">
             <div>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto ea facilis veritatis eveniet saepe iure animi unde aperiam dolores! In magni rem consequatur, hic atque laboriosam corporis laborum dolorum ducimus.
-                <button onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"'>Back</button>
+                <button id="markasread" onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"'>Back</button>
             </div>
         </div>"""
     else:
@@ -78,7 +78,7 @@ def server_error(error):
     "<a href='/home'>" \
     "<button type='button'>Go Back</button></a> </center>", 500
 
-app.config['SECRET_KEY'] = 'POIUYTREWQLKJHGFDSAMNBVCXZ'
+app.config['SECRET_KEY'] = 'POIUYTREWQLKJHGFDSAMNBVCXZQWERTYUIOPASDFGHJKLZXCVBNM'
 
 
 if __name__== '__main__':

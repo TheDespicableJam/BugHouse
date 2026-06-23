@@ -103,6 +103,34 @@
         font-size: 25px;
         text-align: center;
     }
+
+    #markasread{
+        color: aliceblue;
+        font-family: "Bitcount Prop Single";
+        font-size: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.63);
+        background-color: #535151;
+    }
+    #markasread:hover{
+        box-shadow: 0px 2px 5px black;
+    }
+
+
+    #showmsg{
+        background-color: transparent;
+        border: none;
+        color: aliceblue;
+        font-family: "Bitcount Prop Single";
+        font-size: 15px;
+    }
+
+    #showmsg:hover{
+        text-decoration: underline;
+    }
+    
+    #msgcon li::marker{
+        content: "\27A2";
+    }
 </style>
 </head>
 
@@ -112,7 +140,7 @@
     <p style="position: absolute; right: 2vw; top: -1vh; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
 
 <div class="pixel" id='message' style="height: 10vh; width: 6vw;">
-    <img src="/static/msgicon.png" style="height: 6vh; width: auto;" alt="">
+    <img id="msgicon" src="/static/msgicon.png" style="height: 6vh; width: auto;">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
 </div>
 
@@ -153,8 +181,8 @@
     <div class="closey"></div>
     <p class="hostname">Messages</p>
     </div>
-    <div id="content" style=" font-size: 17px; padding: 10px; color: aliceblue; flex: 1; position: relative;">
-        <div id="inbox">Inbox</div>
+    <div id="content" style=" font-size: 17px; padding: 25px; color: aliceblue; flex: 1; position: relative;">
+        <div id="inbox">Inbox</div><br>
             <div id="msgcon">
             </div> 
     </div>
@@ -167,6 +195,7 @@
 </body>
 
 <script>
+
     function time(){
         const now = new Date()
         document.getElementById('time').textContent = now.toLocaleTimeString()
@@ -180,11 +209,67 @@
     const terminal = document.getElementById('terminal')
     const text = document.getElementById('text')
     const msg = document.getElementById('msg')  
+    const ads = [
+        {
+        title: "Get FREE RAM!!!",
+        body: "Call us on this number 1800-G3T-SC4MM3D and tell us you credit card number(for verification, obviously) and download 64GB of FREE RAM!!!"
+        },
+        {
+        title: "HOT SINGLES IN YOUR AREA",
+        body: "Looking for fun times?... <br>They are definitely real and not bots."
+        },
+        {
+        title: "YOU'VE BEEN SELECTED FOR THE BETA DEVELOPERS ONLY IPHONE 20 TESTING!!!",
+        body: "Click absolutely no where to claim your prize."
+        },
+        {
+        title: "FREE MINECRAFT?!?!!",
+        body: "Download this very real software to GET MINCERAFT FOR ABSOLUTELY FREE!!!"
+        },
+        {
+        title: "GTA 6 FREE DOWNLOAD?!??!!",
+        body: "I can't even make a joke about this one... maybe in another life..."
+        }
+        ];
+
+    let lastCleared = Number(localStorage.getItem('lastCleared'));
+    if(!lastCleared){
+        lastCleared = Date.now();
+        localStorage.setItem('lastCleared', lastCleared)
+    }
+    let adWaiting = false;
+    let currentAd = null;
 
     function showMsg(){
         document.getElementById('messages').style.display="block"
         document.getElementById('showmsg').style.display='none'
     }
+
+    function checkForAd(){
+    if(adWaiting){return;}
+    const elapsed = Date.now() - lastCleared;
+    const sevenMinutes = 10 * 1000;
+
+    if(elapsed >= sevenMinutes){
+        const randomIndex = Math.floor(Math.random() * ads.length);
+        currentAd = ads[randomIndex];
+        adWaiting = true;
+        document.getElementById('msgicon').src = "/static/msgicon_unread.png" 
+        }
+    }   
+
+    setInterval(checkForAd, 5000);
+    checkForAd()
+
+    function clearAd(){
+        adWaiting = false;
+        currentAd = null;
+        document.getElementById('msgicon').src = "/static/msgicon.png" 
+        lastCleared = Date.now()
+        localStorage.setItem('lastCleared', lastCleared);
+        document.getElementById('msgcon').innerHTML = "<p style='font-size:25px; margin:0;'>All Caught Up</p><p>No New Messages</p>";
+    }
+
     function hideMsg(){
         msg.close()
         document.getElementById('messages').style.display="none"
@@ -206,15 +291,39 @@
                         document.getElementById('msgcon').innerHTML += reply
                     }
                     else{
-                        document.getElementById('msgcon').innerHTML =""
-                        document.getElementById('msgcon').innerHTML += "nope"
-                    }
+                        checkForAd();
+                        document.getElementById('msgcon').innerHTML = "";
+                        if(adWaiting){
+                            document.getElementById('msgcon').innerHTML = 
+                            `<p style="font-size:20px; margin: 0; ">You Have New Message(s)<p>
+                            <ul style="padding:0; margin: 5px;">
+                                <li>
+                                    <button id="showmsg" onclick="showMsg()" style="border:none;">
+                                        ${currentAd.title}
+                                    </button>
+                                </li>
+                            </ul>
+                            <div id="messages" style="position:absolute; display:none; inset:0; padding:20px; background-color:rgb(80,88,97);">
+                                <div>
+                                    ${currentAd.body}<br><br>
+                                    <button id="markasread" onclick="
+                                        document.getElementById('messages').style.display='none';
+                                        document.getElementById('showmsg').style.display='block';
+                                        clearAd();">Mark As Read</button>
+                                </div>
+                            </div>`;
+                        }
+                            else{
+                                document.getElementById('msgcon').innerHTML =
+                                "<p style='font-size:25px; margin:0;'>All Caught Up</p><p>No New Messages</p>";
+                            }
+                        }
                 })
         }, 850)
 
         setTimeout(function(){
             message.style.removeProperty('background')
-        }, 1500)
+        }, 950)
     } )
 
     terminal.addEventListener('click',  ()=>{
