@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from challenge1 import challenge1
 from challenge2 import challenge2
 from challenge3 import challenge3
@@ -21,13 +21,23 @@ def desktop():
 def msgchecker():
     check = session.get('ch4_completed')
     if check:
-        return """<ul style="list-style-type: none; padding: 0;">
-            <li><button id="showmsg" onclick=showMsg() style="border: none;">I need Help</button></li>
-        </ul>
+        return """<p style="font-size:20px; margin: 0; ">You Have New Message(s)<p>
+                            <ul style="padding:0; margin: 5px;">
+                                <li>
+                                    <button id="showmsg" onclick="showMsg()" style="border:none;">
+                                        I Need Help
+                                    </button>
+                                </li>
+                            </ul>
         <div id="messages" style="position: absolute; display: none; inset: 0; padding: 20px; background-color: rgb(80, 88, 97);">
-            <div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto ea facilis veritatis eveniet saepe iure animi unde aperiam dolores! In magni rem consequatur, hic atque laboriosam corporis laborum dolorum ducimus.
-                <button id="markasread" onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"'>Back</button>
+            <div style="padding-top: 20px; font-size:20px;">
+                Listen I know this might seem weirdly urgent but I need your help.<br>I used to be a dev at Bughouse, before they fired me. Some idiot kept targeting me and even when i told the "1% of the top 1%" at the company... they wouldnt understand...
+                they destroyed everything, my family, my kids, my WHOLE LIFE... i want revenge.... Dont worry you'll be paid a handsome amount...
+                If this works out trust me you will be able to take down one of the biggest security firms... and thats a trophy in itself...
+                if you are ready click on the link... I'll be waiting...
+                <br><br>
+                <a href="/home"><button id="jacklink">http://opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion</button></a>
+                <br><br><button id="markasread" onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"; document.getElementById("msgicon").src="/static/msgicon.png"; '>Back</button>
             </div>
         </div>"""
     else:
@@ -38,27 +48,38 @@ def msgchecker():
 def home():
     msg= ''
     if request.method == 'GET':
-        return render_template('home.html', msg=msg)
+        return render_template("home.html")
     else:
-        command = str.lower(request.form.get('command'))
-        if command == 'help':
-           msg = 'Use the "SSH" command to start playing, for first level: SSH@11111111 -p firstlevel\nUse the "help" command to bring up this message'
-           return render_template('home.html', msg=msg)
-        elif command == 'ssh':
-            msg = 'Use this format for the SSH command to start playing:\nSSH@<CHAT ID> -p <Admin Token>\nFor first level: SSH@11111111 -p firstlevel'
-            return render_template('home.html', msg=msg)
-        elif command == 'ssh@11111111 -p firstlevel':
-            return redirect('/challenge/1a')
-        elif command == 'ssh@29405828 -p jackbirkman':
-            return redirect('/challenge/2a')
-        elif command == 'ssh@37502750 -p youspace':
-            return redirect('/challenge/3a')
-        elif command == 'ssh@47851606 -p elitehack':
-            return redirect('/challenge/4a')
+        check = request.form.get('command')
+        if not check:
+            return jsonify(
+                label='message',
+                data='Please Enter a Command'
+            )
         else:
-            msg='Please use a valid command: "help" or "SSH"'
-            return render_template('home.html', msg=msg)
+            command = check.lower() 
+            parts = command.split()
 
+            if len(parts) == 3:
+                if parts[0] == 'ssh@11111111' and parts[1] == '-p' and parts[2] == 'firstlevel':
+                    return jsonify(
+                        label='redirect',
+                        data='/challenge/1a'
+                    )
+                else:
+                    return jsonify(
+                    label='message',
+                    data='Please Enter a Valid Command'
+                )
+            else:
+                return jsonify(
+                    label='message',
+                    data='Please Enter a Valid Command'
+                )
+            
+@app.route('/docs')
+def docs():
+    return render_template("challenge5/documentation.html")
 
 @app.errorhandler(404)
 def page_not_found(error):

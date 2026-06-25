@@ -19,23 +19,65 @@
 </pre>
 </div>
 <p><center>A Game by TheDespicableJam</center></p>
-<div id="command" {% if not msg %} style="display: none;" {% else %} style="display: flex;" {% endif %}>
-root@kali:~$ &nbsp;<form style="flex: 1;" method="post" autocomplete="off" action='/home'><input class="cli" id="inp" type="text" name="command"></form>
+
+<div id="terminal" style="display: none;">
+    root@kali:~$ &nbsp;
+    <input id="inp" style="background-color: transparent; border: none; flex: 1; box-sizing: border-box; outline: none;" type="text">
 </div>
-<pre style="margin: 0; color: white;" class="msg">{{msg}}<div id="msg"></div></pre>
+<div id="output" class="msg" style="margin-top: 2vh; margin-left: 1vw;">
+</div>
+
 <script>
+
     const inp = document.getElementById('inp')
+
     inp.focus();
     setTimeout(function() { banner1.style.display = 'block' ;},1000 );
     setTimeout(function() { banner2.style.display = 'block' ;},1500 );
     setTimeout(function() { banner3.style.display = 'block' ;},2000 );
-</script>
-{% if not msg %}
-<script>
+
+    const terminal =  document.getElementById('terminal')
+
     setTimeout(function() {
-    command.style.display = 'flex';   
+    terminal.style.display = 'flex';
+    terminal.style.marginTop = '7vh'   
+    terminal.style.marginLeft = '1vw'   
     inp.focus();
     },2500 );
+
+    function commandentered(){
+        const comval = inp.value
+        const output = document.getElementById('output')
+
+        fetch('/home', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'command=' + comval
+         })
+        .then(respone => respone.json())
+        .then(reply=>{
+            if (reply.label === 'message'){
+                output.textContent=reply.data;
+                setTimeout(function(){
+                    output.style.animation='fade-out 1s linear';
+                    output.addEventListener('animationend', ()=>{
+                        output.style.animation=''
+                        output.textContent=''
+                    })
+                }, 2000)
+            } 
+            else if(reply.label === 'redirect'){
+                window.location = reply.data
+            }
+        })
+        inp.value = ''
+    }
+
+    inp.addEventListener('keydown', function(event){
+        if(event.key === 'Enter' && terminal.style.display === 'flex'){
+            commandentered()
+        }
+    })
+
 </script>
-{% endif %}
  {% endblock %}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOR site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+    <style>
+        *{
+            font-family: "Press Start 2P";
+        }
+
+        body{
+            padding: 20px;
+            background-color: rgb(41, 38, 38);
+            color: rgb(214, 41, 41);
+            line-height: 33px;
+        }
+
+        @keyframes fade {
+            50% {opacity: 0;}
+        }
+
+        @keyframes typing{
+            from {width: 0}
+        }
+
+        #line1, #line2, #line3, #line4{
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #ex1, #ex2, #ex3, #ex4{
+            font-size: 15px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            display: none;
+        }
+
+        #key{
+            color: white;
+            font-size: 13px;
+            bottom: 2vh;
+            right: 2vw;
+            position: absolute;
+            animation: fade 1s linear infinite;
+        }
+        #key::before{
+            content: "\232C";
+            color: red;
+            font-size: 30px;
+            position: relative;
+            bottom: -0.35vh;
+        }
+
+        #connect{
+            background-color: grey;
+            color: white;
+            display: none;
+            padding: 4px;
+            margin-top: 20px;
+        }
+
+        @keyframes slide{
+            from{right: -25vw;}
+            to{right: 1vw;}
+        }
+        @keyframes slide-out{
+            from{right: 1vw;}
+            to{right: -25vw;}
+        }
+
+        #noti{
+            color: white;
+            font-size: 12px;
+            background-color: rgb(22, 21, 21);
+            outline: 2px solid grey;
+            display: inline-block;
+            padding-right: 5px;
+            padding-left: 5px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            position: fixed;
+            top: 3vh;
+            right: -25vw;
+        }
+    </style>
+
+    <div id="textblock">
+        <div id="line1">
+            If you are reading this, it means you already got my mail 
+        </div>
+        <div id="line2" style="display: none;">
+            and maybe even the hard drive i sent you
+        </div>
+        <div id="line3" style="display: none;">
+            dont back out now... i need your help
+        </div>
+        <div id="line4" style="display: none;">
+            everything you need to carry out this hack is in the hard drive
+        </div>
+    </div>
+    <div id="explanation">
+        <div id="ex1">
+            You just need to follow as i say from now on <br>Click on "connect" to connect the hard drive i sent you
+        </div>
+        <div id="ex2">
+            they thought they cleared the drive but they werent good enough <br>i have installed 2 tools on the drive, Ghidra and Autopsy...
+        </div>
+         <div id="ex3">
+            you have to recover the bughouse employee software with Autopsy <br>and if anything gets corrupted in recovery, try reverse engineering it with Ghidra
+        </div>
+         <div id="ex4">
+             you will find both tools in your terminal...
+        </div>
+        <button id="connect" onclick=notification()>
+            "connect"
+        </button>
+    </div>
+
+    <div id="key" style="display: none;">
+        Press Enter to Proceed
+    </div>
+
+    <div id="noti">
+        [OK] External Drive Mounted
+    </div>
+</body>
+
+<script>
+    function initial(){document.getElementById('line1').style.animation='typing 3s steps(64)'}
+    initial()
+    setTimeout(function(){
+        document.getElementById('line2').style.display='block'  
+        document.getElementById('line2').style.animation="typing 3s steps(45)";}, 2500)
+    
+    setTimeout(function(){
+        document.getElementById('line3').style.display='block'  
+        document.getElementById('line3').style.animation="typing 3s steps(50)";}, 4500)
+    
+    setTimeout(function(){
+        document.getElementById('line4').style.display='block'  
+        document.getElementById('line4').style.animation="typing 3s steps(50)"}, 6000)
+    
+    setTimeout(function(){
+        document.getElementById('key').style.display='block'}, 10000)
+    const line4 = document.getElementById('line4');
+    const key = document.getElementById('key')
+
+    document.addEventListener('keydown', function(event){
+        if (event.key === 'Enter' && line4.style.display==='block'){
+            document.getElementById('textblock').style.display='none'
+            key.style.display='none'
+            document.getElementById('ex1').style.display='block'
+            document.getElementById('ex1').style.animation='typing 3s steps(50)'
+        }
+    })
+
+    function page2(line){
+        document.getElementById('ex'+line).addEventListener('animationend', ()=>{
+            document.getElementById('ex'+(line+1)).style.display='block'
+            document.getElementById('ex'+(line+1)).style.animation='typing 3s steps(50)'
+        })
+    }
+
+    document.getElementById('ex1').addEventListener('animationend', page2(1))
+    document.getElementById('ex2').addEventListener('animationend', page2(2))
+    document.getElementById('ex3').addEventListener('animationend', page2(3))
+    document.getElementById('ex4').addEventListener('animationend', ()=>{
+        document.getElementById('connect').style.display='block'
+    })
+
+    function notification(){
+        document.getElementById('noti').style.animation='slide 1.5s ease-in-out forwards'
+        setTimeout(function(){
+        document.getElementById('connect').style.display='none'
+        }, 1000)
+        setTimeout(function(){
+        document.getElementById('noti').style.animation='slide-out 1s ease-in-out forwards'
+        }, 4000)
+    }
+    
+
+
+</script>
+
+</html>

@@ -36,6 +36,7 @@
     }
             
     .pixel{
+        padding: 5px;
         image-rendering: crisp-edges;
         background: transparent;
         border: none;
@@ -121,7 +122,7 @@
         border: none;
         color: aliceblue;
         font-family: "Bitcount Prop Single";
-        font-size: 15px;
+        font-size: 18px;
     }
 
     #showmsg:hover{
@@ -130,6 +131,20 @@
     
     #msgcon li::marker{
         content: "\27A2";
+    }
+
+    #jacklink{
+        padding: 0;
+        font-family: "Bitcount Prop Single";
+        font-size: 20px;
+        background: transparent;
+        border: none;
+        text-decoration: underline;
+        color: rgb(19, 19, 129);
+    }
+
+    #jacklink:hover{
+        color: rgb(235, 62, 62);
     }
 </style>
 </head>
@@ -183,7 +198,7 @@
     </div>
     <div id="content" style=" font-size: 17px; padding: 25px; color: aliceblue; flex: 1; position: relative;">
         <div id="inbox">Inbox</div><br>
-            <div id="msgcon">
+            <div id="msgcon" style="font-size: 20px;">
             </div> 
     </div>
 </dialog>
@@ -248,9 +263,9 @@
     function checkForAd(){
     if(adWaiting){return;}
     const elapsed = Date.now() - lastCleared;
-    const sevenMinutes = 10 * 1000;
+    const showAD = 10 * 1000;
 
-    if(elapsed >= sevenMinutes){
+    if(elapsed >= showAD){
         const randomIndex = Math.floor(Math.random() * ads.length);
         currentAd = ads[randomIndex];
         adWaiting = true;
@@ -356,7 +371,7 @@ music.addEventListener('click',  ()=>{
         music.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
 
         setTimeout(function(){
-            window.location = '/home'
+            window.location = '/docs'
         }, 850)
 
         setTimeout(function(){
