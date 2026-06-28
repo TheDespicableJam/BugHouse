@@ -61,12 +61,13 @@
             bottom: -0.35vh;
         }
 
-        #connect{
+        #connect, #toterminal{
             background-color: grey;
             color: white;
             display: none;
             padding: 4px;
             margin-top: 20px;
+            text-decoration: none;
         }
 
         @keyframes slide{
@@ -119,10 +120,13 @@
             you have to recover the bughouse employee software with Autopsy <br>and if anything gets corrupted in recovery, try reverse engineering it with Ghidra
         </div>
          <div id="ex4">
-             you will find both tools in your terminal...
+             you will find both the tools in your terminal...<br> type "Autopsy" and "Ghidra" to fire em up
         </div>
         <button id="connect" onclick=notification()>
             "connect"
+        </button>
+            <button id="toterminal" onclick="window.open('/home')">
+            Go to Terminal
         </button>
     </div>
 
@@ -136,6 +140,8 @@
 </body>
 
 <script>
+    const key = document.getElementById('key')
+
     function initial(){document.getElementById('line1').style.animation='typing 3s steps(64)'}
     initial()
     setTimeout(function(){
@@ -150,10 +156,12 @@
         document.getElementById('line4').style.display='block'  
         document.getElementById('line4').style.animation="typing 3s steps(50)"}, 6000)
     
-    setTimeout(function(){
-        document.getElementById('key').style.display='block'}, 10000)
+    document.getElementById('line4').addEventListener('animationend', ()=>{
+        key.style.display='block'
+    })
+
     const line4 = document.getElementById('line4');
-    const key = document.getElementById('key')
+    
 
     document.addEventListener('keydown', function(event){
         if (event.key === 'Enter' && line4.style.display==='block'){
@@ -171,9 +179,10 @@
         })
     }
 
-    document.getElementById('ex1').addEventListener('animationend', page2(1))
-    document.getElementById('ex2').addEventListener('animationend', page2(2))
-    document.getElementById('ex3').addEventListener('animationend', page2(3))
+    page2(1);
+    page2(2);
+    page2(3);
+
     document.getElementById('ex4').addEventListener('animationend', ()=>{
         document.getElementById('connect').style.display='block'
     })
@@ -182,11 +191,15 @@
         document.getElementById('noti').style.animation='slide 1.5s ease-in-out forwards'
         setTimeout(function(){
         document.getElementById('connect').style.display='none'
+        setTimeout(function(){
+            document.getElementById('toterminal').style.display='block'
+        }, 4000)
         }, 1000)
         setTimeout(function(){
         document.getElementById('noti').style.animation='slide-out 1s ease-in-out forwards'
         }, 4000)
-    }
+        
+    }   
     
 
 

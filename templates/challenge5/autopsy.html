@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+    #banner1{
+        font-size: 15px;
+        transform: translateX(31vw);
+        width: fit-content;
+        color: rgb(219, 46, 3, 0.888);
+    }
+    #banner2{
+        font-size: 15px;
+        transform: translateX(31vw);
+        width: fit-content;
+        color: rgba(219, 46, 3, 0.666);
+    }
+    #banner3{
+        font-size: 15px;
+        transform: translateX(31vw);
+        width: fit-content;
+        color: rgb(219, 46, 0.333);
+    }
+
+    #output {
+        height: 45vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    #output::-webkit-scrollbar {
+        display: none;
+    }
+
+</style>
+
+<div id="banner1">
+<pre style="margin-top: 5vh; margin-bottom: 0;">
+ ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███    ██████▓██   ██▓
+▒████▄     ██  ▓██▒▓  ██▒ ▓▒▒██▒  ██▒▓██░  ██▒▒██    ▒ ▒██  ██▒
+▒██  ▀█▄  ▓██  ▒██░▒ ▓██░ ▒░▒██░  ██▒▓██░ ██▓▒░ ▓██▄    ▒██ ██░
+</pre></div>
+ <div id="banner2">
+<pre style="margin: 0;">
+░██▄▄▄▄██ ▓▓█  ░██░░ ▓██▓ ░ ▒██   ██░▒██▄█▓▒ ▒  ▒   ██▒ ░ ▐██▓░
+ ▓█   ▓██▒▒▒█████▓   ▒██▒ ░ ░ ████▓▒░▒██▒ ░  ░▒██████▒▒ ░ ██▒▓░
+ ▒▒   ▓▒█░░▒▓▒ ▒ ▒   ▒ ░░   ░ ▒░▒░▒░ ▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░  ██▒▒▒ 
+</pre>
+ </div>
+<div id="banner3">
+<pre style="margin: 0;">
+  ▒   ▒▒ ░░░▒░ ░ ░     ░      ░ ▒ ▒░ ░▒ ░     ░ ░▒  ░ ░▓██ ░▒░ 
+  ░   ▒    ░░░ ░ ░   ░      ░ ░ ░ ▒  ░░       ░  ░  ░  ▒ ▒ ░░  
+      ░  ░   ░                  ░ ░                 ░  ░ ░     
+</div>
+
+<div id="terminal" style="padding-left: 10px; margin-top: 8vh; color: white; display: none;">
+    AUTOPSY> &nbsp; <input id="inp" style="background-color: transparent; border: none; flex: 1; box-sizing: border-box; outline: none; color: rgb(241, 240, 155);" type="text">
+</div>
+<div id="output" class="msg" style="margin-top: 2vh; margin-left: 1vw;">
+</div>
+
+
+<script>
+    const output = document.getElementById('output')
+    const inp = document.getElementById('inp')
+
+    function startup(){
+        setTimeout(function(){output.innerText+='Initiating Autopsy... \n'}, 1000)
+        setTimeout(function(){output.innerText+='Looking for Mounted Drives... \n'}, 2500)
+        setTimeout(function(){output.innerText+='Drive Detected!\n'}, 5000)
+        setTimeout(function(){output.innerText+='Ready'}, 6000)
+        setTimeout(function(){
+            output.innerText='';
+            document.getElementById('terminal').style.display='flex'
+            inp.focus()            
+        }, 7000)
+    }
+
+    function selector(){
+        let i = 0
+        const arrow = document.querySelectorAll('.arrow')
+        arrow[0].style.display='inline-block'
+
+        
+        document.addEventListener('keydown', (event)=>{
+            if(event.key==='ArrowDown'){
+                if(i===1){
+                    return
+                }
+                else{
+                    i++
+                    for(const n of arrow){
+                        n.style.display='none'
+                    }
+                    arrow[i].style.display='inline-block'
+                }
+            }
+            else if(event.key==='ArrowUp'){
+                if(i===0){
+                    return
+                }
+                else{
+                    i--
+                    for(const n of arrow){
+                            n.style.display='none'
+                        }
+                arrow[i].style.display='inline-block'
+                }
+            }
+        })
+    }
+   
+
+    function enter(){
+        const val = inp.value
+        fetch('/autopsy', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'command=' + val
+        })
+        .then(Response=>Response.json())
+        .then(reply=>{
+            if(reply.label === 'message'){
+                output.innerText=reply.data
+                inp.value=''
+            }
+            else if(reply.label === 'selector'){
+                inp.blur()
+                output.innerHTML=reply.data
+                selector()
+                inp.value=''
+                
+            }
+        })
+    }
+
+
+    startup()
+
+    document.getElementById('terminal').addEventListener("keydown", (event)=>{
+        if(event.key == 'Enter'){
+            enter()
+        }
+    })
+</script>
+
+{% endblock %}

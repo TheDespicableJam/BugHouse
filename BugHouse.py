@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, session, jsonify
 from challenge1 import challenge1
 from challenge2 import challenge2
 from challenge3 import challenge3
@@ -66,20 +66,102 @@ def home():
                         label='redirect',
                         data='/challenge/1a'
                     )
+                elif parts[0] == 'ssh@29405828' and parts[1] == '-p' and parts[2]=='jackbirkman':
+                    return jsonify(
+                        label='redirect',
+                        data='/challenge/2a'
+                    )
+                elif parts[0] == 'ssh@37502750' and parts[1] == '-p' and parts[2]=='youspace':
+                    return jsonify(
+                        label='redirect',
+                        data='/challenge/3a'
+                    )
+                elif parts[0] == 'ssh@47851606' and parts[1] == '-p' and parts[2]=='challenge4':
+                    return jsonify(
+                        label='redirect',
+                        data='/challenge/4a'
+                    )
                 else:
                     return jsonify(
                     label='message',
-                    data='Please Enter a Valid Command'
+                    data='Please use a valid command: "help" or "SSH"'
+                )
+            elif len(parts) == 1:
+                if parts[0]=='help':
+                    return jsonify(
+                    label='message',
+                    data='Use the "SSH" command to start playing, for first level: SSH@11111111 -p firstlevel<br>Use the "help" command to bring up this message'
+                    )
+                elif parts[0]=='ssh':
+                    return jsonify(
+                    label='message',
+                    data='Use this format for the SSH command to start playing:<br>SSH@&lt;CHAT ID&gt; -p &lt;Admin Token&gt;<br>For first level: SSH@11111111 -p firstlevel'
+                    )
+                elif parts[0] == 'autopsy':
+                    return jsonify(
+                        label='redirect',
+                        data='/autopsy'
+                    )
+                elif parts[0] == 'ghidra':
+                    return jsonify()
+
+                else:
+                    return jsonify(
+                    label='message',
+                    data='Please use a valid command: "help" or "SSH"'
                 )
             else:
                 return jsonify(
                     label='message',
-                    data='Please Enter a Valid Command'
+                    data='Please use a valid command: "help" or "SSH"'
                 )
             
-@app.route('/docs')
+@app.route('/opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion')
 def docs():
     return render_template("challenge5/documentation.html")
+
+@app.route('/autopsy', methods=['GET', 'POST'])
+def autopsy():
+    if request.method =='GET':
+        mount = False
+        scan = False
+        recovered = False
+        #integrity = False
+        
+        return render_template('challenge5/autopsy.html')
+    
+    else:
+        check  = request.form.get('command')
+        if not check:
+            return jsonify(
+                label='message',
+                data='Run --help for valid commands'
+            )
+        else:
+
+            command = check.lower()
+            parts = command.split()
+
+            if len(parts) == 1:
+                if parts[0] == '--help':
+                    return jsonify(
+                        label='message',
+                        data='Available Commands: \n--mount\n--scan\n--recover\n--verify'
+                    )
+                elif parts[0] == '--mount':
+                    mount = True
+                    return jsonify(
+                        label='selector',
+                        data="""<div id="selector">
+                                <div>
+                                    [1] Seagate Baracuda 500GB HDD  <span class="arrow" style="display: none;">&lt;</span>
+                                </div>
+                                <div>
+                                    [2] Internal SSD  <span class="arrow" style="display: none;">&lt;</span>
+                                </div>
+                            </div>"""
+                    )
+            
 
 @app.errorhandler(404)
 def page_not_found(error):

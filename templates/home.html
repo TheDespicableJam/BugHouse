@@ -57,14 +57,14 @@
         .then(respone => respone.json())
         .then(reply=>{
             if (reply.label === 'message'){
-                output.textContent=reply.data;
+                output.innerHTML=reply.data;
                 setTimeout(function(){
                     output.style.animation='fade-out 1s linear';
                     output.addEventListener('animationend', ()=>{
                         output.style.animation=''
                         output.textContent=''
                     })
-                }, 2000)
+                }, 3000)
             } 
             else if(reply.label === 'redirect'){
                 window.location = reply.data
