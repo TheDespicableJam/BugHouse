@@ -64,6 +64,9 @@
 <script>
     const output = document.getElementById('output')
     const inp = document.getElementById('inp')
+    let i = 0
+    let arrows = []
+    let selectorMode = false
 
     function startup(){
         setTimeout(function(){output.innerText+='Initiating Autopsy... \n'}, 1000)
@@ -71,44 +74,17 @@
         setTimeout(function(){output.innerText+='Drive Detected!\n'}, 5000)
         setTimeout(function(){output.innerText+='Ready'}, 6000)
         setTimeout(function(){
-            output.innerText='';
+            output.innerText=''
             document.getElementById('terminal').style.display='flex'
             inp.focus()            
         }, 7000)
     }
 
     function selector(){
-        let i = 0
-        const arrow = document.querySelectorAll('.arrow')
-        arrow[0].style.display='inline-block'
-
-        
-        document.addEventListener('keydown', (event)=>{
-            if(event.key==='ArrowDown'){
-                if(i===1){
-                    return
-                }
-                else{
-                    i++
-                    for(const n of arrow){
-                        n.style.display='none'
-                    }
-                    arrow[i].style.display='inline-block'
-                }
-            }
-            else if(event.key==='ArrowUp'){
-                if(i===0){
-                    return
-                }
-                else{
-                    i--
-                    for(const n of arrow){
-                            n.style.display='none'
-                        }
-                arrow[i].style.display='inline-block'
-                }
-            }
-        })
+        i = 0
+        arrows = document.querySelectorAll('.arrow')
+        selectorMode = true
+        arrows[0].style.display='inline-block'
     }
    
 
@@ -122,25 +98,59 @@
         .then(Response=>Response.json())
         .then(reply=>{
             if(reply.label === 'message'){
-                output.innerText=reply.data
+                output.innerText+=reply.data+'\n\n'
                 inp.value=''
+                output.scrollTop=output.scrollHeight
             }
             else if(reply.label === 'selector'){
                 inp.blur()
-                output.innerHTML=reply.data
+                output.innerHTML+=reply.data+'\n\n'
                 selector()
                 inp.value=''
+                output.scrollTop=output.scrollHeight
                 
             }
         })
     }
 
+    function draw(){
+                    for(const n of arrows){
+                        n.style.display='none'
+                    }
+                    arrows[i].style.display='inline-block'
+                    }
 
     startup()
 
-    document.getElementById('terminal').addEventListener("keydown", (event)=>{
-        if(event.key == 'Enter'){
+    document.addEventListener("keydown", (event)=>{
+        if(event.key == 'Enter' && document.activeElement===document.getElementById('inp')){
             enter()
+        }
+        else if(selectorMode){
+            if(event.key==='ArrowDown'){
+                if(i===1){
+                    return
+                }
+                else{
+                    i++
+                    draw()
+                }
+            }
+            else if(event.key==='ArrowUp'){
+                if(i===0){
+                    return
+                }
+                else{
+                    i--
+                    draw()
+                    }
+            }
+            else if(event.key === 'Enter'){
+                console.log(i)
+            }
+            else{
+                return
+            }
         }
     })
 </script>
