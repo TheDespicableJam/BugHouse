@@ -98,13 +98,20 @@
         .then(Response=>Response.json())
         .then(reply=>{
             if(reply.label === 'message'){
-                output.innerText+=reply.data+'\n\n'
+                output.innerText+=reply.data
+                output.innerHTML+='<br>'
+                inp.value=''
+                output.scrollTop=output.scrollHeight
+            }
+            else if(reply.label === 'clear'){
+                output.innerText=''
                 inp.value=''
                 output.scrollTop=output.scrollHeight
             }
             else if(reply.label === 'selector'){
                 inp.blur()
-                output.innerHTML+=reply.data+'\n\n'
+                output.innerHTML+=reply.data
+                output.innerHTML+='<br>'
                 selector()
                 inp.value=''
                 output.scrollTop=output.scrollHeight
@@ -127,6 +134,7 @@
             enter()
         }
         else if(selectorMode){
+            inp.style.display='none'
             if(event.key==='ArrowDown'){
                 if(i===1){
                     return
@@ -146,7 +154,24 @@
                     }
             }
             else if(event.key === 'Enter'){
-                console.log(i)
+                inp.style.display=''
+                fetch('/autopsy', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: 'drive=' + i
+                })
+
+                .then(Response=>Response.json())
+                .then(reply=>{
+                    output.innerHTML=reply.data
+                    output.innerHTML+='<br>'
+                })
+                for(const n of arrows){
+                        n.style.display='none'
+                    }
+                selectorMode = false
+                inp.focus()
+
             }
             else{
                 return

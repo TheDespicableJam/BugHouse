@@ -123,45 +123,79 @@ def docs():
 @app.route('/autopsy', methods=['GET', 'POST'])
 def autopsy():
     if request.method =='GET':
-        mount = False
-        scan = False
-        recovered = False
-        #integrity = False
-        
+        session['mounted'] = False
+        session['scan'] = False
+        session['recover'] = False
+        session['drive'] = None
         return render_template('challenge5/autopsy.html')
     
     else:
         check  = request.form.get('command')
-        if not check:
+        drive = request.form.get('drive')
+#part for drive selection
+        if drive is not None:
+            session['mounted'] = True
+            if drive == "1":
+                session['drive'] = '1'
+                return jsonify(
+                    label='SSD',
+                    data='SSD Has been selected'
+                )
+            elif drive == "0":
+                session['drive'] = '0'
+                return jsonify(
+                    label='HDD',
+                    data='HDD has been selected'
+                )
+#command check
+        elif not check:
             return jsonify(
                 label='message',
                 data='Run --help for valid commands'
             )
         else:
-
             command = check.lower()
             parts = command.split()
-
+#command checking part
             if len(parts) == 1:
                 if parts[0] == '--help':
                     return jsonify(
                         label='message',
-                        data='Available Commands: \n--mount\n--scan\n--recover\n--verify'
+                        data='Available Commands: \n--clear\n--mount\n--scan\n--recover'
                     )
+#part for --mount
                 elif parts[0] == '--mount':
-                    mount = True
                     return jsonify(
                         label='selector',
                         data="""<div id="selector">
                                 <div>
-                                    [1] Seagate Baracuda 500GB HDD  <span class="arrow" style="display: none;">&lt;</span>
+                                    [1] Seagate Baracuda 500GB HDD  <span id="HDD" class="arrow" style="display: none;">&lt;</span>
                                 </div>
                                 <div>
-                                    [2] Internal SSD  <span class="arrow" style="display: none;">&lt;</span>
+                                    [2] Internal SSD  <span id="SDD" class="arrow" style="display: none;">&lt;</span>
                                 </div>
                             </div>"""
                     )
-            
+                elif parts[0] == '--state':
+                    return jsonify(
+                                label='message',
+                                data=f"""
+                        mounted: {session.get('mounted')}
+                        scan: {session.get('scan')}
+                        recover: {session.get('recover')}
+                        drive: {session.get('drive')}
+                        """
+                    )
+#part for --clear
+                elif parts[0] == '--clear':
+                    return jsonify(
+                        label='clear'
+                    )
+                else:
+                    return jsonify(
+                        label='message',
+                        data='Run --help for valid commands'
+                    )
 
 @app.errorhandler(404)
 def page_not_found(error):
