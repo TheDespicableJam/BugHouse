@@ -139,13 +139,13 @@ def autopsy():
                 session['drive'] = '1'
                 return jsonify(
                     label='SSD',
-                    data='SSD Has been selected'
+                    data='Internal SSD selected'
                 )
             elif drive == "0":
                 session['drive'] = '0'
                 return jsonify(
                     label='HDD',
-                    data='HDD has been selected'
+                    data='Seagate Baracuda 500GB HDD Selected'
                 )
 #command check
         elif not check:
@@ -176,6 +176,18 @@ def autopsy():
                                 </div>
                             </div>"""
                     )
+                elif parts[0] == '--scan':
+                    if not session.get('drive'):
+                        return jsonify(
+                            label='message',
+                            data='No Drive Selected'
+                        )
+                    else:
+                        return jsonify(
+                            label='scan'
+                        )
+                        
+#debug command                
                 elif parts[0] == '--state':
                     return jsonify(
                                 label='message',

@@ -86,7 +86,50 @@
         selectorMode = true
         arrows[0].style.display='inline-block'
     }
-   
+    
+    function progressanimation(){
+        const timestamps = [
+                    '[....................................................................................................] 0%',
+                    '[##########..........................................................................................] 10%',
+                    '[###############################.....................................................................] 31%',
+                    '[########################################################............................................] 56%',
+                    '[###################################################################.................................] 67%',
+                    '[#############################################################################################.......] 93%',
+                    '[####################################################################################################] 100%'
+                ]
+
+        let t = 0
+        const timer = setInterval(() => {
+                        inp.style.display='none'
+                        t+=5
+                        console.log(t)
+                        if(t<9){
+                            output.innerHTML='Reading Partition Table...<br>'+timestamps[0]
+                        }
+                        else if(t<30){
+                            output.innerHTML='Parsing NTFS Metadata...<br>'+timestamps[1]
+                        }
+                        else if(t<55){
+                            output.innerHTML='Resolving hard links...<br>'+timestamps[2]
+                        }
+                        else if(t<66){
+                            output.innerHTML='Resolving Directory Structure...<br>'+timestamps[3]
+                        }
+                        else if(t<92){
+                            output.innerHTML='Scanning unallocated clusters...<br>'+timestamps[4]
+                        }
+                        else if(t<100){
+                            output.innerHTML='Nearing Completion...<br>'+timestamps[5]
+                        }
+                        else if(t === 100){
+                            output.innerHTML='Completed Scan<br>'+timestamps[6]+'<br><br>Following executable(s) can be recovered:<br>[1] BugHouse_Employee_Suite.exe<br>'
+                            clearInterval(timer)
+                            inp.style.display='block'
+                            inp.focus()
+                        }
+                    }, 2000);
+        
+    }
 
     function enter(){
         const val = inp.value
@@ -116,6 +159,11 @@
                 inp.value=''
                 output.scrollTop=output.scrollHeight
                 
+            }
+            else if(reply.label === 'scan'){
+                output.innerHTML=''
+                inp.value =''
+                progressanimation()
             }
         })
     }
@@ -154,7 +202,7 @@
                     }
             }
             else if(event.key === 'Enter'){
-                inp.style.display=''
+                inp.style.display='block'
                 fetch('/autopsy', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
