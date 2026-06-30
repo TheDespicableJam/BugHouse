@@ -2,6 +2,9 @@
 {% block content %}
 
 <style>
+    #progress{
+        font-family: 'Bitcount Prop Single', monospace;
+    }
 
     #banner1{
         font-size: 15px;
@@ -69,12 +72,12 @@
     let selectorMode = false
 
     function startup(){
-        setTimeout(function(){output.innerText+='Initiating Autopsy... \n'}, 1000)
-        setTimeout(function(){output.innerText+='Looking for Mounted Drives... \n'}, 2500)
-        setTimeout(function(){output.innerText+='Drive Detected!\n'}, 5000)
-        setTimeout(function(){output.innerText+='Ready'}, 6000)
+        setTimeout(function(){output.innerHTML+='Initiating Autopsy... <br>'}, 1000)
+        setTimeout(function(){output.innerHTML+='Looking for Mounted Drives... <br>'}, 2500)
+        setTimeout(function(){output.innerHTML+='Drive Detected!<br>'}, 5000)
+        setTimeout(function(){output.innerHTML+='Ready'}, 6000)
         setTimeout(function(){
-            output.innerText=''
+            output.innerHTML=''
             document.getElementById('terminal').style.display='flex'
             inp.focus()            
         }, 7000)
@@ -99,8 +102,9 @@
                 ]
 
         let t = 0
+        inp.style.display='none'
+
         const timer = setInterval(() => {
-                        inp.style.display='none'
                         t+=5
                         console.log(t)
                         if(t<9){
@@ -122,13 +126,33 @@
                             output.innerHTML='Nearing Completion...<br>'+timestamps[5]
                         }
                         else if(t === 100){
-                            output.innerHTML='Completed Scan<br>'+timestamps[6]+'<br><br>Following executable(s) can be recovered:<br>[1] BugHouse_Employee_Suite.exe<br>'
+                            output.innerHTML='Completed Scan<br>'+timestamps[6]+'<br><br><pre id="progress">Discovered Artifacts:<br>[1] BugHouse_Employee_Suite.exe<br>     Status: Deleted<br>     Integrity: 93%<br>     Recoverable: Yes<br></pre>'
                             clearInterval(timer)
                             inp.style.display='block'
                             inp.focus()
                         }
-                    }, 2000);
-        
+                    }, 1000);
+    }
+
+    function ssd(){
+        inp.style.display='none'
+        let t = 0
+        const timer =  setInterval(() => {
+            t+=1
+            console.log(t)
+            if(t<6){
+                output.innerHTML='Initiating Scan...'
+            }
+            else if(t<11){
+                output.innerHTML='An Error Occured... Trying Common Fixes...'
+            }
+            else if(t === 12){
+                inp.style.display ='block'
+                inp.focus()
+                output.innerHTML='Fatal Error... <br>Running OS with Autopsy Detected<br>Active Memory Detected<br>'
+                clearInterval(timer)
+            }
+        }, 1000);
     }
 
     function enter(){
@@ -141,19 +165,19 @@
         .then(Response=>Response.json())
         .then(reply=>{
             if(reply.label === 'message'){
-                output.innerText+=reply.data
+                output.innerHTML+=reply.data
                 output.innerHTML+='<br>'
                 inp.value=''
                 output.scrollTop=output.scrollHeight
             }
             else if(reply.label === 'clear'){
-                output.innerText=''
+                output.innerHTML=''
                 inp.value=''
                 output.scrollTop=output.scrollHeight
             }
             else if(reply.label === 'selector'){
-                inp.blur()
-                output.innerHTML+=reply.data
+                inp.style.display='none'
+                output.innerHTML=reply.data
                 output.innerHTML+='<br>'
                 selector()
                 inp.value=''
@@ -161,11 +185,18 @@
                 
             }
             else if(reply.label === 'scan'){
-                output.innerHTML=''
-                inp.value =''
-                progressanimation()
-            }
-        })
+                if(reply.data === '0'){
+                    output.innerHTML=''
+                    inp.value =''
+                    progressanimation()
+                }   
+                else if(reply.data === '1'){
+                    output.innerHTML=''
+                    inp.value =''
+                    ssd()
+                }
+
+        }})
     }
 
     function draw(){
@@ -182,7 +213,7 @@
             enter()
         }
         else if(selectorMode){
-            inp.style.display='none'
+
             if(event.key==='ArrowDown'){
                 if(i===1){
                     return

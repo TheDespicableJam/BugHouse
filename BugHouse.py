@@ -36,7 +36,7 @@ def msgchecker():
                 If this works out trust me you will be able to take down one of the biggest security firms... and thats a trophy in itself...
                 if you are ready click on the link... I'll be waiting...
                 <br><br>
-                <a href="/home"><button id="jacklink">http://opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion</button></a>
+                <a href="/opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion"><button id="jacklink">http://opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion</button></a>
                 <br><br><button id="markasread" onclick='document.getElementById("messages").style.display="none"; document.getElementById("showmsg").style.display="block"; document.getElementById("msgicon").src="/static/msgicon.png"; '>Back</button>
             </div>
         </div>"""
@@ -136,12 +136,14 @@ def autopsy():
         if drive is not None:
             session['mounted'] = True
             if drive == "1":
+                session['scan'] = False
                 session['drive'] = '1'
                 return jsonify(
                     label='SSD',
                     data='Internal SSD selected'
                 )
             elif drive == "0":
+                session['scan'] = False
                 session['drive'] = '0'
                 return jsonify(
                     label='HDD',
@@ -182,9 +184,16 @@ def autopsy():
                             label='message',
                             data='No Drive Selected'
                         )
-                    else:
+                    elif session.get('scan') == True:
                         return jsonify(
-                            label='scan'
+                            label='message',
+                            data='Drive has already been scanned'
+                        )
+                    else:
+                        session['scan'] = True
+                        return jsonify(
+                            label='scan',
+                            data=session.get('drive')
                         )
                         
 #debug command                
@@ -192,10 +201,10 @@ def autopsy():
                     return jsonify(
                                 label='message',
                                 data=f"""
-                        mounted: {session.get('mounted')}
-                        scan: {session.get('scan')}
-                        recover: {session.get('recover')}
-                        drive: {session.get('drive')}
+                        mounted: {session.get('mounted')}<br>
+                        scan: {session.get('scan')}<br>
+                        recover: {session.get('recover')}<br>
+                        drive: {session.get('drive')}<br>
                         """
                     )
 #part for --clear
