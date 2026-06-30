@@ -123,15 +123,17 @@ def docs():
 @app.route('/autopsy', methods=['GET', 'POST'])
 def autopsy():
     if request.method =='GET':
+        if 'recovered' not in session:
+            session['recover'] = False
         session['mounted'] = False
         session['scan'] = False
-        session['recover'] = False
         session['drive'] = None
         return render_template('challenge5/autopsy.html')
     
     else:
         check  = request.form.get('command')
         drive = request.form.get('drive')
+        artifact = request.form.get('artifact')
 #part for drive selection
         if drive is not None:
             session['mounted'] = True
@@ -142,12 +144,20 @@ def autopsy():
                     label='SSD',
                     data='Internal SSD selected'
                 )
+            
             elif drive == "0":
                 session['scan'] = False
                 session['drive'] = '0'
                 return jsonify(
                     label='HDD',
                     data='Seagate Baracuda 500GB HDD Selected'
+                )
+        
+        if artifact is not None:
+            if artifact == "0":
+                return jsonify(
+                    label='message',
+                    data='BugHouse_Employee_Suite.exe recovered successfully.'
                 )
 #command check
         elif not check:
@@ -163,12 +173,13 @@ def autopsy():
                 if parts[0] == '--help':
                     return jsonify(
                         label='message',
-                        data='Available Commands: \n--clear\n--mount\n--scan\n--recover'
+                        data='Available Commands: <br>--clear<br>--mount<br>--scan<br>--recover'
                     )
 #part for --mount
                 elif parts[0] == '--mount':
                     return jsonify(
                         label='selector',
+                        mode='drive',
                         data="""<div id="selector">
                                 <div>
                                     [1] Seagate Baracuda 500GB HDD  <span id="HDD" class="arrow" style="display: none;">&lt;</span>
@@ -178,24 +189,44 @@ def autopsy():
                                 </div>
                             </div>"""
                     )
+                
                 elif parts[0] == '--scan':
                     if not session.get('drive'):
                         return jsonify(
                             label='message',
                             data='No Drive Selected'
                         )
+                        
                     elif session.get('scan') == True:
                         return jsonify(
                             label='message',
                             data='Drive has already been scanned'
                         )
+                    
                     else:
                         session['scan'] = True
                         return jsonify(
                             label='scan',
                             data=session.get('drive')
                         )
-                        
+                elif parts[0] == '--recover':
+                    if session.get('scan') == True:
+                        session['recover'] = True
+                        return jsonify(
+                            label='selector',
+                            mode='artifact',
+                            data="""<div id="selector">
+                                        <div>
+                                            [1] BugHouse_Employee_Suite.exe  <span class="arrow" style="display: none;">&lt;</span>
+                                        </div>
+                                    </div>"""
+                        )
+                    else:
+                        return jsonify(
+                            label='message',
+                            data='No Scanned Drive'
+                        )
+                    
 #debug command                
                 elif parts[0] == '--state':
                     return jsonify(
@@ -212,11 +243,18 @@ def autopsy():
                     return jsonify(
                         label='clear'
                     )
+                
                 else:
                     return jsonify(
                         label='message',
                         data='Run --help for valid commands'
                     )
+                
+            else:
+                return jsonify(
+                    label='message',
+                    data='Run --help for valid commands'
+                )
 
 @app.errorhandler(404)
 def page_not_found(error):
