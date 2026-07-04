@@ -15,7 +15,8 @@ app.register_blueprint(challenge5)
 #home route function
 @app.route('/', methods=['GET','POST'])
 def desktop():
-    return render_template('dekstop.html')
+    msg=session.get('recover')
+    return render_template('dekstop.html', msg=msg)
 
 @app.route('/messages', methods=['GET'])
 def msgchecker():
@@ -103,7 +104,10 @@ def home():
                         data='/autopsy'
                     )
                 elif parts[0] == 'ghidra':
-                    return jsonify()
+                    return jsonify(
+                        label='redirect',
+                        data='ghidra'
+                    )
 
                 else:
                     return jsonify(
@@ -123,7 +127,7 @@ def docs():
 @app.route('/autopsy', methods=['GET', 'POST'])
 def autopsy():
     if request.method =='GET':
-        if 'recovered' not in session:
+        if 'recover' not in session:
             session['recover'] = False
         session['mounted'] = False
         session['scan'] = False
@@ -154,11 +158,18 @@ def autopsy():
                 )
         
         if artifact is not None:
-            if artifact == "0":
-                return jsonify(
-                    label='message',
-                    data='BugHouse_Employee_Suite.exe recovered successfully.'
-                )
+                if session.get('drive') != "0":
+                    return jsonify(
+                        label='message',
+                        data='Invalid Drive Scanned'
+                        )
+                else:
+                    return jsonify(
+                        label='recover',
+                        data='BugHouse_Employee_Suite recovered Successfully<br>File Saved to Desktop'
+                    )
+        
+        
 #command check
         elif not check:
             return jsonify(
@@ -210,7 +221,12 @@ def autopsy():
                             data=session.get('drive')
                         )
                 elif parts[0] == '--recover':
-                    if session.get('scan') == True:
+                    if session.get('recover') == True:
+                        return jsonify(
+                            label='message',
+                            data='Already Recovered'
+                        )
+                    elif session.get('scan') == True and session.get('drive') == '0':
                         session['recover'] = True
                         return jsonify(
                             label='selector',
@@ -221,10 +237,11 @@ def autopsy():
                                         </div>
                                     </div>"""
                         )
+
                     else:
                         return jsonify(
                             label='message',
-                            data='No Scanned Drive'
+                            data='No Valid Drive Scanned'
                         )
                     
 #debug command                
@@ -255,6 +272,13 @@ def autopsy():
                     label='message',
                     data='Run --help for valid commands'
                 )
+
+
+@app.route('/ghidra')
+def ghidra():
+    if 'patched' not in session:
+        session['patched'] = False
+    return render_template('ghidra.html')
 
 @app.errorhandler(404)
 def page_not_found(error):

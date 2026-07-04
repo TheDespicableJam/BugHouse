@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="preconnect" href="https://fonts.googleapis.com">
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -11,6 +15,10 @@
         font-family: 'Bitcount Prop Single', monospace;
     }
     #msg:open{
+        display: flex;
+        flex-direction: column;
+    }
+    #bghcontent{
         display: flex;
         flex-direction: column;
     }
@@ -186,6 +194,33 @@
     <img src="/static/music.png" style="height: 7vh; width: auto;" alt="">
     <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
 </div>
+
+
+{% if msg%}
+<div class="pixel" id='bughouse' style="height: 15vh; width: 5vw; position: absolute; top: 2vh; left: 8vw;">
+    <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
+    <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
+</div>
+
+<dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw;" id="bgh">
+    <div style="display: flex;" class="toolbar">
+    <div id="crossbgh" class="closer">
+        <div class="closing">x</div>
+    </div>
+    <div class="closey"></div>
+    <p class="hostname">BugHouse</p>
+    </div>
+    {% if not patch %}
+    <div id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative;">
+    </div>
+    {% else %}
+    <div id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative; display: flex;">
+        Hello this works
+    </div>
+    {% endif %}
+</dialog>
+{% endif %}
+
 
 <!--messages app-->
 <dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
@@ -384,7 +419,7 @@ photos.addEventListener('click',  ()=>{
         photos.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
 
         setTimeout(function(){
-            window.location = '/home'
+            window.location = '/ghidra'
         }, 850)
 
         setTimeout(function(){
@@ -393,4 +428,53 @@ photos.addEventListener('click',  ()=>{
     } )    
     
 </script>
+{% if msg %}
+<script>
+    const bughouseapp = document.getElementById('bughouse')
+    const crossbgh = document.getElementById('crossbgh')
+    const bgh = document.getElementById('bgh')
+    const content = document.getElementById('bghcontent')
+
+    function failstart(){
+            bgh.showModal()
+            bgh.style.backgroundColor='black'
+            content.style.height='80%'
+            content.style.justifyContent='center'
+            content.style.alignItems='center'
+            content.style.color='White'
+            content.innerHTML='Loading...'
+            
+            setTimeout(function(){
+                content.style.justifyContent=''
+                content.style.alignItems=''
+                content.style.color=''
+                bgh.style.backgroundColor='rgb(0, 48, 204)'
+                document.getElementById('bghcontent').innerHTML='<p style="text-align: center; color:rgb(219, 15, 15)">Runtime Error</p> <br><p style="color: white; font-size: 13px; line-height: 30px;">Failed Integrity Check<br>Error Code 0x4011B2</p>'
+            }, 3000 )
+
+    }
+
+
+
+     bughouseapp.addEventListener('click',  ()=>{
+        bughouseapp.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
+
+        setTimeout(function(){
+            
+            failstart()
+        }, 850)
+
+        setTimeout(function(){
+            bughouseapp.style.background = 'transparent'
+        }, 950)
+    } )
+
+    crossbgh.addEventListener('click', ()=>{
+        bgh.close()
+    })
+
+
+
+</script>
+{% endif %}
 </html>

@@ -42,6 +42,28 @@
         background: rgb(0, 0, 0);
         border-radius: 4px;
     }
+    @keyframes slide{
+            from{right: -50vw;}
+            to{right: 1vw;}
+        }
+    @keyframes slide-out{
+        from{right: 1vw;}
+        to{right: -50vw;}
+    }
+    #noti{
+        color: white;
+        font-size: 20px;
+        background-color: rgb(22, 21, 21);
+        outline: 2px solid grey;
+        display: inline-block;
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        position: fixed;
+        top: 8vh;
+        right: -50vw;
+    }
 
 </style>
 
@@ -70,7 +92,9 @@
 </div>
 <div id="output" class="msg" style="margin-top: 2vh; margin-left: 1vw;">
 </div>
-
+<div id="noti">
+    [NEW] New Application: "BugHouse Employee Suite"
+</div>
 
 <script>
     const output = document.getElementById('output')
@@ -212,7 +236,15 @@
                         n.style.display='none'
                     }
                     arrows[i].style.display='inline-block'
-                    }
+    }
+    
+    function notification(){
+        document.getElementById('noti').style.animation='slide 1.5s ease-in-out forwards'
+        setTimeout(function(){
+        document.getElementById('noti').style.animation='slide-out 1s ease-in-out forwards'
+        }, 4000)
+        
+    }   
 
     startup()
 
@@ -259,8 +291,14 @@
 
                 .then(Response=>Response.json())
                 .then(reply=>{
+                    if(reply.label === 'recover'){
+                        output.innerHTML=reply.data+'<br>'
+                        notification()
+                    }
+                    else{
                     output.innerHTML=reply.data
                     output.innerHTML+='<br>'
+                    }
                 })
                 for(const n of arrows){
                         n.style.display='none'

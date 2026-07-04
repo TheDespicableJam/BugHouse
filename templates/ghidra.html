@@ -1,0 +1,203 @@
+    {% extends 'base.html' %}
+    {% block content %}
+
+    <style>
+
+        body{
+            margin: 0;
+        }
+
+        #ghidra{
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+        }
+
+        #leftpane{
+            width: 25%;
+            height: 95.5vh;
+            background-color: rgb(75, 70, 70);
+            color: white;
+        }
+        #rightpane, #code{
+            padding-top: 30px;
+            padding-left: 20px;
+            font-size: 14px;
+            font-family: 'Press Start 2P';
+            flex: 1;
+            background-color: #000000;
+            color: white;
+            line-height: 25px;
+        }
+
+        #title{
+            text-align: center;
+            padding-top: 25px;
+        }
+
+        .functions{
+            padding-left: 20px;
+            padding-bottom: 10px;
+            color: rgb(143, 175, 233);
+            cursor: default;
+            width: fit-content;
+        }
+        .functions:hover{
+            color: cornflowerblue;
+        }
+
+        #operators{
+            background-color: transparent;
+            border: 3px solid transparent;
+            outline: none;
+            color:#B897F4;
+            font-family: 'Press Start 2P';
+        }
+        #operators:hover{
+            border: 3px solid #7b43e2 ;
+        }
+
+        #compile{
+            margin: 30px;
+            margin-top: 10vh;
+            color:white
+        }
+
+        .keyword {
+            color: #569CD6;      /* if else return while */
+        }
+        .type {
+            color: #4EC9B0;      /* int uint void undefined8 */  
+        }
+        .function {
+            color: #DCDCAA;      /* verify runtimeerror */
+        }
+        .variable {
+            color: #9CDCFE;      /* uvar1 state level */
+        }
+        .global {
+            color: #C586C0;      /* DAT_00403020 */
+        }
+        .number {
+            color: #B5CEA8;      /* 0x4011B2 0 1 */
+        }
+        .operator {
+            color: #D4D4D4;      /* operatos*/
+        }
+        .string {
+            color: #CE9178;      /* strings */
+        }
+        .constant {
+            color: #FFD700;      /* EXPECTED_HASH */
+        }
+    </style>
+
+    <div id="ghidra">
+        <div id="leftpane">
+            <div id="title">
+                Ghidra Discovered Functions
+            </div>
+            <p style="padding: 0; margin: 0;">============================</p>
+            <p style="padding: 0; padding-left: 5px; padding-bottom: 20px; margin: 0;">Binary: Bughouse Employee Suite</p>
+            <div id="functions">
+                <div class="functions" id="main">
+                    PROC_00401000
+                </div>
+                <div class="functions" id="license">
+                    PROC_004010F8
+                </div>
+                <div class="functions" id="verify">
+                    PROC_004011B2
+                </div>
+                <div class="functions" id="Userlvl">
+                    PROC_004012F4
+                </div>
+            </div>
+            <button id="compile">
+                    Compile
+                </button>
+        </div>
+
+        <div id="rightpane">
+            <div id="Editor">Code Editor</div>
+            <p style="padding: 0; margin: 0;">========================================================================</p>
+            <pre id="code" style="color: #B897F4;">Select a Process to inspect</pre>
+        </div>
+    </div>
+
+<script>
+    
+    function process(proc){
+        document.getElementById(proc).addEventListener('click', ()=>{
+            if(proc === 'main'){
+                document.getElementById('code').innerHTML=`<span class="type">undefined8</span> <span class="function">main</span>(<span class="type">void</span>)
+{
+    <span class="function">InitializeWindow</span>();
+    <span class="function">UserLevel</span>();
+    <span class="keyword">if</span> (<span class="function">LicenseCheck</span>() <span class="operator">==</span> <span class="number">0</span>) {
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="function">OpenApplication</span>();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}`
+            }
+
+
+            else if(proc === 'license'){
+                document.getElementById('code').innerHTML=`<span class="type">undefined8</span> <span class="function">LicenseCheck</span>(<span class="type">void</span>)
+{
+    <span class="type">int</span> <span class="variable">state</span>;
+    <span class="variable">state</span> <span class="operator">=</span> <span class="function">GetLicenseState</span>();
+    <span class="keyword">if</span> (<span class="variable">state</span> <span class="operator">==</span> <span class="number">0</span>) {
+        <span class="keyword">return</span> <span class="function">VerifyIntegrity</span>();
+    }
+    <span class="keyword">return</span> <span class="number">1</span>;
+}`
+            }
+
+
+            else if(proc === 'verify'){
+                document.getElementById('code').innerHTML=`<span class="type">undefined8</span> <span class="function">VerifyIntegrity</span>(<span class="type">void</span>)
+{
+    <span class="type">uint</span> <span class="variable">uVar1</span>;
+    <span class="variable">uVar1</span> <span class="operator">=</span> <span class="function">ComputeChecksum</span>();
+    <span class="keyword">if</span> (<span class="variable">uVar1</span> <select id="operators">
+        <option value="equal">==</option>
+        <option value="notequal">!=</option>
+        <option value="greater">></option>
+        <option value="smaller"><</option>
+        </select> <span class="constant">EXPECTED_HASH</span>) {
+        <span class="function">RuntimeError</span>(<span class="number">0x4011B2</span>);
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}`
+            }
+
+
+            else if(proc === 'Userlvl'){
+                document.getElementById('code').innerHTML=`<span class="type">undefined8</span> <span class="function">UserLevel</span>(<span class="type">void</span>)
+{
+    <span class="type">int</span> <span class="variable">level</span>;
+    <span class="variable">level</span> <span class="operator">=</span> <span class="function">ReadUserPermissions</span>();
+    <span class="keyword">if</span> (<span class="variable">level</span> <span class="operator"><</span> <span class="number">2</span>) {
+        <span class="global">DAT_00403020</span> <span class="operator">=</span> <span class="number">0</span>;
+        <span class="keyword">return</span> <span class="number">0</span>;
+    }
+    <span class="global">DAT_00403020</span> <span class="operator">=</span> <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">1</span>;
+}`
+            }
+        })
+    }
+
+    process("main")
+    process("license")
+    process("verify")
+    process("Userlvl")
+
+</script>
+
+
+
+    {% endblock %}
