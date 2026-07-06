@@ -59,7 +59,7 @@
 
         #compile{
             margin: 30px;
-            margin-top: 10vh;
+            margin-top: 5vh;
             color:white
         }
 
@@ -90,9 +90,87 @@
         .constant {
             color: #FFD700;      /* EXPECTED_HASH */
         }
-    </style>
 
-    <div id="ghidra">
+        #compilemsg{
+            background-color: rgba(0, 0, 0, 0.904);
+            color: white;
+            height: 30vh;
+            width: 30vw;
+            border: 5px solid white;
+            font-family: 'Press Start 2P';
+            font-size: 17px;
+        }
+        #compilemsg:open{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #compilemsg::backdrop{
+            background: none;
+        }
+
+        #startup{
+            position: absolute;
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            font-family: 'Press Start 2P';
+            color: white;
+        }
+
+        #startupmsg{
+            margin-top: 55vh;
+            margin-left: 40vw;
+            color: white;
+            padding: 10px;
+            border: 2px solid rgb(255, 243, 243);
+            width: fit-content;
+        }
+
+        #errormsg{
+            margin:30px ;
+        }
+    </style>
+    <div id="startup">
+        <pre>              
+                     / / |      
+   ,-'             _/ / /       
+  (-_          _,-' `Z_/        
+   "#:      ,-'_,-.    \  _     
+    #'    _(_-'_()\     \" |    
+  ,--_,--'                 |    
+ / ""                      L-'\ 
+ \,--^---v--v-._        /   \ | 
+   \_________________,-'      | 
+                    \           
+                     \          
+                      \         
+        </pre>
+                    
+        <div>
+            -_-_-Ghidra-_-_-
+        </div>
+        <pre>              
+       /\ \              
+       \ \ \_             '-,   
+        \_` '-,_          _-)  
+     _  /    .-,_'-,      :#"   
+    | "/     /()_'-_)_    '#    
+    |                 '--,_--,  
+ /'-L                      "" \ 
+ | /   \        _.-v--v---^--,/ 
+ |      '-,_________________/   
+           /                    
+          /                     
+         /                      
+        </pre>
+    </div>
+
+    <div id="startupmsg">
+        Initiating Startup...
+    </div>
+
+    <div id="ghidra" style="display: none;">
         <div id="leftpane">
             <div id="title">
                 Ghidra Discovered Functions
@@ -112,10 +190,12 @@
                 <div class="functions" id="Userlvl">
                     PROC_004012F4
                 </div>
+            <p style="padding: 0; margin: 0;">============================</p>
             </div>
-            <button id="compile">
+            <button id="compile" onclick="compile()">
                     Compile
-                </button>
+            </button><br>
+            <p id="errormsg"></p>
         </div>
 
         <div id="rightpane">
@@ -123,9 +203,14 @@
             <p style="padding: 0; margin: 0;">========================================================================</p>
             <pre id="code" style="color: #B897F4;">Select a Process to inspect</pre>
         </div>
+
+        <dialog id="compilemsg"></dialog>
     </div>
 
+
 <script>
+
+    let savedOp = null
     
     function process(proc){
         document.getElementById(proc).addEventListener('click', ()=>{
@@ -162,8 +247,8 @@
     <span class="type">uint</span> <span class="variable">uVar1</span>;
     <span class="variable">uVar1</span> <span class="operator">=</span> <span class="function">ComputeChecksum</span>();
     <span class="keyword">if</span> (<span class="variable">uVar1</span> <select id="operators">
-        <option value="equal">==</option>
         <option value="notequal">!=</option>
+        <option value="equal">==</option>
         <option value="greater">></option>
         <option value="smaller"><</option>
         </select> <span class="constant">EXPECTED_HASH</span>) {
@@ -172,6 +257,10 @@
     }
     <span class="keyword">return</span> <span class="number">0</span>;
 }`
+document.getElementById('operators').addEventListener('change', (e)=>{
+        savedOp = document.getElementById('operators').value
+        console.log(savedOp)
+    })
             }
 
 
@@ -191,13 +280,55 @@
         })
     }
 
+    function startup(){
+        setTimeout(function(){
+            document.getElementById('startup').style.display='none'
+            document.getElementById('startupmsg').style.display='none'
+            document.getElementById('ghidra').style.display='flex'
+        }, 3000)
+    }
+
+    function compilingscreen(){
+        document.getElementById('compilemsg').showModal()
+        document.getElementById('compilemsg').textContent='Compiling...'
+        setTimeout(function(){
+        document.getElementById('compilemsg').textContent='Almost There...'
+        }, 2000)
+        setTimeout(function(){
+        document.getElementById('compilemsg').textContent='Done'
+        }, 5000)
+        setTimeout(function(){
+        document.getElementById('compilemsg').close()
+        }, 6500)
+    }
+
+    function compile(){
+        const operators = document.getElementById('operators')        
+        if(operators){
+            savedOp = document.getElementById('operators').value
+            fetch('/compile', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'change='+savedOp
+            })
+            .then(Response=>Response.json())
+            .then(reply=>{
+                compilingscreen()
+            })
+        }
+        else{
+            document.getElementById('errormsg').textContent = 'No Changes made to Compile'
+            setTimeout(function(){
+                document.getElementById('errormsg').textContent=''
+            }, 2000)
+        }
+    }
+
+    startup()
     process("main")
     process("license")
     process("verify")
     process("Userlvl")
 
 </script>
-
-
-
-    {% endblock %}
+{% endblock %}

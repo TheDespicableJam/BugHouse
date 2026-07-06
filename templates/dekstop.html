@@ -196,7 +196,7 @@
 </div>
 
 
-{% if msg%}
+{% if recover %}
 <div class="pixel" id='bughouse' style="height: 15vh; width: 5vw; position: absolute; top: 2vh; left: 8vw;">
     <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
     <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
@@ -210,14 +210,8 @@
     <div class="closey"></div>
     <p class="hostname">BugHouse</p>
     </div>
-    {% if not patch %}
-    <div id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative;">
-    </div>
-    {% else %}
-    <div id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative; display: flex;">
-        Hello this works
-    </div>
-    {% endif %}
+    <pre id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative;">
+    </pre>
 </dialog>
 {% endif %}
 
@@ -428,12 +422,16 @@ photos.addEventListener('click',  ()=>{
     } )    
     
 </script>
-{% if msg %}
+{% if recover %}
 <script>
     const bughouseapp = document.getElementById('bughouse')
     const crossbgh = document.getElementById('crossbgh')
     const bgh = document.getElementById('bgh')
     const content = document.getElementById('bghcontent')
+
+///ignore this part, false error from vscode, works in browser
+    let patched = {{ patched|tojson }}
+///^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     function failstart(){
             bgh.showModal()
@@ -454,14 +452,58 @@ photos.addEventListener('click',  ()=>{
 
     }
 
+    function start()
+            {bgh.showModal()
+            bgh.style.backgroundColor='black'
+            content.style.height='80%'
+            content.style.justifyContent='center'
+            content.style.alignItems='center'
+            content.style.color='White'
+            content.innerHTML='Loading...'
+
+            setTimeout(function(){
+                content.innerHTML=''
+                content.style.justifyContent='center'
+                content.style.alignItems='center'
+                content.style.color='White'
+                content.style.fontFamily=''
+                bgh.style.backgroundColor='rgb(0, 0, 0)'
+                content.textContent=`
+   CAUTION YOU ARE ACCESSING BUGHOUSE'S PRIVATE EMPLOYEE SUITE
+
+                       ##             ##
+                         ####     ####
+                         ####     ####
+                            ### ###
+                            #######
+               ###      #############      ###
+               ###    #################    ###
+                  #########################
+                   #######################
+                     ###################
+                   #######################
+                  #########################
+               ###    #################    ###
+               ###      #############      ###
+                          #########
+                          
+                          Loading...
+                          `
+            }, 3000 )
+    }
 
 
-     bughouseapp.addEventListener('click',  ()=>{
+
+    bughouseapp.addEventListener('click',  ()=>{
         bughouseapp.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
 
         setTimeout(function(){
-            
+            if (patched){
+                start()
+            }
+            else{
             failstart()
+            }
         }, 850)
 
         setTimeout(function(){

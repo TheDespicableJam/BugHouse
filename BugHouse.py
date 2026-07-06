@@ -15,8 +15,9 @@ app.register_blueprint(challenge5)
 #home route function
 @app.route('/', methods=['GET','POST'])
 def desktop():
-    msg=session.get('recover')
-    return render_template('dekstop.html', msg=msg)
+    recover=session.get('recover')
+    patched = session.get('patched')
+    return render_template('dekstop.html', recover=recover, patched=patched)
 
 @app.route('/messages', methods=['GET'])
 def msgchecker():
@@ -253,7 +254,15 @@ def autopsy():
                         scan: {session.get('scan')}<br>
                         recover: {session.get('recover')}<br>
                         drive: {session.get('drive')}<br>
+                        patched: {session.get('patched')}
                         """
+                    )
+                elif parts[0] == 'godmode':
+                    session['recover'] = True
+                    session['patched'] = True
+                    return jsonify(
+                        label='message',
+                        data='godmode'
                     )
 #part for --clear
                 elif parts[0] == '--clear':
@@ -277,8 +286,22 @@ def autopsy():
 @app.route('/ghidra')
 def ghidra():
     if 'patched' not in session:
-        session['patched'] = False
+        session['patched']= False
     return render_template('ghidra.html')
+
+@app.route('/compile', methods=['POST'])
+def compile():
+   change = request.form.get('change')
+   if change == 'equal':
+       session['patched'] = True
+       return jsonify(
+           label='patched'
+       )
+   else:
+       return jsonify(
+           labe='nochange'
+       )
+       
 
 @app.errorhandler(404)
 def page_not_found(error):
