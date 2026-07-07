@@ -38,6 +38,10 @@
             transform: rotate(360deg);
         }
     }
+    @keyframes fadein {
+            0% {opacity: 0;}
+            100%{opacity: 1;}
+        }
 
     .spin{
         animation: spin 2s linear infinite
@@ -160,82 +164,85 @@
 
 
 <body>
-    <p style="position: absolute; right: 2vw; top: -1vh; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
+<div id="desktop">
+        <p style="position: absolute; right: 2vw; top: -1vh; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
 
-<div class="pixel" id='message' style="height: 10vh; width: 6vw;">
-    <img id="msgicon" src="/static/msgicon.png" style="height: 6vh; width: auto;">
-    <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
-</div>
-
-<br>
-
-<div class="pixel" id='terminal' style="height: 12vh; width: 5vw;">
-    <img src="/static/terminal.png" style="height: 8vh; width: auto;;" alt="">
-    <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Terminal</p>
-</div>
-
-<br>
-
-<div class="pixel" id='text' style="height: 11vh; width: 4.5vw; text-align: center;">
-    <img src="/static/text.png" style="height: 7vh; width: auto;" alt="">
-    <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Text</p>
-</div>
-
-<br>
-
-<div class="pixel"  id='photos' style="height: 11vh; width: 5vw; text-align: center;">
-    <img src="/static/photos.png" style="height: 7vh; width: auto;" alt="">
-    <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Pictures</p>
-</div>
-
-<br>
-
-<div class="pixel" id='music' style="height: 11vh; width: 4.5vw; text-align: center;">
-    <img src="/static/music.png" style="height: 7vh; width: auto;" alt="">
-    <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
-</div>
-
-
-{% if recover %}
-<div class="pixel" id='bughouse' style="height: 15vh; width: 5vw; position: absolute; top: 2vh; left: 8vw;">
-    <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
-    <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
-</div>
-
-<dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw;" id="bgh">
-    <div style="display: flex;" class="toolbar">
-    <div id="crossbgh" class="closer">
-        <div class="closing">x</div>
+    <div class="pixel" id='message' style="height: 10vh; width: 6vw;">
+        <img id="msgicon" src="/static/msgicon.png" style="height: 6vh; width: auto;">
+        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
     </div>
-    <div class="closey"></div>
-    <p class="hostname">BugHouse</p>
+
+    <br>
+
+    <div class="pixel" id='terminal' style="height: 12vh; width: 5vw;">
+        <img src="/static/terminal.png" style="height: 8vh; width: auto;;" alt="">
+        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Terminal</p>
     </div>
-    <pre id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative;">
-    </pre>
-</dialog>
-{% endif %}
 
+    <br>
 
-<!--messages app-->
-<dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
-    <div style="display: flex;" class="toolbar">
-    <div id="cross" class="closer">
-        <div class="closing">x</div>
+    <div class="pixel" id='text' style="height: 11vh; width: 4.5vw; text-align: center;">
+        <img src="/static/text.png" style="height: 7vh; width: auto;" alt="">
+        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Text</p>
     </div>
-    <div class="closey"></div>
-    <p class="hostname">Messages</p>
+
+    <br>
+
+    <div class="pixel"  id='photos' style="height: 11vh; width: 5vw; text-align: center;">
+        <img src="/static/photos.png" style="height: 7vh; width: auto;" alt="">
+        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Pictures</p>
     </div>
-    <div id="content" style=" font-size: 17px; padding: 25px; color: aliceblue; flex: 1; position: relative;">
-        <div id="inbox">Inbox</div><br>
-            <div id="msgcon" style="font-size: 20px;">
-            </div> 
+
+    <br>
+
+    <div class="pixel" id='music' style="height: 11vh; width: 4.5vw; text-align: center;">
+        <img src="/static/music.png" style="height: 7vh; width: auto;" alt="">
+        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
     </div>
-</dialog>
+
+
+    {% if recover %}
+    <div class="pixel" id='bughouse' style="height: 15vh; width: 5vw; position: absolute; top: 2vh; left: 8vw;">
+        <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
+        <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
+    </div>
+
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw;" id="bgh">
+        <div style="display: flex;" class="toolbar">
+        <div id="crossbgh" class="closer">
+            <div class="closing">x</div>
+        </div>
+        <div class="closey"></div>
+        <p class="hostname">BugHouse</p>
+        </div>
+        <pre id="bghcontent" style="font-family: 'Press Start 2P'; font-size: 17px; padding: 25px; color: rgb(219, 15, 15); flex: 1; position: relative;">
+        </pre>
+    </dialog>
+    {% endif %}
+
+
+    <!--messages app-->
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
+        <div style="display: flex;" class="toolbar">
+        <div id="cross" class="closer">
+            <div class="closing">x</div>
+        </div>
+        <div class="closey"></div>
+        <p class="hostname">Messages</p>
+        </div>
+        <div id="content" style=" font-size: 17px; padding: 25px; color: aliceblue; flex: 1; position: relative;">
+            <div id="inbox">Inbox</div><br>
+                <div id="msgcon" style="font-size: 20px;">
+                </div> 
+        </div>
+    </dialog>
 
 
 
-<img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
+    <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
 
+</div>
+<div id="gotcha" style="display: none;"></div>
 </body>
 
 <script>
@@ -424,6 +431,14 @@ photos.addEventListener('click',  ()=>{
 </script>
 {% if recover %}
 <script>
+    const radio = new Audio('/static/radiocall.mp3')
+    const siren = new Audio('/static/siren.mp3')
+    const knock = new Audio('/static/break.mp3')
+
+    radio.load();
+    siren.load();
+    knock.load();
+
     const bughouseapp = document.getElementById('bughouse')
     const crossbgh = document.getElementById('crossbgh')
     const bgh = document.getElementById('bgh')
@@ -489,7 +504,28 @@ photos.addEventListener('click',  ()=>{
                           
                           Loading...
                           `
+            
             }, 3000 )
+            setTimeout(function(){
+                document.getElementById('desktop').style.display='none'
+                document.body.style.backgroundImage="url('/static/black.png')"
+            }, 8000)
+            setTimeout(function(){
+                const gotcha = document.getElementById('gotcha')
+                gotcha.style.display='block'
+                radio.play();
+                document.body.style.display='flex'
+                document.body.style.alignItems='center'
+                document.body.style.justifyContent='center'
+                gotcha.style.fontFamily='"Press Start 2P"';
+                gotcha.style.fontSize='25px'
+                gotcha.style.color='white'
+                gotcha.textContent='"We got em Boys"'
+                gotcha.style.animation='fadein 2s linear forwards'
+                gotcha.addEventListener('animationend', () => {
+                    console.log("animation ended");
+                });
+            }, 10000)
     }
 
 
