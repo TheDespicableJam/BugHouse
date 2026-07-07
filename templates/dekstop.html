@@ -513,18 +513,33 @@ photos.addEventListener('click',  ()=>{
             setTimeout(function(){
                 const gotcha = document.getElementById('gotcha')
                 gotcha.style.display='block'
-                radio.play();
+                siren.play();
                 document.body.style.display='flex'
-                document.body.style.alignItems='center'
                 document.body.style.justifyContent='center'
                 gotcha.style.fontFamily='"Press Start 2P"';
-                gotcha.style.fontSize='25px'
+                gotcha.style.marginTop='10vh'
+                gotcha.style.fontSize='18px'
                 gotcha.style.color='white'
-                gotcha.textContent='"We got em Boys"'
+                gotcha.textContent='Manhattan, New York City, 2:00 AM'
                 gotcha.style.animation='fadein 2s linear forwards'
-                gotcha.addEventListener('animationend', () => {
-                    console.log("animation ended");
+                siren.addEventListener('ended', () => {
+                    knock.play()
                 });
+                knock.addEventListener('ended', ()=>{
+                    radio.play();
+                    gotcha.style.lineHeight='40px'
+                    gotcha.style.padding='20px'
+                    gotcha.innerHTML=`<br><br><br>"NYPD! Step away from the computer! You're under arrest for multiple counts of computer intrusion and unauthorized access to protected computer systems. Put your hands behind your back!"`
+                
+                radio.addEventListener('ended', ()=>{
+                    setTimeout(function(){
+                        gotcha.style.marginTop=''
+                        gotcha.style.padding=''
+                        gotcha.style.alignContent='center'
+                        gotcha.innerHTML='ACT I Completed <br> To Be Continued...'
+                    }, 5000)
+                })
+                })
             }, 10000)
     }
 
