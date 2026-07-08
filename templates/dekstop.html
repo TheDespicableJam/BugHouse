@@ -9,7 +9,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Desktop</title>
+</head>
+
+
+
+{% if firsttime %}
+
+<style>
+    
+    body{
+    margin:0;
+    overflow:hidden;
+    background-image:url('/static/sides.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-color:black;
+    }
+
+    #game-wrapper{
+    width:1366px;
+    height:768px;
+    position:absolute;
+    transform-origin:top left;
+    background-color:black;
+    }
+
+    #cutscene{
+    width:100%;
+    height:100%;
+    color:white;
+    font-family:'Press Start 2P';
+    font-size:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    }
+
+    @keyframes fadein {
+        0% {opacity: 0;}
+        100%{opacity: 1;}
+    }
+
+    #dialog{
+        line-height: 40px;
+    }
+
+    #dive{
+        font-family: 'Press Start 2P';
+        color: white;
+        border: 3px solid white;
+        background-color: black;
+        padding: 5px;
+    }
+    #dive:hover{
+        background-color: grey;
+    }
+    #one, #two, #three, #dive{
+        opacity: 0;
+    }
+</style>
+
+<body>
+<div id="game-wrapper">
+<div id="cutscene">
+    <div id="dialog">
+        <div id="one">I had never been this lousy...</div>
+        <div id="two">yet i messed up the Boracle Hack...</div>
+        <div id="three">and they blackmailed me into this...</div>
+        <button id="dive" onclick="button()">Lets Go</button>
+    </div>
+</div>
+</div>
+</body>
+
+<script>
+function scaleGame(){
+    const wrapper=document.getElementById("game-wrapper");
+
+    const scale=Math.min(
+        window.innerWidth/1366,
+        window.innerHeight/768
+    );
+
+    wrapper.style.transform=`scale(${scale})`;
+    wrapper.style.left=((window.innerWidth-1366*scale)/2)+"px";
+    wrapper.style.top=((window.innerHeight-768*scale)/2)+"px";
+}
+
+window.addEventListener("resize",scaleGame);
+scaleGame();
+</script>
+
+<script>
+    function startup(){
+        document.getElementById('one').style.animation = 'fadein 4s linear forwards'
+        document.getElementById('one').addEventListener('animationend',()=> {
+            document.getElementById('two').style.animation = 'fadein 4s linear forwards'
+            document.getElementById('two').addEventListener('animationend',()=> {
+                document.getElementById('three').style.animation = 'fadein 4s linear forwards'
+                document.getElementById('three').addEventListener('animationend', ()=>{
+                    document.getElementById('dive').style.animation = 'fadein 3s linear forwards'
+                })
+            })
+        })}
+
+        function button(){
+            fetch('/',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'cutcomp='+'yes'
+            })
+            .then(Response=>Response.json())
+            .then(reply=>{
+                if(reply.label === 'redirect'){
+                    window.location=reply.data
+                }
+            })
+        }
+
+    startup()
+
+</script>
+
+{% else %}
+
 <style>
     dialog{
         font-family: 'Bitcount Prop Single', monospace;
@@ -44,7 +170,7 @@
         }
 
     .spin{
-        animation: spin 2s linear infinite
+        animation: spin 1.5s linear infinite
     }
             
     .pixel{
@@ -71,7 +197,7 @@
         display: flex;
         gap: 5px;
         font-size: 17px;
-        color: white
+        color: white;
         }
 
 
@@ -159,9 +285,6 @@
         color: rgb(235, 62, 62);
     }
 </style>
-</head>
-
-
 
 <body>
 <div id="desktop">
@@ -173,6 +296,7 @@
     </div>
 
     <br>
+    <br>
 
     <div class="pixel" id='terminal' style="height: 12vh; width: 5vw;">
         <img src="/static/terminal.png" style="height: 8vh; width: auto;;" alt="">
@@ -180,19 +304,6 @@
     </div>
 
     <br>
-
-    <div class="pixel" id='text' style="height: 11vh; width: 4.5vw; text-align: center;">
-        <img src="/static/text.png" style="height: 7vh; width: auto;" alt="">
-        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Text</p>
-    </div>
-
-    <br>
-
-    <div class="pixel"  id='photos' style="height: 11vh; width: 5vw; text-align: center;">
-        <img src="/static/photos.png" style="height: 7vh; width: auto;" alt="">
-        <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Pictures</p>
-    </div>
-
     <br>
 
     <div class="pixel" id='music' style="height: 11vh; width: 4.5vw; text-align: center;">
@@ -200,14 +311,16 @@
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
     </div>
 
+    <br>
+    <br>
 
     {% if recover %}
-    <div class="pixel" id='bughouse' style="height: 15vh; width: 5vw; position: absolute; top: 2vh; left: 8vw;">
+    <div class="pixel" id='bughouse' style="height: 15vh; width: 5vw;">
         <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
         <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
     </div>
 
-    <dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw;" id="bgh">
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 100vh; width: 70vw;" id="bgh">
         <div style="display: flex;" class="toolbar">
         <div id="crossbgh" class="closer">
             <div class="closing">x</div>
@@ -238,12 +351,12 @@
     </dialog>
 
 
-
     <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
 
 </div>
 <div id="gotcha" style="display: none;"></div>
 </body>
+{% endif%}
 
 <script>
 
@@ -253,7 +366,9 @@
     }
     time();
     setInterval(time, 1000)
-    
+
+    const notification = new Audio('/static/notification.mp3')
+    notification.load()
     const photos = document.getElementById('photos')
     const music = document.getElementById('music')
     const message = document.getElementById('message')
@@ -299,12 +414,13 @@
     function checkForAd(){
     if(adWaiting){return;}
     const elapsed = Date.now() - lastCleared;
-    const showAD = 10 * 1000;
+    const showAD = 5 * 60 * 1000;
 
     if(elapsed >= showAD){
         const randomIndex = Math.floor(Math.random() * ads.length);
         currentAd = ads[randomIndex];
         adWaiting = true;
+        notification.play()
         document.getElementById('msgicon').src = "/static/msgicon_unread.png" 
         }
     }   
@@ -389,45 +505,19 @@
         }, 1500)
     } )
 
-text.addEventListener('click',  ()=>{
-
-        text.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
-
-        setTimeout(function(){
-            window.location = '/home'
-        }, 850)
-
-        setTimeout(function(){
-            text.style.background = 'transparent'
-        }, 1500)
-    } )    
 
 music.addEventListener('click',  ()=>{
 
         music.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
 
         setTimeout(function(){
-            window.location = '/opwuetcbalehqo109dhbw154mnbah4l8641hn5j2ks6lrpcm69q65.onion'
+            window.open('https://youtu.be/dQw4w9WgXcQ')
         }, 850)
 
         setTimeout(function(){
             music.style.background = 'transparent'
         }, 1500)
     } )    
-
-photos.addEventListener('click',  ()=>{
-
-        photos.style.backgroundColor = "rgba(0, 0, 255, 0.45)"
-
-        setTimeout(function(){
-            window.location = '/ghidra'
-        }, 850)
-
-        setTimeout(function(){
-            photos.style.background = 'transparent'
-        }, 1500)
-    } )    
-    
 </script>
 {% if recover %}
 <script>
@@ -537,7 +627,7 @@ photos.addEventListener('click',  ()=>{
                         gotcha.style.padding=''
                         gotcha.style.alignContent='center'
                         gotcha.innerHTML='ACT I Completed <br> To Be Continued...'
-                    }, 5000)
+                    }, 8000)
                 })
                 })
             }, 10000)

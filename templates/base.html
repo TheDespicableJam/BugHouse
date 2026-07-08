@@ -9,136 +9,173 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>BugHouse</title>
-    
+
 <style>
-    .toolbar {
-        width: 100%;
-        background-color: #333;
-        padding: 5px;
-        box-sizing: border-box;
-        display: flex;
-        gap: 5px;
-        font-size: 17px;
-        color: aliceblue;
-        margin: 0;
-        }
+.toolbar{
+    width:100%;
+    background-color:#333;
+    padding:5px;
+    box-sizing:border-box;
+    display:flex;
+    gap:5px;
+    font-size:17px;
+    color:aliceblue;
+    margin:0;
+}
 
+.closer{
+    height:15px;
+    width:15px;
+    border-radius:50%;
+    position:relative;
+    background-color:#ff5f57;
+}
+.closer:hover{
+    background-color:#ff0d00;
+}
 
-    .closer {
-        height: 15px;
-        width: 15px;
-        border-radius: 50%;
-        position: relative;
-        background-color: #ff5f57;
-    }
-    .closer:hover{
-        background-color: #ff0d00;
-    }
+.closey{
+    height:15px;
+    width:15px;
+    border-radius:50%;
+    background-color:#febc2e;
+}
 
+.hostname{
+    margin:auto;
+}
 
+.closing{
+    color:white;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:13px;
+    cursor:default;
+}
 
-    .closey{
-        height: 15px;
-        width: 15px;
-        border-radius: 50%;
-        background-color: #febc2e;
-    }
+.cli{
+    border:none;
+    background:transparent;
+    outline:none;
+    width:90%;
+}
 
-    .hostname {margin: auto;}
+.msg{
+    font-family:'Bitcount Prop Single', monospace;
+    color:white;
+}
 
-    .closing{
-        color: white; 
-        position: absolute; 
-        top: 50%; left:50%; 
-        transform: translate(-50%, -50%);
-        font-size: 13px;
-        cursor: default
-    }
-    .cli{
-        border: none;
-        background: transparent;
-        outline: none;
-        width: 90%;
-    }
-    .msg{
-        font-family: 'Bitcount Prop Single', monospace;
-        color: white;
-    }
+.apple{
+    color:#ff5555;
+}
 
+.player{
+    color:#5555ff;
+}
 
-    .apple{
-        color: #ff5555
-    }
+#scroll::-webkit-scrollbar{
+    display:none;
+}
 
-    .player{
-        color: #5555ff
-    }
+.fade{
+    animation:fade 1s linear infinite;
+}
 
+@keyframes fade{
+    50%{opacity:0;}
+}
 
-    #scroll::-webkit-scrollbar{
-        display: none;
-    }
+@keyframes fade-out{
+    0%{opacity:1;}
+    100%{opacity:0;}
+}
 
-    /* animations? */
-    .fade {
-    animation: fade 1s linear infinite;
-    }
-    @keyframes fade {
-    50% {
-        opacity: 0;
-    }
-    }
+html,body{
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden;
+}
 
-    @keyframes fade-out {
-    0% {opacity: 1;}
-    100%{opacity: 0;}
-    }
+body{
+    background:url("/static/sides.jpg") center center / cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
+#game-wrapper{
+    width:1366px;
+    height:768px;
+    transform-origin:center center;
+    background-color:rgb(32,32,32);
+    color:#31ff31;
+    font-family:'Bitcount Prop Single', monospace;
+    font-size:20px;
+    overflow:hidden;
+}
 
+input{
+    background-color:black;
+    color:#31ff31;
+    border:2px solid #626862;
+    font-family:'Bitcount Prop Single', monospace;
+    font-size:18px;
+}
 
-    body {
-        background-color: rgb(32, 32, 32);
-        color: #31ff31;
-        font-family: 'Bitcount Prop Single', monospace;
-        font-size: 20px;
-    }
+button{
+    background-color:rgb(41,38,38);
+    color:#43ff4c;
+    border:2px solid #626862;
+    font-family:'Bitcount Prop Single', monospace;
+    font-size:18px;
+}
 
-    input {
-    background-color: black;
-    color: #31ff31;
-    border: 2px solid #626862;
-    font-family: 'Bitcount Prop Single', monospace;
-    font-size: 18px;
-    } 
-
-    button {
-    background-color: rgb(41, 38, 38);
-    color: #43ff4c;
-    border: 2px solid #626862;
-    font-family: 'Bitcount Prop Single', monospace;
-    font-size: 18px;
-    }
-
-    button:hover{
-        background-color: rgba(66, 62, 62);   
-    }
+button:hover{
+    background-color:rgb(66,62,62);
+}
 </style>
 </head>
+
 <body>
-<div>
+
+<div id="game-wrapper">
     <div class="toolbar">
-    <div id="cross" class="closer">
-        <div class="closing">x</div>
+        <div id="cross" class="closer">
+            <div class="closing">x</div>
+        </div>
+        <div class="closey"></div>
+        <p class="hostname">root@kali</p>
     </div>
-    <div class="closey"></div>
-    <p class="hostname">root@kali</p>
+
+    <div id="game">
+        {% block content %}{% endblock %}
+    </div>
 </div>
-    {% block content %}
-    {% endblock %}
+
 <script>
-    document.getElementById('cross').addEventListener('click', ()=>{
-        window.location ='/'})
+function scaleGame(){
+    const wrapper=document.getElementById("game-wrapper");
+
+    const scale=Math.min(
+        window.innerWidth/1366,
+        window.innerHeight/768
+    );
+
+    wrapper.style.transform=`scale(${scale})`;
+}
+
+window.addEventListener("resize",scaleGame);
+scaleGame();
 </script>
-    
+
+<script>
+document.getElementById("cross").addEventListener("click",()=>{
+    window.location="/";
+});
+</script>
+
 </body>
 </html>

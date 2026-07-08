@@ -15,9 +15,21 @@ app.register_blueprint(challenge4)
 #home route function
 @app.route('/', methods=['GET','POST'])
 def desktop():
-    recover=session.get('recover')
-    patched = session.get('patched')
-    return render_template('dekstop.html', recover=recover, patched=patched)
+    if request.method == 'GET':
+        if 'firsttime' not in session:
+            session['firsttime'] = True
+        recover=session.get('recover')
+        patched = session.get('patched')
+        firsttime = session.get('firsttime')
+        return render_template('dekstop.html', recover=recover, patched=patched, firsttime=firsttime)
+    elif request.method == 'POST':
+        cutscene = request.form.get('cutcomp')
+        if cutscene:
+            session['firsttime'] = False
+            return jsonify(
+                label='redirect',
+                data='/'
+            )
 
 @app.route('/messages', methods=['GET'])
 def msgchecker():
