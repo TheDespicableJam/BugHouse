@@ -1,11 +1,30 @@
-{% extends 'prod.html'%}
-{% block content %}
-<center><h1>Employee Dashboard, BugHouse</h1></center>
-<h2>Current Status: Offline<br><br> Priviledges: Admin</h2>
-<p><strong>Due to a potential security breach we have stopped services on this page please contact IT for the new admin dashboard</strong></p>
-<br>
-<p>Admin Token Detected:Birkman40965070, Initiated Terminal Return Script</p>
-<a href="/challenge/1a">
-<button onclick="window.close()">Back to Chat</button>
-    </a>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BugHouse</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+<body>
+    
+    <div id="blueline">
+        BugHoue Employee Portal
+    </div>
+
+    <div id="content">
+        <div id="warning">
+            Services have been stopped on this page due to a potential Security Breach
+        </div>
+        <div id="text">
+            If you think this was a mistake please contact the HR
+        </div>
+    </div>
+
+    <div id="return">
+        Initiated Terminal Return Script ----- Admin Token Detected 'JackBirkman' <br>
+        <button id="back" onclick="window.close()">Back to Chat</button>
+    </div>
+
+</body>
+</html>

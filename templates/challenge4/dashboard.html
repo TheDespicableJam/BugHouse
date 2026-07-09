@@ -12,16 +12,29 @@
     font-size: 18px;
     color: aliceblue;
     }
+    #return{
+    padding: 8px ;
+    height: fit-content;
+    width: fit-content;
+    color: rgb(157, 85, 230);
+    background-color: black;
+}
+
 </style>
 <div  class="bar">This Account will be Terminated in&nbsp;<span id="timer"></span></div>
 {% endif %}
 <center><h1>Employee Dashboard, BugHouse</h1></center>
 <h2 style="margin-bottom: 0;">Current Status: Online <br><br> User: {% if id == 'mndnt' %}Kevin{% elif id == 'ljkp' %}Jack{% elif id == 'ujuzks' %}Samuel {% endif %}<br>Priviledges: Admin</h2>
 <br>
-<h2 style="position: absolute; top: 23vh; right: 5vh;">
+<h2 style="position: absolute; top: 150px; right: 100px;">
     Bio: {{bio}}</h2>
 {% if id == 'ljkp' %}
-<p style="color: white; margin-top: 0;">MANTIS</p>
+<br>
+<div id="return">
+    initiated Terminal Return Script ----- Admin Token Detected 'bighack' <br><br>
+    <button onclick="window.close()">Back to Chat</button>
+</div>
+<br>
 {% endif %}
 <a href="/challenge/4a/Dashboard/LitHubMonitor?user={{id}}">
     <button type="button">Monitor LitHub</button>

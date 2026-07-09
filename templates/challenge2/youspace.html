@@ -1,6 +1,21 @@
 {% extends 'base.html'%}
 {% block content %}
 {% if login %}
+<style>
+
+    #return{
+    font-size: medium;
+    font-weight: 100;
+    padding: 8px ;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 10vh;
+    margin-left: 2vw;
+    color: rgb(157, 85, 230);
+    background-color: black;
+}
+
+</style>
 <h1>
     YouSpace, a space just for you
 </h1>
@@ -11,7 +26,7 @@
 <h2>
     Logged in As: Jack(Admin)
 </h2>
-<p>
+<p style="padding-left: 10px;">
     Samuel says: "@admin, i found something weird at /roles"<br><br>
     elite_h4xxor says: "Shutup Samuel! I know your IP, I will doxx you"<br><br>
     Jane says: "Guys! I have started my cybersec journey at BugHouse, but i just dont understand cookies :("<br><br>
@@ -19,14 +34,14 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and for role management too!"
 
 </p>
-
-<h2>
-    QnVne2NoMGMwbDR0M19jaDFwfQ
-</h2>
-<a href="/challenge/2a">
-<button onclick="window.close()">Back to Chat</button>
-</a>
-
+<div id="return">
+    <h2>
+      Initiated Terminal Return Script -----  Admin Token Detected 'youspace'
+    </h2>
+    <a href="/challenge/2a">
+    <button id="back" onclick="window.close()">Back to Chat</button>
+    </a>
+</div>
 {% else %}
 <h1>
     YouSpace, a space just for you

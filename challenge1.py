@@ -8,7 +8,7 @@ challenge1=Blueprint('challenge1', __name__ )
 def flag1():
     msg= ''
     if request.method == 'POST':
-        val =  flag('Birkman40965070')
+        val =  flag('jackbirkman')
         if val == 'Correct':
             msg = 'correct'
             return render_template('challenge1/Contract1.html', msg=msg)

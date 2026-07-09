@@ -8,26 +8,33 @@
         }
 
         #ghidra{
-            display: flex;
-            flex-direction: row;
-            box-sizing: border-box;
+            display:flex;
+            flex-direction:row;
+            box-sizing:border-box;
+            height:calc(768px - 30px);
         }
 
         #leftpane{
             width: 25%;
-            height: 95.5vh;
             background-color: rgb(75, 70, 70);
             color: white;
         }
-        #rightpane, #code{
-            padding-top: 30px;
-            padding-left: 20px;
-            font-size: 14px;
-            font-family: 'Press Start 2P';
-            flex: 1;
-            background-color: #000000;
+        #rightpane{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            background:black;
+        }
+
+        #code{
+            flex:1;
+            padding-top:30px;
+            padding-left:20px;
+            font-size:14px;
+            font-family:'Press Start 2P';
+            background:black;
             color: white;
-            line-height: 25px;
+            line-height:25px;
         }
 
         #title{
@@ -59,7 +66,7 @@
 
         #compile{
             margin: 30px;
-            margin-top: 5vh;
+            margin-top: 30px;
             color:white
         }
 
@@ -94,8 +101,8 @@
         #compilemsg{
             background-color: rgba(0, 0, 0, 0.904);
             color: white;
-            height: 30vh;
-            width: 30vw;
+            height: 240px;
+            width: 300px;
             border: 5px solid white;
             font-family: 'Press Start 2P';
             font-size: 17px;
@@ -111,16 +118,21 @@
 
         #startup{
             position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 60px;
             font-size: 25px;
             font-family: 'Press Start 2P';
             color: white;
         }
 
         #startupmsg{
-            margin-top: 55vh;
-            margin-left: 40vw;
+            position: absolute;
+            left: 50%;
+            top: 55%;
+            transform: translateX(-50%);
             color: white;
             padding: 10px;
             border: 2px solid rgb(255, 243, 243);
@@ -148,7 +160,7 @@
         </pre>
                     
         <div>
-            -_-_-Ghidra-_-_-
+            -_-Ghidra-_-
         </div>
         <pre>              
        /\ \              
@@ -199,8 +211,8 @@
         </div>
 
         <div id="rightpane">
-            <div id="Editor">Code Editor</div>
-            <p style="padding: 0; margin: 0;">========================================================================</p>
+            <div id="Editor" style="color: white;">Code Editor</div>
+            <p style="padding: 0; margin: 0; color: white;">========================================================================</p>
             <pre id="code" style="color: #B897F4;">Select a Process to inspect</pre>
         </div>
 

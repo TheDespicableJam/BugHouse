@@ -1,13 +1,15 @@
 from flask import request
 
 def flag(flg):
-    flag = request.form['flag']
+    check = request.form['flag']
 
-    if flag == flg:
-        return("Correct")
-    elif not flag:
+    if not check:
         return("empty")
     else:
-        return("Wrong")
+        flag = check.lower()    
+        if flag == flg:
+            return("Correct")
+        else:
+            return("Wrong")
     
 

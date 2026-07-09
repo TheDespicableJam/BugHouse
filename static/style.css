@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap');
+
+*{
+    font-family: 'Geist Pixel';
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: antiquewhite;
+}
+
+#blueline{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(40, 40, 148);
+    width: 100vw;
+    height: 10vh;
+    font-size: 40px;
+    color:white;
+}
+
+#content{
+    padding-left: 2vw;
+    padding-top: 15vh;
+    font-size: 30px;
+    font-weight: bolder;
+    color: black;
+}
+
+#warning::before{
+    content: '\26A0';
+    font-size: 30px;
+}
+
+#text{
+    margin-top: 10vh;
+    font-size: 25px;
+}
+
+#return{
+    padding: 8px ;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 10vh;
+    margin-left: 2vw;
+    color: rgb(157, 85, 230);
+    background-color: black;
+}
+
+#back{
+    margin-top: 2vh;
+    background-color: grey;
+}

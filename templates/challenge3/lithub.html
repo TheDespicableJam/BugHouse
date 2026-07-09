@@ -1,61 +1,88 @@
 {% extends 'base.html'%}
 {% block content %}
+<style>
 
-{% if login %}
-<h1>
-    LitHub, a place where teens makes LIT stuff! 
-</h1>
+    @keyframes float {
+    0% {transform: translateY(0px);}
+    25% {transform: translateY(-5px);}
+    50% {transform: translateY(0px);}
+    75% {transform: translateY(5px);}
+    100% {transform: translateY(0px);}
+    }
 
-<h2>
-    Logged in As: Admin Team
-</h2>
+    .l{
+        animation: float 1.25s linear infinite;
+    }
+    .i{
+        animation: float 1.25s linear infinite;
+        animation-delay: 0.25s;
+    }
+    .t{
+        animation: float 1.25s linear infinite;
+        animation-delay: 0.5s;
+    }
 
-<p><strong>Trending Topics</strong>
-    <ul>
-        {% if show_post %}
-        <li>Admin Team says: "LitHub SUCKS @$$ !!! GitHub 4Ever!!!"</li>
-        {% else %}
-        <li><strong>This Post has been deleted by the admin team due to violation of platform guidelines</strong></li>
-        {% endif %}
-        <li>Samuel says: "WTH?!</li>
-        <li>elite_h4xxor says: "hehe... thnx Samuel for the /roles lead x) "</li>
-        <li>Kevin-Admin Team, LitHub says: "Sorry guys, we are all locked out of the Admin Team account <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we are trying to recover the passwords, but Jack is on vacation and he has the master Keys.</li>
-    </ul>
-</p>
-{% if show_post %}
-<form method="post" action="/challenge/3a/LitHub">
-<button>Delete Post</button></form>
-{% else %}
-<h2>Bug{s4v3d_th3_d4y}</h2>
-<a href="/challenge/3a">
-    <button onclick="window.close()" type="button">Back to Chat</button>
-</a>
+    #game-wrapper{
+        background-color: rgb(15, 15, 15)
+    }
 
+    #title, #slogan{
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: rgb(238, 224, 197);
+        font-family: 'Press Start 2P';
+    }
+
+    #topics, #convo{
+        color: white;
+        font-size: 20px;
+        padding-left: 20px;
+        padding-right: 4px;
+        line-height: 35px;
+    }
+    #return{
+    padding: 8px ;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 10vh;
+    margin-left: 2vw;
+    color: rgb(157, 85, 230);
+    background-color: black;
+}
+
+    
+    
+</style>
+
+<!--HEY GUYS!!! jack here, if you guys need admin access while i am not in office, just "POST" here /..../LitHub/backupkeys ;)-->
+
+<div id="title">
+    <div>LitHub</div>
+</div>
+<div id="slogan">
+    where teens make <span class="l" style="color: rgb(180, 48, 180);">&nbsp;L</span><span class="i" style="color:red">I</span><span class="t" style="color: rgb(49, 49, 235);">T&nbsp;</span> stuff
+</div>
+<br><br><br>
+<div id="topics">
+    Logged in as: <span style="color: rgb(122, 122, 231);">{{user}}</span>
+    <br><br>
+    Trending Topics :
+<ul id="convo">
+    <li>Jane says: "what do headers even do T-T, every reqeust has it?!?! but what DO THEY DO!!!"</li>
+    <br>
+    <li>Samuel says: " @ Jane headers are pretty versatile, you can use them as labels on requests and can be used to check where a requests comes from, and can even be used as a label to check for while debugging your webapps "</li>
+    <br>
+    <li>TheDespicableJam: "Somebody plzz help me!!!!!! damn you css!!! how do i make a wavestyle animation in css :("</li>
+</ul>
+{% if user == 'Admin Team' %}
+<div id="return">
+    Initiated Terminal Return Script ----- Admin Token Detected 'privaterepos' <br>
+    <button onclick="window.close()">Back to Chat</button>
+</div>
 {% endif %}
 
-{% else %}
-<h1>
-    LitHub, a place where teens makes LIT stuff! 
-</h1>
-
-<h2>
-    Logged in As: LitHub Visitor
-</h2>
-
-<p><strong>Trending Topics</strong>
-    <ul>
-        <li>Admin Team says: "LitHub SUCKS @$$ !!! GitHub 4Ever!!!"</li>
-        <li>Samuel says: "WTH?!</li>
-        <li>elite_h4xxor says: "hehe... thnx Samuel for the /roles lead x) "</li>
-        <li>Kevin-Admin Team, LitHub says: "Sorry guys, we are all locked out of the Admin Team account <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we are trying to recover the passwords, but Jack is on vacation and he has the master Keys.</li>
-    </ul>
-
-<a href="/challenge/3a/LitHub/Home">
-    <button type="button">Go to Home Page</button>
-</a>
- 
-</p>
-{% endif %}
 {% endblock %}

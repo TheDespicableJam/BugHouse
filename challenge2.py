@@ -10,7 +10,7 @@ challenge2=Blueprint('challenge2', __name__ )
 def challenge2a():
     msg=''
     if request.method == 'POST':
-      val = flag('unknownvisitor')
+      val = flag('youspace')
       if val == 'Correct':
           msg='correct'
           response = make_response(render_template('challenge2/Contract2.html', msg=msg))

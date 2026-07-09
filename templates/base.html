@@ -142,6 +142,7 @@ button:hover{
 <body>
 
 <div id="game-wrapper">
+{% if show_toolbar is not defined or show_toolbar %}
     <div class="toolbar">
         <div id="cross" class="closer">
             <div class="closing">x</div>
@@ -149,6 +150,7 @@ button:hover{
         <div class="closey"></div>
         <p class="hostname">root@kali</p>
     </div>
+{% endif %}
 
     <div id="game">
         {% block content %}{% endblock %}
@@ -164,7 +166,10 @@ function scaleGame(){
         window.innerHeight/768
     );
 
-    wrapper.style.transform=`scale(${scale})`;
+    wrapper.style.position = "absolute";
+    wrapper.style.left = "50%";
+    wrapper.style.top = "50%";
+    wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
 }
 
 window.addEventListener("resize",scaleGame);

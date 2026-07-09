@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop</title>
-</head>
 
-
-
+{%extends 'base.html' %}
+{% block content %}
 {% if firsttime %}
 
 <style>
@@ -25,15 +12,12 @@
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
-    background-color:black;
     }
-
     #game-wrapper{
-    width:1366px;
-    height:768px;
-    position:absolute;
-    transform-origin:top left;
     background-color:black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
 
     #cutscene{
@@ -71,9 +55,6 @@
         opacity: 0;
     }
 </style>
-
-<body>
-<div id="game-wrapper">
 <div id="cutscene">
     <div id="dialog">
         <div id="one">I had never been this lousy...</div>
@@ -82,26 +63,7 @@
         <button id="dive" onclick="button()">Lets Go</button>
     </div>
 </div>
-</div>
 </body>
-
-<script>
-function scaleGame(){
-    const wrapper=document.getElementById("game-wrapper");
-
-    const scale=Math.min(
-        window.innerWidth/1366,
-        window.innerHeight/768
-    );
-
-    wrapper.style.transform=`scale(${scale})`;
-    wrapper.style.left=((window.innerWidth-1366*scale)/2)+"px";
-    wrapper.style.top=((window.innerHeight-768*scale)/2)+"px";
-}
-
-window.addEventListener("resize",scaleGame);
-scaleGame();
-</script>
 
 <script>
     function startup(){
@@ -149,11 +111,19 @@ scaleGame();
         flex-direction: column;
     }
     body{
-        background-image: url('/static/wall.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 100vh;
-        overflow: hidden;
+        background-image: url('/static/sides.jpg');
+        }
+    
+        #game-wrapper{
+            margin-top: 12px;
+            padding-top: 50px;
+            padding-left: 30px;
+            font-size: 18px;
+            background-image: url('/static/wall.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 800px;
+            overflow: hidden;
         }
 
     @keyframes spin {
@@ -223,9 +193,10 @@ scaleGame();
     }
 
     .hostname {
+        font-size: 15px;
         position: absolute;
         left: 50%;
-        transform: translate(-50%, -88%);
+        transform: translate(-50%);
     }
     
     .closing{
@@ -239,7 +210,7 @@ scaleGame();
     }
 
     #inbox{
-        font-size: 25px;
+        font-size: 20px;
         text-align: center;
     }
 
@@ -286,28 +257,27 @@ scaleGame();
     }
 </style>
 
-<body>
 <div id="desktop">
-        <p style="position: absolute; right: 2vw; top: -1vh; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
+        <p style="position: absolute; right: 35px; top: 50px; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
 
-    <div class="pixel" id='message' style="height: 10vh; width: 6vw;">
-        <img id="msgicon" src="/static/msgicon.png" style="height: 6vh; width: auto;">
+    <div class="pixel" id='message' style="height: 65px; width: 6vw;">
+        <img id="msgicon" src="/static/msgicon.png" style="height: 50px; width: auto;">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
     </div>
 
     <br>
     <br>
 
-    <div class="pixel" id='terminal' style="height: 12vh; width: 5vw;">
-        <img src="/static/terminal.png" style="height: 8vh; width: auto;;" alt="">
+    <div class="pixel" id='terminal' style="height: 80px; width: 5vw;">
+        <img src="/static/terminal.png" style="height: 65px; width: auto;;" alt="">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Terminal</p>
     </div>
 
     <br>
     <br>
 
-    <div class="pixel" id='music' style="height: 11vh; width: 4.5vw; text-align: center;">
-        <img src="/static/music.png" style="height: 7vh; width: auto;" alt="">
+    <div class="pixel" id='music' style="height: 70px; width: 4.5vw; text-align: center;">
+        <img src="/static/music.png" style="height: 55px; width: auto;" alt="">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
     </div>
 
@@ -315,12 +285,12 @@ scaleGame();
     <br>
 
     {% if recover %}
-    <div class="pixel" id='bughouse' style="height: 15vh; width: 5vw;">
-        <img src="/static/Bughouse.png" style="height: 8vh; width: auto; margin: 0 auto; display: block;">
+    <div class="pixel" id='bughouse' style="height: 100px; width: 5vw;">
+        <img src="/static/Bughouse.png" style="height: 50px; width: auto; margin: 0 auto; display: block;">
         <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
     </div>
 
-    <dialog style=" outline: none; border: 0;padding: 0px; height: 100vh; width: 70vw;" id="bgh">
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 70vw;" id="bgh">
         <div style="display: flex;" class="toolbar">
         <div id="crossbgh" class="closer">
             <div class="closing">x</div>
@@ -335,27 +305,27 @@ scaleGame();
 
 
     <!--messages app-->
-    <dialog style=" outline: none; border: 0;padding: 0px; height: 85vh; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
         <div style="display: flex;" class="toolbar">
         <div id="cross" class="closer">
             <div class="closing">x</div>
         </div>
         <div class="closey"></div>
-        <p class="hostname">Messages</p>
+        <p  class="hostname">Messages</p>
         </div>
         <div id="content" style=" font-size: 17px; padding: 25px; color: aliceblue; flex: 1; position: relative;">
-            <div id="inbox">Inbox</div><br>
+            <div style="top: 10px;" id="inbox">Inbox</div><br>
                 <div id="msgcon" style="font-size: 20px;">
                 </div> 
         </div>
     </dialog>
 
 
-    <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 18vw; top: 4vh; height:8vh; width: auto;" >
+    <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 220px; top: 75px; height:55px; width: auto;" >
 
 </div>
 <div id="gotcha" style="display: none;"></div>
-</body>
+</div>
 {% endif%}
 
 <script>
@@ -598,16 +568,16 @@ music.addEventListener('click',  ()=>{
             }, 3000 )
             setTimeout(function(){
                 document.getElementById('desktop').style.display='none'
-                document.body.style.backgroundImage="url('/static/black.png')"
+                document.getElementById('game-wrapper').style.background='black'
             }, 8000)
             setTimeout(function(){
                 const gotcha = document.getElementById('gotcha')
                 gotcha.style.display='block'
                 siren.play();
-                document.body.style.display='flex'
-                document.body.style.justifyContent='center'
+                document.getElementById('game-wrapper').style.display='flex'
+                document.getElementById('game-wrapper').style.justifyContent='center'
                 gotcha.style.fontFamily='"Press Start 2P"';
-                gotcha.style.marginTop='10vh'
+                gotcha.style.marginTop='50px'
                 gotcha.style.fontSize='18px'
                 gotcha.style.color='white'
                 gotcha.textContent='Manhattan, New York City, 2:00 AM'
@@ -623,10 +593,13 @@ music.addEventListener('click',  ()=>{
                 
                 radio.addEventListener('ended', ()=>{
                     setTimeout(function(){
-                        gotcha.style.marginTop=''
+                        gotcha.style.marginTop='200px'
                         gotcha.style.padding=''
-                        gotcha.style.alignContent='center'
-                        gotcha.innerHTML='ACT I Completed <br> To Be Continued...'
+                        gotcha.innerHTML=`ACT I Completed <br> To Be Continued... `
+                        setTimeout(function(){
+                        gotcha.style.marginTop='100px'
+                        gotcha.innerHTML=`---Credits--- <br> Programming, Art, Design, Sounds:<br> TheDespicableJam [ Mohammad Roohan ] <br><br>Thank You Hack Club and the Horizons team, because of you i made my first ever project :) `
+                        })
                     }, 8000)
                 })
                 })
@@ -660,4 +633,5 @@ music.addEventListener('click',  ()=>{
 
 </script>
 {% endif %}
+{% endblock %}
 </html>

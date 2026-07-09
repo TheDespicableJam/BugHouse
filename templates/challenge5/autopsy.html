@@ -8,25 +8,25 @@
 
     #banner1{
         font-size: 15px;
-        transform: translateX(31vw);
+        transform: translateX(425px);
         width: fit-content;
         color: rgb(219, 46, 3, 0.888);
     }
     #banner2{
         font-size: 15px;
-        transform: translateX(31vw);
+        transform: translateX(425px);
         width: fit-content;
         color: rgba(219, 46, 3, 0.666);
     }
     #banner3{
         font-size: 15px;
-        transform: translateX(31vw);
+        transform: translateX(425px);
         width: fit-content;
         color: rgb(219, 46, 0.333);
     }
 
     #output {
-        height: 45vh;
+        height: 500px;
         overflow-y: auto;
         scrollbar-width: thin;
         scrollbar-color: rgb(0, 0, 0) rgb(32, 32, 32 );
@@ -43,12 +43,12 @@
         border-radius: 4px;
     }
     @keyframes slide{
-            from{right: -50vw;}
-            to{right: 1vw;}
+            from{right: -600px;}
+            to{right: 50px;}
         }
     @keyframes slide-out{
-        from{right: 1vw;}
-        to{right: -50vw;}
+        from{right: 50px;}
+        to{right: -600px;}
     }
     #noti{
         color: white;
@@ -61,14 +61,14 @@
         padding-top: 3px;
         padding-bottom: 3px;
         position: fixed;
-        top: 8vh;
-        right: -50vw;
+        top: 100px;
+        right: -600px;
     }
 
 </style>
 
 <div id="banner1">
-<pre style="margin-top: 5vh; margin-bottom: 0;">
+<pre style="margin-top: 40px; margin-bottom: 0;">
  ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███    ██████▓██   ██▓
 ▒████▄     ██  ▓██▒▓  ██▒ ▓▒▒██▒  ██▒▓██░  ██▒▒██    ▒ ▒██  ██▒
 ▒██  ▀█▄  ▓██  ▒██░▒ ▓██░ ▒░▒██░  ██▒▓██░ ██▓▒░ ▓██▄    ▒██ ██░
@@ -87,10 +87,10 @@
       ░  ░   ░                  ░ ░                 ░  ░ ░     
 </div>
 
-<div id="terminal" style="padding-left: 10px; margin-top: 8vh; color: white; display: none;">
+<div id="terminal" style="padding-left: 10px; margin-top: 100px; color: white; display: none;">
     AUTOPSY> &nbsp; <input id="inp" style="background-color: transparent; border: none; flex: 1; box-sizing: border-box; outline: none; color: rgb(241, 240, 155);" type="text">
 </div>
-<div id="output" class="msg" style="margin-top: 2vh; margin-left: 1vw;">
+<div id="output" class="msg" style="margin-top: 20px; margin-left: 30px;">
 </div>
 <div id="noti">
     [NEW] New Application: "BugHouse Employee Suite"

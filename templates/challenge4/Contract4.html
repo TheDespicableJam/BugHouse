@@ -3,7 +3,7 @@
 {% block content %}
 <style>
     #output {
-    height: 57vh;
+    height: 650px;
     overflow-y: auto;
     scrollbar-width: none;
 }
@@ -59,9 +59,12 @@
         <button id="sub" onclick=btn()>Submit Flag</button>
     </form> <br>
     <div id="flagresponse"></div><br>
+    <button id="back" style="display: none;" onclick="window.location='/home'">Back</button>
+
     <div id="ter">
-    root@kali:~$ &nbsp;<input class="cli" type="text" id="command"><br>
+    root@kali:~$ &nbsp;<input autocomplete="off" class="cli" type="text" id="command"><br>
 <div id="output"></div>
+
 </div>
 
 
@@ -117,10 +120,11 @@
         })
         .then(response => response.text())
         .then(reply =>{
-            if (reply === '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>word is on dev forums that Jack was fired... hmmm... i will contact you for the next assignment, till then... LAY LOW SPEAK. TO NOBODY'){
+            if (reply === '[12:10 AM] <span class="apple">&lt;Rotten_Apple&gt;</span>word is on dev forums that Jack was fired... hmmm... i will contact you for the next assignment, <br> till then... LAY LOW SPEAK. TO NOBODY'){
             document.getElementById('ter').style.display='none'
             document.getElementById('flag').style.display='none'
             document.getElementById('sub').style.display='none'
+            document.getElementById('back').style.display='block'
             document.getElementById('flagresponse').innerHTML = reply
             }
             else{

@@ -59,7 +59,7 @@
             if (reply.label === 'message'){
                 output.innerHTML=reply.data;
                 setTimeout(function(){
-                    output.style.animation='fade-out 1s linear';
+                    output.style.animation='fade-out 3s linear';
                     output.addEventListener('animationend', ()=>{
                         output.style.animation=''
                         output.textContent=''

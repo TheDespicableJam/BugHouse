@@ -21,7 +21,7 @@ def desktop():
         recover=session.get('recover')
         patched = session.get('patched')
         firsttime = session.get('firsttime')
-        return render_template('dekstop.html', recover=recover, patched=patched, firsttime=firsttime)
+        return render_template('dekstop.html', recover=recover, patched=patched, firsttime=firsttime, show_toolbar=False)
     elif request.method == 'POST':
         cutscene = request.form.get('cutcomp')
         if cutscene:
@@ -90,7 +90,7 @@ def home():
                         label='redirect',
                         data='/challenge/3a'
                     )
-                elif parts[0] == 'ssh@47851606' and parts[1] == '-p' and parts[2]=='challenge4':
+                elif parts[0] == 'ssh@47851606' and parts[1] == '-p' and parts[2]=='privaterepos':
                     return jsonify(
                         label='redirect',
                         data='/challenge/4a'
