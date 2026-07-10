@@ -23,3 +23,6 @@ BugHouse [or project BugExterminator] provides a gamified version for web exploi
 BugHouse is a webapp running [Flask](https://flask.palletsprojects.com/en/stable/) and Python in the backend, and uses HTML, JavaScript, and CSS in the frontend
 
 It is hosted through [Vercel](https://vercel.com) and can be accessed on [BugHouse](https://bug-house.vercel.app/)
+
+## AI Declaration
+I only used a minor amount of AI in this projecet, notably in the Ad generation system, and in the Rescaling wrapper for the screen, which were mostly made by me.
