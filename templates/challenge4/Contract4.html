@@ -51,10 +51,10 @@
 </div>
 
 <div id="main" style="display: none;">
-    <a href='/challenge/4a/Login' target="_blank">
+    <a href='/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Login' target="_blank">
     <button type='button'>Start</button>
     </a><br><br> 
-    <form method='POST' action="/challenge/4a">
+    <form method='POST' action="/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0">
         <input type="text" id="flag" placeholder="Input Flag">
         <button id="sub" onclick=btn()>Submit Flag</button>
     </form> <br>
@@ -113,7 +113,7 @@
     function btn(){
         const flgval = flag.value
         event.preventDefault()
-        fetch('/challenge/4a', {
+        fetch('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: 'flag=' + flgval
@@ -142,7 +142,7 @@ command.addEventListener('keydown', function(event){
             command.value = ''
         }
         else{
-        fetch('/challenge/4a/terminal', {
+        fetch('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/terminal', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: 'command=' + response

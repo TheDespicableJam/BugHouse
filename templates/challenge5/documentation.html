@@ -6,6 +6,7 @@
     <title>TOR site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 
@@ -48,8 +49,8 @@
         #key{
             color: white;
             font-size: 13px;
-            bottom: 2vh;
-            right: 2vw;
+            bottom: 16px;
+            right: 16px;
             position: absolute;
             animation: fade 1s linear infinite;
         }
@@ -58,7 +59,7 @@
             color: red;
             font-size: 30px;
             position: relative;
-            bottom: -0.35vh;
+            bottom: -5px;
         }
 
         #connect, #toterminal{
@@ -90,7 +91,7 @@
             padding-top: 3px;
             padding-bottom: 3px;
             position: fixed;
-            top: 3vh;
+            top: 25px;
             right: -25vw;
         }
     </style>

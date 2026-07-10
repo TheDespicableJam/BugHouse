@@ -4,7 +4,7 @@ from stuff import flag
 challenge1=Blueprint('challenge1', __name__ )
 
 #flag logic and Briefings
-@challenge1.route('/challenge/1a', methods=['POST', 'GET'])
+@challenge1.route('/challenge/dGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Ux', methods=['POST', 'GET'])
 def flag1():
     msg= ''
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def flag1():
         return render_template('challenge1/Contract1.html', msg=msg)
         
 #main login page
-@challenge1.route('/challenge/1a/Login', methods=['POST','GET'])
+@challenge1.route('/challenge/dGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Ux/Login', methods=['POST','GET'])
 def main():
     msg = ''
     if request.method == 'POST':

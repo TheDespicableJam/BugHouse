@@ -6,8 +6,8 @@ challenge2=Blueprint('challenge2', __name__ )
 
 
 #challenge 2
-@challenge2.route('/challenge/2a', methods=['GET', 'POST'])
-def challenge2a():
+@challenge2.route('/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy', methods=['GET', 'POST'])
+def challengeaXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy():
     msg=''
     if request.method == 'POST':
       val = flag('youspace')
@@ -27,17 +27,17 @@ def challenge2a():
 
 
 #pick username and session checker
-@challenge2.route('/challenge/2a/Login')
+@challenge2.route('/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy/Login')
 def main():
     if request.cookies.get('Role') != None:
-      return redirect('/challenge/2a/YouSpace')
+      return redirect('/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy/YouSpace')
     else:
         return render_template('challenge2/challenge2main.html')
     
 
 
 #YouSpace
-@challenge2.route('/challenge/2a/YouSpace', methods=['GET', 'POST'])
+@challenge2.route('/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy/YouSpace', methods=['GET', 'POST'])
 def YouSpace():
         login = False
         username = request.form.get('username')
@@ -52,6 +52,6 @@ def YouSpace():
             return response            
 
 #/roles
-@challenge2.route('/challenge/2a/YouSpace/roles')
+@challenge2.route('/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy/YouSpace/roles')
 def roles():
     return render_template('challenge2/roles.html')

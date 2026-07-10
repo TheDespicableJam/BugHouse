@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, jsonify
+import os
 from challenge1 import challenge1
 from challenge2 import challenge2
 from challenge3 import challenge3
@@ -78,22 +79,22 @@ def home():
                 if parts[0] == 'ssh@11111111' and parts[1] == '-p' and parts[2] == 'firstlevel':
                     return jsonify(
                         label='redirect',
-                        data='/challenge/1a'
+                        data='/challenge/dGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Ux'
                     )
                 elif parts[0] == 'ssh@29405828' and parts[1] == '-p' and parts[2]=='jackbirkman':
                     return jsonify(
                         label='redirect',
-                        data='/challenge/2a'
+                        data='/challenge/aXRoaW5rdGhpc2lzdGhlcm91dGVmb3JjaGFsbGVuZ2Uy'
                     )
                 elif parts[0] == 'ssh@37502750' and parts[1] == '-p' and parts[2]=='youspace':
                     return jsonify(
                         label='redirect',
-                        data='/challenge/3a'
+                        data='/challenge/aXN0aGlzdGhlcm91dGVmb3JjaGFsbGVuZ2Uz'
                     )
                 elif parts[0] == 'ssh@47851606' and parts[1] == '-p' and parts[2]=='privaterepos':
                     return jsonify(
                         label='redirect',
-                        data='/challenge/4a'
+                        data='/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0'
                     )
                 else:
                     return jsonify(
@@ -256,26 +257,7 @@ def autopsy():
                             label='message',
                             data='No Valid Drive Scanned'
                         )
-                    
-#debug command                
-                elif parts[0] == '--state':
-                    return jsonify(
-                                label='message',
-                                data=f"""
-                        mounted: {session.get('mounted')}<br>
-                        scan: {session.get('scan')}<br>
-                        recover: {session.get('recover')}<br>
-                        drive: {session.get('drive')}<br>
-                        patched: {session.get('patched')}
-                        """
-                    )
-                elif parts[0] == 'godmode':
-                    session['recover'] = True
-                    session['patched'] = True
-                    return jsonify(
-                        label='message',
-                        data='godmode'
-                    )
+        
 #part for --clear
                 elif parts[0] == '--clear':
                     return jsonify(
@@ -311,30 +293,20 @@ def compile():
        )
    else:
        return jsonify(
-           labe='nochange'
+           label='nochange'
        )
        
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return "Error 404 Page not found, Go Back? <br>" \
-    "<a href='/home'>" \
-    "<button type='button'>Go Back</button></a> ", 404
+    return render_template('errors.html', err='notfound'), 404
 
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return "Error 405, This method is not allowed, Go Back? <br>" \
-    "<a href='/home'>" \
-    "<button type='button'>Go Back</button></a> ", 405
+    return render_template('errors.html', err='method' ), 405
 
-@app.errorhandler(500)
-def server_error(error):
-    return "<center>Error 500, Mantis Secure Shell Sesion Terminated, Security Breach detected, This attempt will be flagged<br>" \
-    "<a href='/home'>" \
-    "<button type='button'>Go Back</button></a> </center>", 500
-
-app.config['SECRET_KEY'] = 'POIUYTREWQLKJHGFDSAMNBVCXZQWERTYUIOPASDFGHJKLZXCVBNM'
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 
 if __name__== '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

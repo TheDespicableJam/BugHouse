@@ -54,8 +54,20 @@
     #one, #two, #three, #dive{
         opacity: 0;
     }
+
+    #tip{
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.75);
+    font-family: "Press Start 2P";
+    font-size: 11px;
+    text-align: center;
+}
 </style>
 <div id="cutscene">
+    <div id="tip">"Press F11 to play in fullscreen"</div>
     <div id="dialog">
         <div id="one">I had never been this lousy...</div>
         <div id="two">yet i messed up the Boracle Hack...</div>
@@ -63,7 +75,6 @@
         <button id="dive" onclick="button()">Lets Go</button>
     </div>
 </div>
-</body>
 
 <script>
     function startup(){
@@ -152,7 +163,7 @@
 
     .pixel:hover{
         background-color: rgba(240, 248, 255, 0.3);
-        border: 0.08vw solid white
+        border: 1px solid white
     }
 
     dialog::backdrop{
@@ -258,9 +269,9 @@
 </style>
 
 <div id="desktop">
-        <p style="position: absolute; right: 35px; top: 50px; font-family: Bitcount Prop Single; font-size: 2.2vw; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 0.35vw solid rgb(29, 131, 8); padding: 0.35vw;" id="time">&nbsp;</p>
+        <p style="position: absolute; right: 35px; top: 50px; font-family: Bitcount Prop Single; font-size: 30px; color: rgba(0, 0, 0, 0.74); background-color: rgba(158, 158, 158, 0.5); border: 3px solid rgb(29, 131, 8); padding: 3px;" id="time">&nbsp;</p>
 
-    <div class="pixel" id='message' style="height: 65px; width: 6vw;">
+    <div class="pixel" id='message' style="height: 69px; width: 80px;">
         <img id="msgicon" src="/static/msgicon.png" style="height: 50px; width: auto;">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Messages</p>
     </div>
@@ -268,7 +279,7 @@
     <br>
     <br>
 
-    <div class="pixel" id='terminal' style="height: 80px; width: 5vw;">
+    <div class="pixel" id='terminal' style="height: 85px; width: 68px;">
         <img src="/static/terminal.png" style="height: 65px; width: auto;;" alt="">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Terminal</p>
     </div>
@@ -276,7 +287,7 @@
     <br>
     <br>
 
-    <div class="pixel" id='music' style="height: 70px; width: 4.5vw; text-align: center;">
+    <div class="pixel" id='music' style="height: 75px; width: 80px; text-align: center;">
         <img src="/static/music.png" style="height: 55px; width: auto;" alt="">
         <p style="color: white; font-family: Bitcount Prop Single; margin: 0;">Music</p>
     </div>
@@ -285,12 +296,12 @@
     <br>
 
     {% if recover %}
-    <div class="pixel" id='bughouse' style="height: 100px; width: 5vw;">
+    <div class="pixel" id='bughouse' style="height: 105px; width: 80px;">
         <img src="/static/Bughouse.png" style="height: 50px; width: auto; margin: 0 auto; display: block;">
         <pre style="color: white; font-family: Bitcount Prop Single; margin: 0;">BugHouse<br>Employee<br>   Suite</pre>
     </div>
 
-    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 70vw;" id="bgh">
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 900pxp;" id="bgh">
         <div style="display: flex;" class="toolbar">
         <div id="crossbgh" class="closer">
             <div class="closing">x</div>
@@ -305,9 +316,9 @@
 
 
     <!--messages app-->
-    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 70vw; background-color: rgb(80, 88, 97);" id="msg">
+    <dialog style=" outline: none; border: 0;padding: 0px; height: 600px; width: 900px; background-color: rgb(80, 88, 97);" id="msg">
         <div style="display: flex;" class="toolbar">
-        <div id="cross" class="closer">
+        <div id="crossmsg" class="closer">
             <div class="closing">x</div>
         </div>
         <div class="closey"></div>
@@ -321,7 +332,7 @@
     </dialog>
 
 
-    <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 220px; top: 75px; height:55px; width: auto;" >
+    <img id="wheel" class="spin" src="/static/ying.png" style="position: absolute; right: 230px; top: 75px; height:55px; width: auto;" >
 
 </div>
 <div id="gotcha" style="display: none;"></div>
@@ -409,11 +420,9 @@
 
     function hideMsg(){
         msg.close()
-        document.getElementById('messages').style.display="none"
-        document.getElementById('showmsg').style.display="block"
     }
 
-    document.getElementById('cross').addEventListener('click', hideMsg)
+    document.getElementById('crossmsg').addEventListener('click', hideMsg)
      
 
     message.addEventListener('click',  ()=>{
@@ -634,4 +643,3 @@ music.addEventListener('click',  ()=>{
 </script>
 {% endif %}
 {% endblock %}
-</html>

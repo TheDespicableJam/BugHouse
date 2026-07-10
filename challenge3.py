@@ -5,8 +5,8 @@ challenge3=Blueprint('challenge3', __name__ )
 
 
 #challenge 3
-@challenge3.route('/challenge/3a', methods=['GET', 'POST'])
-def challenge3a():
+@challenge3.route('/challenge/aXN0aGlzdGhlcm91dGVmb3JjaGFsbGVuZ2Uz', methods=['GET', 'POST'])
+def challengeaXN0aGlzdGhlcm91dGVmb3JjaGFsbGVuZ2Uz():
     if request.method == 'POST':
         val = flag('privaterepos')
         if val == 'Correct':
@@ -23,7 +23,7 @@ def challenge3a():
         return render_template('challenge3/Contract3.html', msg=msg)
 
   
-@challenge3.route('/challenge/3a/LitHub')
+@challenge3.route('/challenge/aXN0aGlzdGhlcm91dGVmb3JjaGFsbGVuZ2Uz/LitHub')
 def LitHub():
     header = request.headers.get('X-Jack-Key')
     if header == 'yes':
@@ -31,7 +31,7 @@ def LitHub():
     else:
         return render_template('challenge3/lithub.html', user='LitHub Visitor')
     
-@challenge3.route('/challenge/3a/LitHub/backupkeys', methods=['POST'])
+@challenge3.route('/challenge/aXN0aGlzdGhlcm91dGVmb3JjaGFsbGVuZ2Uz/LitHub/backupkeys', methods=['POST'])
 def key():
     return "X-Jack-Key: yes --------- I did'nt mess up this time ;) -Jack"
 

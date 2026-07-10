@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <meta charset="UTF-8">
     <title>BugHouse</title>
 
@@ -176,11 +177,13 @@ window.addEventListener("resize",scaleGame);
 scaleGame();
 </script>
 
+{% if show_toolbar is not defined or show_toolbar %}
 <script>
 document.getElementById("cross").addEventListener("click",()=>{
     window.location="/";
 });
 </script>
+{% endif %}
 
 </body>
 </html>

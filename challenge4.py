@@ -16,8 +16,8 @@ employees = {
 challenge4=Blueprint('challenge4', __name__ )
 
 #flag logic
-@challenge4.route('/challenge/4a', methods=['GET', 'POST'])
-def challenge4a():
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0', methods=['GET', 'POST'])
+def challengeb2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0():
     if request.method == 'POST':
         val = request.form.get('flag')
         if val == 'bighack':
@@ -30,7 +30,7 @@ def challenge4a():
     else:
         return render_template('challenge4/Contract4.html')
     
-@challenge4.route('/challenge/4a/Login', methods=['GET', 'POST'])
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Login', methods=['GET', 'POST'])
 def Login():
     if request.method == 'GET':
         msg=''
@@ -42,31 +42,31 @@ def Login():
                 msg= 'Access on this ID has been restricted'
                 return render_template('challenge4/Login.html', msg=msg)
             else:
-                return redirect(f'/challenge/4a/Dashboard?user={id}')
+                return redirect(f'/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Dashboard?user={id}')
         else:
             msg='Wrong ID'
             return render_template('challenge4/Login.html', msg=msg)
 
-@challenge4.route('/challenge/4a/Dashboard')
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Dashboard')
 def dashboard():
     id = request.args.get('user')
     if id not in employees:
-        return redirect('/challenge/4a/Login')
+        return redirect('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Login')
     else:
         bio = employees[id]['bio']
         return render_template('challenge4/dashboard.html', id=id, bio=bio)
     
-@challenge4.route('/challenge/4a/Dashboard/YouSpaceMonitor')
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Dashboard/YouSpaceMonitor')
 def YSMONITOR():
     id = request.args.get('user')
     return render_template('challenge4/YouSpace.html', id=id)
 
-@challenge4.route('/challenge/4a/Dashboard/LitHubMonitor')
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/Dashboard/LitHubMonitor')
 def LHMONITOR():
     id = request.args.get('user')
     return render_template('challenge4/LitHub.html', id=id)
 
-@challenge4.route('/challenge/4a/terminal', methods=['POST', 'GET'])
+@challenge4.route('/challenge/b2theWlhbXByZXR0eXN1cmV0aGlzaXNjaGFsbGVuZ2U0/terminal', methods=['POST', 'GET'])
 def terminal():
     command = request.form.get('command').lower()
     
