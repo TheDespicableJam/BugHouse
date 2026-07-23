@@ -35,6 +35,10 @@ The game follows this syntax for the SSH commands to select a level **SSH@[ ROOM
 
 So to play the first level you just need to type, **SSH@11111111 -p firstlevel** in the terminal input
 
+![chatid](.github/assets/complete.png)
+After entering the correct admin token and completing the level, you will get the next level's Chatroom ID, to write in the next SSH command
+
+
 **help and SSH:** Incase you forget how to write the command, just type help in the terminal input and you will get a help message instructing you about the syntax
 ![help](.github/assets/help.png)
 
